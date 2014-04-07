@@ -1,0 +1,22 @@
+{
+  "name": "frontend-starter-kit",
+  "version": "1.0.0",
+  "author": "Eli Van Zoeren (http://elivz.com)",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elivz/FrontendStarterKit.git"
+  },
+  "devDependencies": {
+    "gulp": "~3.6.0",
+    "gulp-changed": "~0.3.0",
+    "gulp-rename": "~1.2.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-uglify": "~0.2.1",
+    "gulp-sass": "~0.7.1",
+    "gulp-jshint": "~1.5.3",
+    "gulp-livereload": "~1.2.0",
+    "gulp-autoprefixer": "0.0.6",
+    "gulp-csso": "~0.2.7"
+  }
+}

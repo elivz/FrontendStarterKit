@@ -1,0 +1,7 @@
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.sass-cache
+assets/css/
+node_modules/
+assets/components/

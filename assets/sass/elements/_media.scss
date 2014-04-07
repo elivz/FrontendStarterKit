@@ -1,0 +1,129 @@
+img {
+    -ms-interpolation-mode: bicubic;
+}
+
+// Responsive-ify images and embeds
+img {
+    position: relative;
+    max-width: 100%;
+    height: auto;
+}
+object, iframe {
+    position: relative;
+    max-width: 100%;
+}
+
+.image-wrapper {
+    position: relative;
+    @include inline-block;
+    max-width: 100%;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(#000, 0.05);
+
+    img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        *max-width: none;
+    }
+}
+
+.alignnone {
+    margin: lines(0.25) $gutter-width lines(0.75) 0;
+}
+
+.aligncenter,
+div.aligncenter {
+    display: block;
+    margin: lines(0.25) auto lines(0.75);
+}
+
+.alignright {
+    float: right;
+    margin: lines(0.25) 0 lines(0.75) $gutter-width;
+}
+
+.alignleft {
+    float: left;
+    margin: lines(0.25) $gutter-width lines(0.75) 0;
+}
+
+.aligncenter {
+    display: block;
+    margin: lines(0.25) auto lines(0.75);
+}
+
+a img.alignright {
+    float: right;
+    margin: lines(0.25) 0 lines(0.75) $gutter-width;
+}
+
+a img.alignnone {
+    margin: lines(0.25) $gutter-width lines(0.75) 0;
+}
+
+a img.alignleft {
+    float: left;
+    margin: lines(0.25) $gutter-width lines(0.75) 0;
+}
+
+a img.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+
+div.wp-caption {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+
+    img {
+        display: block;
+        border: 0;
+        margin: 0;
+    }
+
+    p.wp-caption-text {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        padding: lines(0.25) $gutter-width;
+        @include font-size(16px);
+        font-style: italic;
+        color: lighten($text-color, 20%);
+        background: $background;
+        border: solid $medium-color;
+        border-width: 1px 0 0 1px;
+    }
+}
+
+// Galleries
+.tiled-gallery {
+    margin-bottom: lines() !important;
+
+    .image-wrapper {
+        display: block;
+        padding: 0;
+        box-shadow: none;
+
+        &::before, &::after {
+            content: none;
+            box-shadow: none;
+        }
+    }
+
+    .tiled-gallery-item img {
+        *max-width: none !important;
+    }
+}
+
+// Slideshows
+.slideshow-window {
+    background: transparent;
+    border: 0;
+}

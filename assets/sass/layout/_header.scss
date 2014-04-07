@@ -1,0 +1,179 @@
+// Header
+// ------
+
+.pageHeader {
+    margin-bottom: lines();
+}
+
+.headerTop {
+    .headerTopInner {
+        @include container;
+        @include at-breakpoint($desktop) {
+            @include with-grid-settings($gutter: $gutter-width*1.5, $padding: $gutter-width) {
+                @include container;
+            }
+        }
+        @include at-breakpoint($desktop-large) {
+            @include with-grid-settings($gutter: $gutter-width*1.5, $padding: $gutter-width*2.5) {
+                @include container;
+            }
+        }
+        margin: 0 auto;
+
+        > div {
+            overflow: hidden;
+            @include rem(padding, lines(0.2) 0);
+            border-bottom: $rule;
+        }
+    }
+
+    .social {
+        display: none;
+
+        .login {
+            width: auto;
+            margin-right: 0.5em;
+            text-indent: 0;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            @include link-colors(tint($highlight-color, 25%), $highlight-color);
+        }
+    }
+}
+
+.siteName {
+    float: left;
+    width: columns(6.5);
+    @include rem(height, 44px);
+    margin-bottom: 0;
+
+    a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-indent: -9999px;
+        background-size: contain;
+        opacity: 0.15;
+        transition: opacity 0.2s;
+
+        &:hover,
+        &:focus {
+            opacity: 0.75;
+        }
+    }
+}
+
+.tagline {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    @include font-size(11px, 1.6363);
+    font-weight: bold;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    text-align: center;
+
+    &:before,
+    &:after {
+        content: "\2013";
+        margin: 0 0.667em;
+    }
+}
+
+.siteName,
+.social {
+    position: relative;
+    z-index: 2;
+}
+
+@include at-breakpoint($desktop) {
+
+    .headerTop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+
+        .social {
+            display: block;
+            float: right;
+            margin: 0.4em 0;
+        }
+    }
+
+    .headerTopInner {
+        background: $background;
+        background: rgba($background, 0.95);
+    }
+
+    .pageHeader {
+        @include rem(padding-top, lines(2.25));
+    }
+
+    .siteName {
+        @include rem(width, 220px);
+        @include rem(height, 36px);
+        margin: 0;
+    }
+
+
+}
+
+@include at-breakpoint($desktop-large) {
+
+    .tagline {
+        display: block;
+    }
+
+}
+
+.headerMain {
+    display: none;
+    position: relative;
+    @include clearfix;
+
+    @include at-breakpoint($desktop) {
+
+        display: block;
+        @include rem(margin, 6px 0);
+
+        &:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            margin-left: -3px;
+            border-left: $rule;
+            border-right: $rule;
+        }
+
+        .icon-logo {
+            @include span-columns(8);
+            @include set-aspect(175/479); // Match meal plan banner aspect
+            background-position: center center;
+            background-size: auto 90%;
+
+            span {
+                position: absolute;
+                left: -9999px;
+            }
+        }
+
+        .mealplanBanner {
+            @include span-columns(8 omega);
+
+            img {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+
+}

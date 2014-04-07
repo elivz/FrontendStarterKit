@@ -1,0 +1,168 @@
+// Final Nav & Copyright
+// ---------------------
+
+@include at-breakpoint($mobile) {
+    .footerSidebar,
+    .footerNav,
+    .design {
+        display: none;
+    }
+}
+
+.siteFooter {
+    clear: both;
+    position: relative;
+    margin-top: lines();
+    padding-top: lines(0.25);
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        border-top: $rule;
+        border-bottom: $rule;
+    }
+}
+
+.footerSidebar {
+    @include at-breakpoint(47em) {
+        @include with-grid-settings($columns: 6, $gutter: $gutter-width/4, $padding: 0) {
+            position: relative;
+            height: 141px;
+            margin: lines(0.25) 0;
+
+            .widget {
+                position: relative;
+                @include span-columns(2, 6);
+                height: 100%;
+                overflow: hidden;
+
+                &:last-child {
+                    @include omega;
+                }
+            }
+
+        }
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        left: 33.333%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        margin-left: -3px;
+        border-left: $rule;
+        border-right: $rule;
+    }
+    &:after {
+        left: 66.6667%;
+    }
+
+    .footer-logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        @include striped-background;
+
+        .icon-logo {
+            display: block;
+            height: 100%;
+            width: 80%;
+            margin: 0 10%;
+            text-indent: -9999px;
+            background-position: center center;
+            background-size: contain;
+        }
+    }
+
+    // Recent comments list
+    .widget_decent_comments_widget {
+        .widgettitle {
+            margin: 0;
+            @include font-size(13px);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: $title-color-alt;
+        }
+        ul {
+            @include no-bullets;
+            margin: 0;
+            @include font-size-times(0.75, 0.75);
+        }
+
+        li {
+            margin: lines(0.25) 0 0;
+            padding-left: 22px;
+            background: inline-image("bubble-dots.png") no-repeat 0 20%;
+        }
+
+        .comment {
+            padding: 0;
+            border: 0;
+        }
+
+        .comment-author,
+        .comment-link {
+            color: mix($medium-color, $text-color);
+
+            & a {
+                 @include link-colors(mix($medium-color, $text-color), $highlight-color);
+            }
+        }
+
+        .comment-author,
+        .comment-link a {
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .comment-excerpt {
+            height: lines(0.8);
+            @include text-overflow;
+        }
+    }
+}
+
+.credits {
+    clear: both;
+    position: relative;
+    height: lines(1);
+    margin: lines(0.5) 0 lines(0.75);
+
+    .copyright {
+        position: absolute;
+        left: 0;
+        top: 0;
+        @include font-size(11px);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $medium-color;
+    }
+
+    .design {
+        @include font-size(14px);
+        text-align: center;
+        letter-spacing: 0.05em;
+
+        a {
+            color: mix($medium-color, $text-color);
+        }
+
+        strong {
+            position: relative;
+            display: inline-block;
+            top: 3px;
+            width: 112px;
+            text-align: left;
+            text-indent: -9999px;
+        }
+    }
+}

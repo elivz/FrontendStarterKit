@@ -1,0 +1,173 @@
+// Sidebar
+// -------
+
+@include at-breakpoint($mobile) {
+    .sidebar {
+        display: none;
+    }
+}
+
+.sidebar {
+    @include font-size(14px);
+    text-align: center;
+
+    .widget {
+        clear: both;
+        margin-bottom: lines();
+    }
+
+    h2 {
+        margin: 0 0 lines(0.25);
+        @include font-size(12px, 0.75);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    ul {
+        list-style: none;
+        margin-left: 0;
+    }
+}
+
+
+// Categories widget
+.widget_extended-categories {
+    a {
+        color: $highlight-color;
+    }
+
+    ul {
+        overflow: hidden;
+    }
+
+    .expand-list {
+        margin: 0 10%;
+        @include font-size(12px);
+        font-weight: bold;
+        text-transform: uppercase;
+        border-top: $rule;
+        cursor: pointer;
+
+        i {
+            display: inline-block;
+            width: 11px;
+            height: lines();
+            margin-left: 0.25em;
+            vertical-align: top;
+            background-position: center center;
+        }
+    }
+}
+
+// Nick's Picks
+#text-452535950 {
+    h2 {
+        @include font-size(16px, 1.25);
+        background: $light-color;
+    }
+}
+.nicks-picks {
+    li {
+        margin-bottom: lines(0.5);
+        padding: 3px;
+        border: $rule;
+    }
+
+    img {
+        display: block;
+    }
+
+    a {
+        @include font-size(12px, 0.85);
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        @include link-colors($text-color, $highlight-color);
+    }
+}
+
+// Book ad
+.new-book {
+    h2 {
+        @include font-size(16px, 1.25);
+        background: $light-color;
+    }
+
+    img {
+        box-shadow: 4px 4px 12px rgba(black, 0.2);
+    }
+}
+
+// Newsletter sign-up
+.signup-form {
+    position: relative;
+    text-align: center;
+    padding: lines(0.5) ($gutter-width / 2) lines(0.5);
+    background:
+        linear-gradient(-45deg, #2f2a2a 3px, transparent 0) 0 3px,
+        linear-gradient(45deg, #2f2a2a 3px, #fff 0) 0 3px;
+    background-color: #2f2a2a;
+    background-position: left top;
+    background-repeat: repeat-x;
+    background-size: 6px 6px;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background:
+            linear-gradient(-135deg, #2f2a2a 3px, transparent 0) 0 3px,
+            linear-gradient(135deg, #2f2a2a 3px, #fff 0) 0 3px;
+        background-position: left bottom;
+        background-repeat: repeat-x;
+        background-size: 6px 6px;
+    }
+
+    h2 {
+        strong {
+            display: block;
+            @include font-size-times(1.1, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: $background;
+        }
+
+        span {
+            font-weight: normal;
+            color: $medium-color;
+
+            &:before,
+            &:after {
+                content: " \2013 ";
+            }
+        }
+    }
+
+    p {
+        margin-bottom: lines(0.5);
+        @include font-size-times(0.7, 0.65);
+        color: $background;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+
+    .text {
+        float: left;
+        width: 70%;
+        @include rem(height, lines(1));
+        @include font-size(12px, 1);
+        border: 0;
+        border-radius: 3px;
+    }
+
+    button {
+        float: right;
+        width: 25%;
+        background-color: $danger-color;
+    }
+}

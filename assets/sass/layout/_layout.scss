@@ -1,0 +1,75 @@
+html {
+    height: 100%;
+    @include striped-background;
+}
+
+#wrapper {
+    @include container;
+    // @include susy-grid-background;
+    @include at-breakpoint($desktop) {
+        @include with-grid-settings($gutter: $gutter-width*1.5, $padding: $gutter-width) {
+            @include container;
+            // @include susy-grid-background;
+        }
+    }
+    @include at-breakpoint($desktop-large) {
+        @include with-grid-settings($gutter: $gutter-width*1.5, $padding: $gutter-width*2.5) {
+            @include container;
+            // @include susy-grid-background;
+        }
+    }
+    position: relative;
+    margin: 0 auto;
+    background-color: $background;
+}
+
+#main {
+    position: relative;
+}
+
+// Single pages
+
+@include at-breakpoint($desktop) {
+    #main {
+        @include span-columns(12);
+
+        &.full-width {
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    .right-sidebar {
+        @include span-columns(4 omega);
+        padding-left: $font-size;
+    }
+
+    .home {
+        #main {
+            @include span-columns(8);
+            @include push(4);
+        }
+
+        .left-sidebar {
+            position: relative;
+            @include span-columns(4);
+            right: -23.75%;
+            margin-left: -100%;
+            padding-right: $font-size;
+            overflow: hidden;
+        }
+    }
+}
+
+// Single Messages
+#message {
+    max-width: 36em;
+    margin: 10% auto;
+    padding: lines(2) ($gutter-width * 2) lines();
+    text-align: center;
+    background: $background;
+
+    @include at-breakpoint($desktop) {
+        width: 60%;
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "frontend-starter-kit",
+  "dependencies": {
+    "normalize-css": ">= 3.0.0"
+  }
+}

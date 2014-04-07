@@ -1,0 +1,43 @@
+// Set all the link colors at once
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+    color: $normal;
+    @if $visited {
+        &:visited {
+            color: $visited;
+        }
+    }
+    @if $focus {
+        &:focus {
+            color: $focus;
+        }
+    }
+    @if $hover {
+        &:hover {
+            color: $hover;
+        }
+    }
+    @if $active {
+        &:active {
+            color: $active;
+        }
+    }
+}
+
+// Undo list styling
+@mixin no-bullet {
+  list-style-image : none;
+  list-style-type  : none;
+  margin-left      : 0;
+}
+
+// turns off the bullets for an entire list
+@mixin reset-list {
+    margin: 0;
+    list-style: none;
+
+    li {
+        list-style-image: none;
+        list-style-type: none;
+        margin-left: 0;
+    }
+}
