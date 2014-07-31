@@ -1,0 +1,29 @@
+// Dimensions
+
+$font-size: 15px;
+$line-height: 20px;
+$gutter-width: $line-height;
+
+// Fonts & Colors
+
+$text-face: "Helvetica Neue", Arial, sans-serif;
+$title-face: $text-face;
+
+// Main colors
+$color-background: #ffffff; // White
+$color-text: #333333;       // Black
+$color-title: #ff0000;      // Red
+$color-link: #0000ff;       // Blue
+
+// Supplementary Colors
+$color-highlight: #00ff00;  // Green
+$color-light: #bbbbbb;      // Light Grey
+$color-medium: #999999;     // Medium Grey
+$color-dark: #333333;       // Dark Grey
+
+$color-warning: #ee2222;    // Dark red
+$color-danger: #ee2222;     // Dark red
+
+// Other shortcuts
+
+$rule: 1px solid $color-light;

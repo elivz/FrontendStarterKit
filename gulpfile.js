@@ -1,83 +1,141 @@
-var gulp = require('gulp'),
-    changed = require('gulp-changed'),
-    jshint = require('gulp-jshint'),
-    sass = require('gulp-ruby-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    csso = require('gulp-csso'),
-    concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
-    spritesmith = require("gulp.spritesmith"),
-    imagemin = require('gulp-imagemin'),
-    rename = require('gulp-rename'),
-    cache = require('gulp-cache'),
-    livereload = require('gulp-livereload');
+'use strict';
 
-// Compile Our Sass
+// Include Gulp & Tools We'll Use
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')({
+        pattern: 'gulp{-,.}*',
+        replaceString: /gulp(\-|\.)/
+    });
+var del = require('del');
+var pagespeed = require('psi');
+var reload = require('gulp-livereload');
+
+// File paths
+var srcPath  = 'assets/src/',
+    distPath = 'assets/dist/';
+
+// Compile Sass
 gulp.task('styles', function() {
-    return gulp.src('assets/css/src/*.scss')
-        .pipe(sass({
-            sourcemap: true,
-            style: 'compact',
-            require: 'susy' ,
-            precision: 7
+    return gulp.src(srcPath+'css/*.scss')
+        .pipe($.sass({
+            errLogToConsole: true
         }))
-        .pipe(autoprefixer())
-        .pipe(gulp.dest('assets/css'))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(csso())
-        .pipe(gulp.dest('assets/css'));
+        .pipe($.autoprefixer('last 2 versions', "> 1%", "ie 8", "ie 9"))
+        .pipe($.combineMediaQueries())
+        .pipe(gulp.dest(distPath+'css'))
+        .pipe($.csso())
+        .pipe($.rename({suffix: '.min'}))
+        .pipe(gulp.dest(distPath+'css'))
+        .pipe($.livereload({auto: false}))
+        .pipe($.size({title: 'styles'}));
 });
 
-// Lint Task
-gulp.task('lint', function() {
-    return gulp.src('assets/js/**/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+// Compile CoffeeScript down to JS
+gulp.task('coffee', function() {
+    return gulp.src(srcPath+'coffee/**/*.coffee')
+        .pipe(gulp.dest(srcPath+'js/'))
 });
 
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
-    return gulp.src('assets/js/src/**/*.js')
-        .pipe(concat('site.js'))
-        .pipe(gulp.dest('assets/js'))
-        .pipe(uglify())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('assets/js'));
+    gulp.src([
+            srcPath+'components/parsleyjs/parsley.js',
+            srcPath+'js/*/*',
+            srcPath+'js/*'
+        ])
+        .pipe($.if(/\.coffee$/,
+            $.coffee({bare: true}).on('error', function(err) {}))
+        )
+        .pipe($.concat('scripts.js'))
+        .pipe(gulp.dest(distPath+'js'))
+        .pipe($.uglify())
+        .pipe($.rename({suffix: '.min'}))
+        .pipe(gulp.dest(distPath+'js'))
+        .pipe($.livereload({auto: false}))
+        .pipe($.size({title: 'scripts'}));
 });
 
-// Sprites
+// Build and minify standalone JS libraries
+gulp.task('script-libs', ['scripts', 'styles'], function() {
+    // Generate a custom Modernizr.js + RespondJS
+    return gulp.src([
+            distPath+'js/scripts.js',
+            distPath+'css/site.css'
+        ])
+        .pipe($.modernizr('modernizr.min.js', {
+            "options" : [
+                "setClasses",
+                "addTest",
+                "html5printshiv",
+                "testProp",
+                "fnBind",
+                "prefixed"
+            ],
+            excludeTests: [
+                'hidden'
+            ]
+        }))
+        .pipe($.addSrc([
+            srcPath+'components/jquery/dist/jquery.min.js',
+            srcPath+'components/respondJs/dest/respond.min.js'
+        ]))
+        // .pipe($.concat('compatibility.min.js'))
+        .pipe($.uglify())
+        .pipe(gulp.dest(distPath+'js'));
+});
+
+// Generate Sprites
 gulp.task('sprites', function() {
-    var spriteData = gulp.src('assets/images/sprites/*.png').pipe(spritesmith({
+    var spriteData = gulp.src(srcPath+'sprites/*.png')
+        .pipe($.spritesmith({
             imgName: 'sprites.png',
             cssName: '_sprites.scss',
             imgPath: '../images/sprites.png',
             algorithm: 'binary-tree',
-            padding: 10
+            padding: 20
         }));
-        spriteData.img.pipe(gulp.dest('assets/images/src/'));
-        spriteData.css.pipe(gulp.dest('assets/css/src/utilities/'));
+    spriteData.img.pipe(gulp.dest(distPath+'images'));
+    spriteData.css.pipe(gulp.dest(srcPath+'css/utilities'));
 });
 
-// Images
-gulp.task('images', function() {
-    return gulp.src('assets/images/src/**/*')
-        .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
-        .pipe(gulp.dest('assets/images'));
+// Optimize Images
+gulp.task('images', ['sprites'], function () {
+    return gulp.src(srcPath+'images/**/*')
+        .pipe($.cache($.imagemin({
+            progressive: true,
+            interlaced: true
+        })))
+        .pipe(gulp.dest(distPath+'images'))
+        .pipe($.livereload({auto: false}))
+        .pipe($.size({title: 'images'}));
 });
 
-// Watch Files For Changes
-gulp.task('watch', function() {
-    var server = livereload();
-    gulp.watch('assets/js/src/**/*.js', ['lint', 'scripts']).on('change', function(file) {
-        server.changed(file.path);
-    });
-    gulp.watch('assets/css/src/**/*.scss', ['styles']).on('change', function(file) {
-        server.changed(file.path);
-    });
-    gulp.watch(['assets/images/src/**/*', 'assets/images/sprites/**/*'], ['images']).on('change', function(file) {
-        server.changed(file.path);
-    });
+// Watch Files For Changes & Reload
+gulp.task('watch', function () {
+    $.livereload.listen();
+
+    // gulp.watch(['**/*.php'], reload);
+    gulp.watch([srcPath+'css/**/*.scss'], ['styles']);
+    gulp.watch([srcPath+'coffee/**/*.coffee'], ['coffee']);
+    gulp.watch([srcPath+'js/**/*.js'], ['scripts']);
+    gulp.watch([srcPath+'sprites/**/*'], ['sprites']);
+    gulp.watch([srcPath+'images/**/*'], ['images']);
 });
+
+// Clean distribution directories
+gulp.task('clean', del.bind(null, distPath));
 
 // Default Task
-gulp.task('default', ['lint', 'styles', 'scripts', 'sprites', 'images']);
+gulp.task('default', ['clean'], function() {
+    gulp.start('styles', 'script-libs', 'images');
+});
+
+// Run PageSpeed Insights
+// Update `url` below to the public URL for your site
+gulp.task('pagespeed', function(cb) {
+    pagespeed({
+        key: 'AIzaSyAA9firvfB61E4-8jdVfY6MfZQz_8ndfhU',
+        url: 'http://xyz.com',
+        strategy: 'mobile'
+    }, cb);
+});

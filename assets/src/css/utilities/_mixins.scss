@@ -1,0 +1,132 @@
+// Clear floats
+@mixin clearfix {
+    overflow: hidden;
+}
+@mixin pie-clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    *zoom: 1;
+}
+
+// Vertically align an element
+// http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
+@mixin vertical_align {
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+}
+@mixin ghost_vertical_align(){
+    &:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%; width: .1px;
+    }
+}
+
+// Set all the link colors at once
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+    color: $normal;
+    @if $visited {
+        &:visited {
+            color: $visited;
+        }
+    }
+    @if $focus {
+        &:focus {
+            color: $focus;
+        }
+    }
+    @if $hover {
+        &:hover {
+            color: $hover;
+        }
+    }
+    @if $active {
+        &:active {
+            color: $active;
+        }
+    }
+}
+
+// Hides html text and replaces it with an image.
+// If you use this on an inline element, you will need to change the display to block or inline-block.
+// Also, if the size of the image differs significantly from the font size, you'll need to set the width and/or height.
+@mixin replace-text($img, $x: 50%, $y: 50%) {
+    @include hide-text;
+    background: {
+        @if is-url($img) {
+            image: $img;
+        } @else {
+            image: image-url($img);
+        }
+        repeat: no-repeat;
+        position: $x $y;
+    };
+}
+
+// Like the `replace-text` mixin, but also sets the width
+// and height of the element according the dimensions of the image.
+@mixin replace-text-with-dimensions($img, $x: 50%, $y: 50%, $inline: false) {
+    @include replace-text(if($inline, inline-image($img), $img), $x, $y);
+    width: image-width($img);
+    height: image-height($img);
+}
+
+// Hides text in an element so you can see the background.
+@mixin hide-text {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+// Undo list styling
+@mixin no-bullet {
+  list-style-image : none;
+  list-style-type  : none;
+  margin-left      : 0;
+}
+
+// Turn off the bullets for an entire list
+@mixin reset-list {
+    margin: 0;
+    list-style: none;
+
+    li {
+        list-style-image: none;
+        list-style-type: none;
+        margin-left: 0;
+    }
+}
+
+// Include triangle within a pseudo element and add positioning properties (ie. top, left)
+// $direction: up, down, left, right
+@mixin triangle($direction, $size: 6px, $color: #222){
+    content: '';
+    display: block;
+    position: absolute;
+    height: 0; width: 0;
+    @if ($direction == 'up'){
+        border-bottom: $size solid $color;
+        border-left: 1/2*$size solid transparent;
+        border-right: 1/2*$size solid transparent;
+    }
+    @else if ($direction == 'down'){
+        border-top: $size solid $color;
+        border-left: 1/2*$size solid transparent;
+        border-right: 1/2*$size solid transparent;
+    }
+    @else if ($direction == 'left'){
+        border-top: 1/2*$size solid transparent;
+        border-bottom: 1/2*$size solid transparent;
+        border-right: $size solid $color;
+    }
+    @else if ($direction == 'right'){
+        border-top: 1/2*$size solid transparent;
+        border-bottom: 1/2*$size solid transparent;
+        border-left: $size solid $color;
+    }
+}

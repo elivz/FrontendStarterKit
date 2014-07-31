@@ -2,6 +2,5 @@
 *.sublime-project
 *.sublime-workspace
 .sass-cache
-assets/css/
-node_modules/
-assets/components/
+node_modules
+assets/dist
