@@ -15,7 +15,7 @@ var srcPath  = 'assets/src/',
     distPath = 'assets/dist/';
 
 // Compile Sass
-gulp.task('styles', function() {
+gulp.task('styles', ['sprites', 'svg'], function() {
     return gulp.src(srcPath+'css/*.scss')
         .pipe($.sass({
             errLogToConsole: true
@@ -86,16 +86,44 @@ gulp.task('script-libs', ['scripts', 'styles'], function() {
 
 // Generate Sprites
 gulp.task('sprites', function() {
+    // PNG Sprites
     var spriteData = gulp.src(srcPath+'sprites/*.png')
         .pipe($.spritesmith({
             imgName: 'sprites.png',
             cssName: '_sprites.scss',
+            cssFormat: 'scss_maps',
             imgPath: '../images/sprites.png',
             algorithm: 'binary-tree',
-            padding: 20
+            padding: 20,
+            cssVarMap: function (sprite) {
+                sprite.name = 'sprite-' + sprite.name;
+            },
+            cssOpts: {
+                cssClass: function (item) {
+                    return '.sprite-' + item.name;
+                }
+            }
         }));
     spriteData.img.pipe(gulp.dest(distPath+'images'));
     spriteData.css.pipe(gulp.dest(srcPath+'css/utilities'));
+
+    // SVG Sprites
+    return gulp.src(srcPath+'sprites/*.svg')
+        .pipe($.svgmin())
+        .pipe($.svgSprites({
+            svg: {
+                sprite: 'dist/images/svg-sprites.svg'
+            },
+            cssFile: 'src/css/utilities/_svg_sprites.scss',
+            svgPath: '../images/svg-sprites.svg',
+            pngPath: '../images/svg-sprites.png',
+            common: 'svg',
+            preview: false
+        }))
+        .pipe(gulp.dest('assets')) // Write the sprite-sheet + CSS + Preview
+        .pipe($.filter('**/*.svg'))  // Filter out everything except the SVG file
+        .pipe($.svg2png())           // Create a PNG
+        .pipe(gulp.dest('assets'));
 });
 
 // Optimize Images
@@ -108,6 +136,15 @@ gulp.task('images', ['sprites'], function () {
         .pipe(gulp.dest(distPath+'images'))
         .pipe($.livereload({auto: false}))
         .pipe($.size({title: 'images'}));
+});
+
+// Optimize and combine SVGs & generate fallback PNGs
+gulp.task('svg', function() {
+    return gulp.src(srcPath+'images/*.svg')
+        .pipe($.svgmin())
+        .pipe(gulp.dest(distPath+'images'))
+        .pipe($.svg2png())
+        .pipe(gulp.dest(distPath+'images'));
 });
 
 // Watch Files For Changes & Reload
@@ -127,7 +164,7 @@ gulp.task('clean', del.bind(null, distPath));
 
 // Default Task
 gulp.task('default', ['clean'], function() {
-    gulp.start('styles', 'script-libs', 'images');
+    gulp.start('styles', 'script-libs', 'images', 'svg');
 });
 
 // Run PageSpeed Insights

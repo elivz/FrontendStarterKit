@@ -1,9 +1,9 @@
 {
   "name": "frontend-starter-kit",
   "dependencies": {
-    "respondJs": "~1.4.2",
     "jquery": "~1.11",
     "parsleyjs": "~1.2.4",
+    "respondJs": "~1.4.2",
     "sass-list-maps": "~0.9.9"
   }
 }

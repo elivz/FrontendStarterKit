@@ -2,15 +2,23 @@
 SCSS variables are information about icon's compiled state, stored under its original file name
 
 .icon-home {
-  width: $icon-home-width;
+  width: map-get($icon-home, 'width');
 }
-
-The large array-like variables contain all information about a single icon
-$icon-home: x y offset_x offset_y width height total_width total_height image_path;
 */
+$sprite-25: (
+  x: 0px,
+  y: 0px,
+  offset_x: 0px,
+  offset_y: 0px,
+  width: 256px,
+  height: 255px,
+  total_width: 256px,
+  total_height: 255px,
+  image: '../images/sprites.png'
+);
 
 /*
-The provided mixins are intended to be used with the array-like variables
+The provided mixins are intended to be used with variables directly
 
 .icon-home {
   @include sprite-width($icon-home);
@@ -21,22 +29,19 @@ The provided mixins are intended to be used with the array-like variables
 }
 */
 @mixin sprite-width($sprite) {
-  width: nth($sprite, 5);
+  width: map-get($sprite, 'width');
 }
 
 @mixin sprite-height($sprite) {
-  height: nth($sprite, 6);
+  height: map-get($sprite, 'height');
 }
 
 @mixin sprite-position($sprite) {
-  $sprite-offset-x: nth($sprite, 3);
-  $sprite-offset-y: nth($sprite, 4);
-  background-position: $sprite-offset-x  $sprite-offset-y;
+  background-position: map-get($sprite, 'offset_x') map-get($sprite, 'offset_y');
 }
 
 @mixin sprite-image($sprite) {
-  $sprite-image: nth($sprite, 9);
-  background-image: url(#{$sprite-image});
+  background-image: url(map-get($sprite, 'image'));
 }
 
 @mixin sprite($sprite) {
