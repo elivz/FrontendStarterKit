@@ -160,7 +160,13 @@ gulp.task('watch', function () {
 });
 
 // Clean distribution directories
-gulp.task('clean', del.bind(null, distPath));
+gulp.task('clean', function(cb) {
+    del([
+        distPath+'css',
+        distPath+'js',
+        distPath+'images'
+    ], cb);
+});
 
 // Default Task
 gulp.task('default', ['clean'], function() {

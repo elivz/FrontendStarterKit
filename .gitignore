@@ -4,3 +4,5 @@
 .sass-cache
 node_modules
 assets/dist
+assets/src/css/utilities/_sprites.scss
+assets/src/css/utilities/_svg_sprites.scss
