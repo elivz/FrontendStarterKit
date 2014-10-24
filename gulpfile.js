@@ -9,6 +9,7 @@ var $ = require('gulp-load-plugins')({
 var del = require('del');
 var pagespeed = require('psi');
 var reload = require('gulp-livereload');
+var pngquant = require('imagemin-pngquant');
 
 // File paths
 var srcPath  = 'assets/src/',
@@ -17,11 +18,12 @@ var srcPath  = 'assets/src/',
 // Compile Sass
 gulp.task('styles', ['sprites', 'svg'], function() {
     return gulp.src(srcPath+'css/*.scss')
+        .pipe($.sourcemaps.init())
         .pipe($.sass({
             errLogToConsole: true
         }))
-        .pipe($.autoprefixer('last 2 versions', "> 1%", "ie 8", "ie 9"))
-        .pipe($.combineMediaQueries())
+        .pipe($.sourcemaps.write())
+        .pipe($.autoprefixer({ browsers: ['last 2 versions', "> 1%", "ie 8", "ie 9"] }))
         .pipe(gulp.dest(distPath+'css'))
         .pipe($.csso())
         .pipe($.rename({suffix: '.min'}))
@@ -37,28 +39,45 @@ gulp.task('coffee', function() {
 });
 
 // Concatenate & Minify JS
-gulp.task('scripts', function() {
+gulp.task('scripts', ['coffee'], function() {
+    // Compile main site scripts
     gulp.src([
             srcPath+'components/parsleyjs/parsley.js',
             srcPath+'js/*/*',
-            srcPath+'js/*'
+            srcPath+'js/*',
+            '!'+srcPath+'js/compatibility{,/**}'
         ])
-        .pipe($.if(/\.coffee$/,
-            $.coffee({bare: true}).on('error', function(err) {}))
-        )
+        .pipe($.sourcemaps.init())
         .pipe($.concat('scripts.js'))
+        .pipe($.sourcemaps.write())
         .pipe(gulp.dest(distPath+'js'))
         .pipe($.uglify())
         .pipe($.rename({suffix: '.min'}))
         .pipe(gulp.dest(distPath+'js'))
         .pipe($.livereload({auto: false}))
         .pipe($.size({title: 'scripts'}));
+
+    // Compile compatibility scripts that should load in the head
+    gulp.src([
+            srcPath+'js/compatibility/*',
+            srcPath+'components/respondJs/src/respond.js',
+            srcPath+'components/picturefill/src/picturefill.js'
+        ])
+        .pipe($.concat('compatibility.js'))
+        .pipe(gulp.dest(distPath+'js'))
+        .pipe($.uglify())
+        .pipe($.rename({suffix: '.min'}))
+        .pipe(gulp.dest(distPath+'js'))
+        .pipe($.livereload({auto: false}));
+
+    // Copy jQuery to the dist path
+    gulp.src(srcPath+'components/jquery/dist/jquery.min.js')
+        .pipe(gulp.dest(distPath+'js'));
 });
 
-// Build and minify standalone JS libraries
-gulp.task('script-libs', ['scripts', 'styles'], function() {
-    // Generate a custom Modernizr.js + RespondJS
-    return gulp.src([
+// Generate a custom Modernizr build
+gulp.task('modernizr', ['styles', 'scripts'], function() {
+    gulp.src([
             distPath+'js/scripts.js',
             distPath+'css/site.css'
         ])
@@ -69,46 +88,20 @@ gulp.task('script-libs', ['scripts', 'styles'], function() {
                 "html5printshiv",
                 "testProp",
                 "fnBind",
-                "prefixed"
+                "prefixed",
+                "testMediaQuery"
             ],
             excludeTests: [
                 'hidden'
             ]
         }))
-        .pipe($.addSrc([
-            srcPath+'components/jquery/dist/jquery.min.js',
-            srcPath+'components/respondJs/dest/respond.min.js'
-        ]))
-        // .pipe($.concat('compatibility.min.js'))
-        .pipe($.uglify())
-        .pipe(gulp.dest(distPath+'js'));
+        .pipe(gulp.dest(srcPath+'js/compatibility'));
 });
 
 // Generate Sprites
-gulp.task('sprites', function() {
-    // PNG Sprites
-    var spriteData = gulp.src(srcPath+'sprites/*.png')
-        .pipe($.spritesmith({
-            imgName: 'sprites.png',
-            cssName: '_sprites.scss',
-            cssFormat: 'scss_maps',
-            imgPath: '../images/sprites.png',
-            algorithm: 'binary-tree',
-            padding: 20,
-            cssVarMap: function (sprite) {
-                sprite.name = 'sprite-' + sprite.name;
-            },
-            cssOpts: {
-                cssClass: function (item) {
-                    return '.sprite-' + item.name;
-                }
-            }
-        }));
-    spriteData.img.pipe(gulp.dest(distPath+'images'));
-    spriteData.css.pipe(gulp.dest(srcPath+'css/utilities'));
-
+gulp.task('sprites', function(cb) {
     // SVG Sprites
-    return gulp.src(srcPath+'sprites/*.svg')
+    gulp.src(srcPath+'sprites/*.svg')
         .pipe($.svgmin())
         .pipe($.svgSprites({
             svg: {
@@ -124,15 +117,38 @@ gulp.task('sprites', function() {
         .pipe($.filter('**/*.svg'))  // Filter out everything except the SVG file
         .pipe($.svg2png())           // Create a PNG
         .pipe(gulp.dest('assets'));
+
+    // PNG Sprites
+    var spriteData = gulp.src(srcPath+'sprites/*.png')
+        .pipe($.spritesmith({
+            imgName: 'sprites.png',
+            cssName: '_sprites.scss',
+            cssFormat: 'scss',
+            imgPath: '../images/sprites.png',
+            algorithm: 'binary-tree',
+            padding: 20,
+            cssVarMap: function (sprite) {
+                sprite.name = 'sprite-' + sprite.name;
+            },
+            cssOpts: {
+                cssClass: function (item) {
+                    return '.sprite-' + item.name;
+                }
+            }
+        }));
+
+    spriteData.css.pipe(gulp.dest(srcPath+'css/utilities'));
+    return spriteData.img.pipe(gulp.dest(srcPath+'images'));
 });
 
 // Optimize Images
 gulp.task('images', ['sprites'], function () {
     return gulp.src(srcPath+'images/**/*')
-        .pipe($.cache($.imagemin({
+        .pipe($.imagemin({
             progressive: true,
             interlaced: true
-        })))
+        }))
+        .pipe(pngquant({ quality: '65-80' }))
         .pipe(gulp.dest(distPath+'images'))
         .pipe($.livereload({auto: false}))
         .pipe($.size({title: 'images'}));
@@ -170,7 +186,7 @@ gulp.task('clean', function(cb) {
 
 // Default Task
 gulp.task('default', ['clean'], function() {
-    gulp.start('styles', 'script-libs', 'images', 'svg');
+    gulp.start('styles', 'scripts', 'images', 'svg');
 });
 
 // Run PageSpeed Insights

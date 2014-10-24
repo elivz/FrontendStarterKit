@@ -12,14 +12,16 @@
         - components # Third-party components, installed via Bower
         - images    # Unoptimized image files, as exported from Photoshop, etc.
         - js        # All custom scripts for the theme - files with a .coffee extension will be automatically compiled from CoffeeScript
-          - plugins   # Custom-written jQuery plugins to perform specific tasks
-        - css       # SASS source files
+          - compatibility   # JS files that need to run in the head, before the DOM is parsed
+          - plugins         # Custom-written jQuery plugins to perform specific tasks
+        - css       # SCSS source files
         - sprites   # PNG and SVG image files that will be collected into two sprite files
         - svg       # SVG source files
 
 ## Installing Front-End Dependancies
 
 We use [Bower](http://bower.io) to manage front-end components like JS libraries & plugins. Add the dependancy to the `bower.json` file and then run `bower install` from the command line. 
+
 
 ## Front-End Build Process
 
@@ -38,6 +40,11 @@ Use Gulp to compile SASS source files to CSS, minify JS and CSS, and optimize im
 While actively developing, watch source files and rebuild as needed:
 
     gulp watch
+
+To regenerate a custom Modernizr build with support for all the tests you are using, run:
+
+    gulp modernizr; gulp scripts
+
 
 ## Specific Notes
 

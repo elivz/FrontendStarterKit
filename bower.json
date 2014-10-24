@@ -4,6 +4,6 @@
     "jquery": "~1.11",
     "parsleyjs": "~1.2.4",
     "respondJs": "~1.4.2",
-    "sass-list-maps": "~0.9.9"
+    "picturefill": "~2.1.0"
   }
 }
