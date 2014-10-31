@@ -1,26 +1,31 @@
-// Global variables
-@import "variables";
+// Global variables & libraries
+@import "settings/variables";
+@import "settings/fonts";
 
-// Reset styles
-@import "utilities/normalize";
+// Standard components
+@import "includes/normalize";
+@import "includes/typography";
+@import "includes/mixins";
+@import "includes/extends";
 
-// Utitlity styles
-@import "utilities/mixins";
-@import "utilities/defaults";
-@import "utilities/typography";
-@import "utilities/sprites";
-@import "utilities/svg_sprites";
+// Auto-generated files
+@import "generated/sprites";
+@import "generated/svg_sprites";
 
 // HTML elements
-@import "elements/elements";
-@import "elements/media";
+@import "elements/typography";
 @import "elements/forms";
+@import "elements/tables";
+@import "elements/lists";
+@import "elements/buttons";
 
 // Reusable modules
 
 
-// Page Layout
+// Page layout
 @import "layout/layout";
 @import "layout/header";
 @import "layout/footer";
 @import "layout/sidebar";
+
+// Individual page styles

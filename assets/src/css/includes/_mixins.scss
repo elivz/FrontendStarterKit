@@ -1,0 +1,98 @@
+@mixin clearfix {
+    &:after {
+        content:"";
+        display:table;
+        clear:both;
+    }
+}
+
+// Vertically align an element
+// http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
+@mixin vertical-align {
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+}
+@mixin ghost-vertical-align {
+    &:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%; width: .1px;
+    }
+}
+
+// Set all the link colors at once
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+    color: $normal;
+    @if $visited {
+        &:visited {
+            color: $visited;
+        }
+    }
+    @if $focus {
+        &:focus {
+            color: $focus;
+        }
+    }
+    @if $hover {
+        &:hover {
+            color: $hover;
+        }
+    }
+    @if $active {
+        &:active {
+            color: $active;
+        }
+    }
+}
+
+// Hide text, leaving it available to screen-readers
+@mixin hide-text {
+    overflow: hidden;
+    &:before {
+        content: "";
+        display: block;
+        width: 0;
+        height: 100%;
+    }
+}
+
+// Hides html text and replaces it with an image.
+// If you use this on an inline element, you will need to change the display to block or inline-block.
+@mixin replace-text($img, $x: 50%, $y: 50%, $width: false, $height: false) {
+    @include hide-text;
+    background: {
+        @if is-url($img) {
+            image: $img;
+        } @else {
+            image: image-url($img);
+        }
+        repeat: no-repeat;
+        position: $x $y;
+    };
+    @if ($width) {
+        width: $width;
+    }
+    @if ($height) {
+        width: $height;
+    }
+}
+
+// Undo list styling
+@mixin no-bullet {
+    list-style-image: none;
+    list-style-type: none;
+    margin-left: 0;
+}
+
+// Turn off the bullets for an entire list
+@mixin reset-list {
+    margin: 0;
+    list-style: none;
+    li {
+        list-style-image: none;
+        list-style-type: none;
+        margin: 0;
+    }
+}

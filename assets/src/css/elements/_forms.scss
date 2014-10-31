@@ -1,554 +1,83 @@
-// Form Styling
-// ------------
-
-form {
-    margin: 0 0 lines();
-    text-align: left;
+fieldset {
+    background: lighten($base-border-color, 10);
+    border: $base-border;
+    margin: 0 0 ($base-spacing / 2) 0;
+    padding: $base-spacing;
 }
 
 input,
-textarea,
-select,
-label {
-    font-family: $text-face;
-    @include font-size-times(0.75, 1);
-    color: $color-dark;
-}
-
-label {
+label,
+select {
     display: block;
+    font-family: $form-font-family;
+    font-size: $form-font-size;
 }
 
-.required {
-    color: $color-danger;
-}
+label {
+    font-weight: bold;
+    margin-bottom: $base-spacing / 4;
 
-// HORIZONTAL & VERTICAL FORMS
-// ---------------------------
-
-// Reset default <dl> styling
-form {
-    dl, dt, dd {
-        margin: 0;
-        font-weight: normal;
-    }
-}
-
-
-// Inline Forms
-// ------------
-
-// .inline {
-//     dl {
-//         display: inline-block;
-//         width: 14em;
-//         margin-bottom: 0;
-//         vertical-align: top;
-//     }
-
-//     input,
-//     textarea,
-//     select,
-//     .help-inline,
-//     .uneditable-input {
-//         width: 100%;
-//         margin-bottom: 0;
-//         vertical-align: top;
-//     }
-//     // Re-hide hidden elements due to specifity
-//     .hide {
-//         display: none;
-//     }
-
-//     button, .btn {
-//         vertical-align: top;
-//     }
-
-//     label, .btn-group {
-//         display: inline-block;
-//     }
-//     // Remove margin for input-prepend/-append
-//     .input-append, .input-prepend {
-//         margin-bottom: 0;
-//     }
-//     // Inline checkbox/radio labels (remove padding on left)
-//     .radio, .checkbox {
-//         padding-left: 0;
-//         margin-bottom: 0;
-//         vertical-align: middle;
-//     }
-//     // Remove float and margin, set to inline-block
-//     .radio input[type="radio"], .checkbox input[type="checkbox"] {
-//         float: left;
-//         margin-right: 3px;
-//         margin-left: 0;
-//     }
-// }
-
-// Horizontal-specific styles
-// --------------------------
-
-// $horizontalComponentOffset: 200px;
-
-// .form-horizontal {
-//     dl {
-//         clear: both;
-//         @include pie-clearfix;
-//         margin: ($line-height / 2) 0;
-//         padding-left: $horizontalComponentOffset;
-//     }
-//     dt {
-//         float: left;
-//         width: $horizontalComponentOffset - 20px;
-//         margin-left: $horizontalComponentOffset;
-
-//         label {
-//             line-height: $line-height * 0.5;
-//         }
-//     }
-//     dd {
-//         float: left;
-//         position: relative;
-//         width: 100%;
-//         margin-bottom: $line-height / 2;
-
-//         // Small labels below the input
-//         label {
-//             position: absolute;
-//             bottom: 0;
-//             margin-left: 1px;
-//             font-size: $font-size * 0.75 - 2;
-//             line-height: $line-height * 0.5;
-//         }
-
-//         input, textarea {
-//             width: 100%;
-//         }
-
-//         label + input, label + textarea, label + select {
-//             margin-bottom: $line-height / 2;
-//         }
-
-//         &.half, &.quarter {
-//             width: 49%;
-//             margin-right: 2%;
-
-//             input, textarea {
-//                 width: 100%;
-//             }
-
-//         }
-
-//         &.quarter {
-//             width: 23.7%;
-//         }
-
-//         &.last {
-//             margin-right: 0;
-//         }
-//     }
-// }
-
-
-// Vertical-specific styles
-// --------------------------
-
-// .form-vertical {
-//     dl.full {
-//         input, textarea {
-//             width: 98.5%;
-//         }
-//     }
-//     dl.half {
-//         float: left;
-//         width: 49%;
-
-//         input, textarea {
-//             width: 97%;
-//         }
-//     }
-//     dl.last {
-//         float: right;
-//     }
-//     dl {
-//         margin-bottom: 0.5em;
-//     }
-//     dd {
-//         label {
-//             font-size: $font-size * 0.75;
-//             line-height: $line-height * 0.75;
-//         }
-//     }
-// }
-
-// In-Place Form Labels
-// --------------------
-
-.in-place {
-    position: relative;
-
-    dt {
-        position: absolute;
-        left: 1px;
-        top: 0;
-        padding-left: gutters(0.25);
+    &.required:after {
+        content: "*";
     }
 
-    label {
-        cursor: text;
+    abbr {
+        display: none;
     }
 }
 
-// Forms
-// =====
-
-// Mixin for form field states
-@mixin formFieldState($textColor: #555, $borderColor: #ccc, $color-backgroundColor: #f5f5f5) {
-    // Set the text color
-    .control-label,
-    .help-block,
-    .help-inline {
-        color: $textColor;
-    }
-    // Style inputs accordingly
-    .checkbox,
-    .radio,
-    input,
-    select,
-    textarea {
-        color: $textColor;
-    }
-    input,
-    select,
-    textarea {
-        border-color: $borderColor;
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075); // Redeclare so transitions work
-        &:focus {
-            border-color: darken($borderColor, 10%);
-            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten($borderColor, 20%);
-        }
-    }
-}
-
-// Form controls
-// -------------
-
-// Shared size and type resets
-select,
 textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
 input[type="email"],
-input[type="url"],
+input[type="number"],
+input[type="password"],
 input[type="search"],
 input[type="tel"],
-input[type="color"] {
-    appearance: none;
-    display: inline-block;
-    height: lines(1.25);
-    line-height: lines(1.25, 2);
+input[type="text"],
+input[type="url"],
+select[multiple=multiple] {
+    transition: border-color;
+    background-color: white;
+    border-radius: $form-border-radius;
+    border: 1px solid $form-border-color;
+    box-shadow: $form-box-shadow;
+    font-family: $form-font-family;
+    font-size: $form-font-size;
+    margin-bottom: $base-spacing / 2;
+    padding: ($base-spacing / 3) ($base-spacing / 3);
     width: 100%;
-    padding: 0 gutters(0.5);
-    font-family: $text-face;
-    font-style: italic;
-    vertical-align: middle;
-    color: $color-text;
-    background: lighten($color-light, 5%);
-    border: $rule;
-    border-radius: 0;
-    transition: box-shadow 0.2s;
 
-    // Focus state
+    &:hover {
+        border-color: $form-border-color-hover;
+    }
+
     &:focus {
-        outline: 0;
-        border-color: $color-medium;
+        border-color: $form-border-color-focus;
+        box-shadow: $form-box-shadow-focus;
+        outline: none;
     }
 }
 
-// Reset height since textareas have rows
 textarea {
-    height: auto;
+    resize: vertical;
 }
 
-// Position radios and checkboxes better
-input[type="radio"],
-input[type="checkbox"] {
-    margin: 4px 0 0;
-    *margin-top: 0; /* IE7 */
-    margin-top: 1px \9; /* IE8-9 */
-    line-height: normal;
-}
-
-// Reset width of input images, buttons, radios, checkboxes
-input[type="file"],
-input[type="image"],
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-input[type="radio"],
-input[type="checkbox"] {
-    width: auto; // Override of generic input selector
-}
-
-// Fix  padding in Webkit
 input[type="search"] {
-    padding-right: 0;
-}
-input[type="search"]::-webkit-search-decoration {
-    display: none;
+    appearance: none;
 }
 
-select,
-select[size="0"],
-select[size="1"] {
-    height: lines(1.25);
-    padding-right: 0;
+input[type="checkbox"],
+input[type="radio"] {
+    display: inline;
+    margin-right: $base-spacing / 4;
 }
 
-// Make multiple select elements height not fixed
-select[multiple],
-select[size] {
-    height: auto;
+input[type="file"] {
+    padding-bottom: $base-spacing / 2;
+    width: 100%;
 }
 
-.select-wrapper {
-    position: relative;
-    overflow: hidden;
-    background: $color-background;
-
-    &:after {
-        content: "<>";
-        position: absolute;
-        display: block;
-        height: 20px;
-        width: lines(1.25, 1);
-        right: -1px;
-        top: 3px;
-        font: bold 12px/20px "Consolas", monospace;
-        text-align: center;
-        color: $color-background;
-        background: $color-medium;
-        transform: rotate(90deg);
-        pointer-events: none;
-    }
-}
-
-
-// Placeholder
-// -------------------------
-
-// Placeholder text gets special styles because when browsers invalidate entire lines if it doesn't understand a selector
-input,
-textarea {
-    &::placeholder {
-        color: $color-medium;
-    }
-}
-
-
-// CHECKBOXES & RADIOS
-// -------------------
-
-// Indent the labels to position radios/checkboxes as hanging
-.radio,
-.checkbox {
-    min-height: lines(); // clear the floating input if there is no label text
-    padding-left: 20px;
-}
-.radio input[type="radio"],
-.checkbox input[type="checkbox"] {
-    float: left;
-    margin-left: -20px;
-}
-
-// Move the options list down to align with labels
-.controls > .radio:first-child,
-.controls > .checkbox:first-child {
-    padding-top: 5px; // has to be padding because margin collaspes
-}
-
-// Radios and checkboxes on same line
-.radio.inline,
-.checkbox.inline {
-    display: inline-block;
-    padding-top: 5px;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-.radio.inline + .radio.inline,
-.checkbox.inline + .checkbox.inline {
-    margin-left: 10px; // space out consecutive inline controls
-}
-
-
-// DISABLED STATE
-// --------------
-
-// Disabled and read-only inputs
-input[disabled],
-select[disabled],
-textarea[disabled],
-input[readonly],
-select[readonly],
-textarea[readonly] {
-    cursor: not-allowed;
-    background-color: darken($color-background, 5%);
-}
-// Explicitly reset the colors here
-input[type="radio"][disabled],
-input[type="checkbox"][disabled],
-input[type="radio"][readonly],
-input[type="checkbox"][readonly] {
-    background-color: transparent;
-}
-
-
-// HTML5 invalid states
-// Shares styles with the .control-group.error above
-input:focus:invalid,
-textarea:focus:invalid,
-select:focus:invalid {
-    color: #b94a48;
-    border-color: #ee5f5b;
-    &:focus {
-        border-color: darken(#ee5f5b, 10%);
-        box-shadow: 0 0 6px lighten(#ee5f5b, 20%);
-    }
-}
-
-// Buttons
-// -------
-
-.btn,
-button,
-input[type="button"],
-input[type="submit"] {
-    -webkit-appearance: none;
-    display: inline-block;
+select {
+    margin-bottom: $base-spacing;
+    max-width: 100%;
     width: auto;
-    height: lines(1.5);
-    margin: 0;
-    padding: 0 2em;
-    font-family: $title-face;
-    @include font-size-times(0.75, 1.5);
-    font-weight: bold;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    color: $color-background;
-    background-color: lighten($color-text, 5%);
-    border: 0;
-    transition: all 0.2s;
-
-    &:hover,
-    &:focus {
-        background-color: $color-link;
-        color: $color-background;
-    }
-
-    &:active {
-        transition: none;
-    }
-
-    // Disabled state
-    &.disabled, &[disabled] {
-        cursor: default;
-        background-image: none;
-        box-shadow: none !important;
-    }
-}
-
-.btn-tiny {
-    height: lines();
-    padding: 0 0.5em;
-    @include font-size-times(0.6, 1);
-    border-radius: 3px;
-}
-
-.btn-angled {
-    height: lines(3);
-    transform: skewX(-15deg);
-    border-radius: 2px;
-
-    span {
-        display: block;
-        padding: lines(0.5) 0;
-        @include font-size-plus(1px, 1);
-        font-weight: normal;
-        text-transform: none;
-        letter-spacing: 0.15em;
-        transform: skewX(22deg);
-    }
-
-    strong {
-        display: block;
-        font-size: 1.05em;
-        text-transform: uppercase;
-
-        &:before,
-        &:after {
-            content: "\2014";
-            margin: 0 0.5em;
-            font-weight: normal;
-        }
-    }
-}
-
-// Set the backgrounds
-// -------------------------
-.btn-primary {
-    background: $color-highlight;
-}
-
-// Danger and error appear as red
-.btn-danger {
-    background: $color-danger;
-}
-
-$orange: #945530;
-.btn-orange {
-    background: $orange;
-    background: linear-gradient(lighten($orange, 8%), darken($orange, 8%));
-    border: $color-light;
-    transition: all 0.2s;
-
-    &:hover,
-    &:focus {
-        background: saturate($orange, 15%);
-        background: linear-gradient(saturate(lighten($orange, 10%), 15%), saturate(darken($orange, 8%), 15%));
-    }
-}
-
-$purple: #6c5763;
-.btn-purple {
-    background: $purple;
-    background: linear-gradient(lighten($purple, 8%), darken($purple, 8%));
-    border: $color-light;
-    transition: all 0.2s;
-
-    &:hover,
-    &:focus {
-        background: saturate($purple, 15%);
-        background: linear-gradient(saturate(lighten($purple, 10%), 15%), saturate(darken($purple, 8%), 15%));
-    }
-}
-
-// Button Groups
-// ----------------
-
-.button-set {
-    padding: lines(0.5, 1) 0 0;
-    margin-top: $line-height;
-    margin-bottom: $line-height;
-    border-top: $rule;
 }

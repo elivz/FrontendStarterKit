@@ -1,3 +1,11 @@
 .wrapper {
+    max-width: 70em;
+    margin: 0 auto;
+    padding: 0 lines();
+}
 
+main {
+    * + * {
+        margin-top: lines();
+    }
 }

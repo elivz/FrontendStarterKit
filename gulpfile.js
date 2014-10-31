@@ -16,7 +16,7 @@ var srcPath  = 'assets/src/',
     distPath = 'assets/dist/';
 
 // Compile Sass
-gulp.task('styles', ['sprites', 'svg'], function() {
+gulp.task('styles', function() {
     return gulp.src(srcPath+'css/*.scss')
         .pipe($.sourcemaps.init())
         .pipe($.sass({
@@ -105,15 +105,15 @@ gulp.task('sprites', function(cb) {
         .pipe($.svgmin())
         .pipe($.svgSprites({
             svg: {
-                sprite: 'dist/images/svg-sprites.svg'
+                sprite: srcPath+'images/svg-sprites.svg'
             },
-            cssFile: 'src/css/utilities/_svg_sprites.scss',
+            cssFile: srcPath+'css/generated/_svg_sprites.scss',
             svgPath: '../images/svg-sprites.svg',
             pngPath: '../images/svg-sprites.png',
             common: 'svg',
             preview: false
         }))
-        .pipe(gulp.dest('assets')) // Write the sprite-sheet + CSS + Preview
+        .pipe(gulp.dest('')) // Write the sprite-sheet + CSS + Preview
         .pipe($.filter('**/*.svg'))  // Filter out everything except the SVG file
         .pipe($.svg2png())           // Create a PNG
         .pipe(gulp.dest('assets'));
@@ -137,7 +137,7 @@ gulp.task('sprites', function(cb) {
             }
         }));
 
-    spriteData.css.pipe(gulp.dest(srcPath+'css/utilities'));
+    spriteData.css.pipe(gulp.dest(srcPath+'css/generated'));
     return spriteData.img.pipe(gulp.dest(srcPath+'images'));
 });
 
@@ -160,6 +160,7 @@ gulp.task('svg', function() {
         .pipe($.svgmin())
         .pipe(gulp.dest(distPath+'images'))
         .pipe($.svg2png())
+        .pipe(pngquant({ quality: '65-80' }))
         .pipe(gulp.dest(distPath+'images'));
 });
 
@@ -172,7 +173,8 @@ gulp.task('watch', function () {
     gulp.watch([srcPath+'coffee/**/*.coffee'], ['coffee']);
     gulp.watch([srcPath+'js/**/*.js'], ['scripts']);
     gulp.watch([srcPath+'sprites/**/*'], ['sprites']);
-    gulp.watch([srcPath+'images/**/*'], ['images']);
+    gulp.watch([srcPath+'images/**/*.{png,jpg,jpeg,gif}'], ['images']);
+    gulp.watch([srcPath+'images/**/*.svg'], ['svg']);
 });
 
 // Clean distribution directories

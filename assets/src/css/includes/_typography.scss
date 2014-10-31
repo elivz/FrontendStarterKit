@@ -1,0 +1,68 @@
+// Baseline, measured in pixels
+// The value should be the same as the font-size value for the html element
+// If the html element's font-size is set to 62.5% (of the browser's default font-size of 16px),
+// then the variable below would be 10px.
+$baseline-px: 16px;
+
+// Ensure there is at least this many pixels
+// of vertical padding above and below the text.
+$min-line-padding: 2px !default;
+
+// Smalled division of the default line height to round to
+$default-precision: 4 !default;
+
+@mixin rem($property, $px-values) {
+    // Convert the baseline into rems
+    $baseline-rem: $baseline-px / 1rem * 1;
+    // Print the first line in pixel values
+    #{$property}: $px-values;
+    // If there is only one (numeric) value, return the property/value line for it.
+    @if type-of($px-values) == "number" {
+        #{$property}: $px-values / $baseline-rem;
+    }
+    @else {
+        // Create an empty list that we can dump values into
+        $rem-values: ();
+        @each $value in $px-values {
+            // If the value is zero, return 0
+            @if $value == 0 or type-of( $value ) != "number" {
+                $rem-values: append($rem-values, $value);
+            }
+            @else {
+                $rem-values: append($rem-values, $value / $baseline-rem);
+            }
+        }
+        // Return the property and its list of converted values
+        #{$property}: $rem-values;
+    }
+}
+
+// Adjust a block to have a different font size and line height to maintain the
+// rhythm. $lines specifies how many multiples of the baseline rhythm each line
+// of this font should use up. It does not have to be an integer, but it
+// defaults to the smallest integer that is large enough to fit the font.
+@mixin font-size($size: $base-font-size, $lines: lines-for-font-size($size)) {
+    @include rem(font-size, $size);
+    @include rem(line-height, $lines * $line-height);
+}
+
+@mixin font-size-times($multiplier, $lines: lines-for-font-size($base-font-size * $multiplier)) {
+    @include font-size($multiplier * $font-size, $lines);
+}
+
+@mixin font-size-plus($pixels, $lines: lines-for-font-size($base-font-size + $pixels)) {
+    @include font-size($pixels + $base-font-size, $lines);
+}
+
+// Calculate the minimum multiple of rhythm units needed to contain the font-size.
+@function lines-for-font-size($font-size, $precision: $default-precision) {
+    $lines: ceil($precision * $font-size / $base-line-height) / $precision;
+    @if $lines * $base-line-height - $font-size < $min-line-padding * 2 {
+        $lines: $lines + (1 / $precision);
+    }
+    @return $lines;
+}
+
+@function lines($lines: 1) {
+    @return $lines * $base-line-height;
+}
