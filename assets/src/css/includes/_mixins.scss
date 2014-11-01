@@ -1,8 +1,8 @@
 @mixin clearfix {
     &:after {
-        content:"";
-        display:table;
-        clear:both;
+        content: "";
+        display: table;
+        clear: both;
     }
 }
 
@@ -47,7 +47,7 @@
     }
 }
 
-// Hide text, leaving it available to screen-readers
+// Hide text visually, leaving it accesible to screen-readers
 @mixin hide-text {
     overflow: hidden;
     &:before {
@@ -95,4 +95,32 @@
         list-style-type: none;
         margin: 0;
     }
+}
+
+// Set the font-size to a multiplier of the base size.
+// Optionally also set the line height, either to a
+// factor of the base line-height, or automatically
+// based on the font size.
+@mixin font-size-times($multiplier, $lines: false) {
+    $font-size: $multiplier * $base-font-size;
+    font-size: $font-size;
+    @if ($lines == auto) {
+        $lines: lines-for-font-size($font-size);
+    }
+    @if ($lines) {
+        line-height: $lines * $base-line-height / ($font-size / 1em);
+    }
+}
+
+// Set the font-size to a particular size in ems, and
+// set the line height either manually or automatically.
+@mixin font-size($size: $base-font-size, $lines: false) {
+    @include font-size-times($size / 1em, $lines);
+}
+
+// Calculate the minimum multiple of rhythm units needed to contain the font-size.
+$line-height-precision: 4 !default;
+@function lines-for-font-size($font-size, $precision: $line-height-precision) {
+    $lines: ceil($precision * $font-size / $base-spacing) / $precision;
+    @return $lines;
 }

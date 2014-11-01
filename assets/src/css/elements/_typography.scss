@@ -14,33 +14,36 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: $header-font-family;
-    line-height: $header-line-height;
     margin: 0;
+    font-family: $header-font-family;
+    text-rendering: optimizelegibility;
 }
 
 h1 {
-    font-size: $h1-font-size;
+    @include font-size($h1-font-size, auto);
+    margin-bottom: space(1, $h1-font-size);
 }
 
 h2 {
-    font-size: $h2-font-size;
+    @include font-size($h2-font-size, auto);
+    margin-bottom: space(0.5, $h2-font-size);
 }
 
 h3 {
-    font-size: $h3-font-size;
+    @include font-size($h3-font-size, auto);
+    margin-bottom: space(0.25, $h3-font-size);
 }
 
 h4 {
-    font-size: $h4-font-size;
+    @include font-size($h4-font-size, auto);
 }
 
 h5 {
-    font-size: $h5-font-size;
+    @include font-size($h6-font-size, auto);
 }
 
 h6 {
-    font-size: $h6-font-size;
+    @include font-size($h6-font-size, auto);
 }
 
 p {
@@ -48,14 +51,12 @@ p {
 }
 
 a {
-    transition: color 0.1s linear;
+    transition: color $base-transition;
     color: $base-link-color;
     text-decoration: none;
-
     &:hover {
         color: $hover-link-color;
     }
-
     &:active, &:focus {
         color: $hover-link-color;
         outline: none;

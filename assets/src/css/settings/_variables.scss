@@ -12,12 +12,11 @@ $h5-font-size: $base-font-size * 1.25;
 $h6-font-size: $base-font-size;
 
 // Line height
-$base-line-height: 1.5;
-$header-line-height: 1.25;
+$base-line-height: 1.5; // 24px
+$base-spacing: $base-line-height * 1em;
 
 // Other Sizes
 $base-border-radius: 3px;
-$base-spacing: $base-line-height * 1em;
 $base-z-index: 0;
 
 // Colors
@@ -42,6 +41,11 @@ $hover-button-color: $hover-link-color;
 // Border color
 $base-border-color: $light-gray;
 $base-border: 1px solid $base-border-color;
+
+// Transitions
+$base-timing: 0.15s;
+$base-easing: ease-in-out;
+$base-transition: $base-timing $base-easing;
 
 // Forms
 $form-border-color: $base-border-color;
