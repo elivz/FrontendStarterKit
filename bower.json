@@ -2,8 +2,9 @@
   "name": "frontend-starter-kit",
   "dependencies": {
     "jquery": "~1.11",
-    "parsleyjs": "~1.2.4",
     "respondJs": "~1.4.2",
-    "picturefill": "~2.1.0"
+    "picturefill": "~2.1.0",
+    "fitvids": "~1.1.0",
+    "selectivizr": "~1.0.2"
   }
 }

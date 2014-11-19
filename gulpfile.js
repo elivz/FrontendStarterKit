@@ -42,7 +42,7 @@ gulp.task('coffee', function() {
 gulp.task('scripts', ['coffee'], function() {
     // Compile main site scripts
     gulp.src([
-            srcPath+'components/parsleyjs/parsley.js',
+            srcPath+'components/fitvids/jquery.fitvids.js',
             srcPath+'js/*/*',
             srcPath+'js/*',
             '!'+srcPath+'js/compatibility{,/**}'
@@ -60,13 +60,20 @@ gulp.task('scripts', ['coffee'], function() {
     // Compile compatibility scripts that should load in the head
     gulp.src([
             srcPath+'js/compatibility/*',
-            srcPath+'components/respondJs/src/respond.js',
             srcPath+'components/picturefill/src/picturefill.js'
         ])
-        .pipe($.concat('compatibility.js'))
-        .pipe(gulp.dest(distPath+'js'))
+        .pipe($.concat('compatibility.min.js'))
         .pipe($.uglify())
-        .pipe($.rename({suffix: '.min'}))
+        .pipe(gulp.dest(distPath+'js'))
+        .pipe($.livereload({auto: false}));
+
+    // Compile IE8 compatibility scripts that should load in the head
+    gulp.src([
+            srcPath+'components/selectivizr/selectivizr.js',
+            srcPath+'components/respondJs/src/respond.js'
+        ])
+        .pipe($.concat('compatibility-ie8.min.js'))
+        .pipe($.uglify())
         .pipe(gulp.dest(distPath+'js'))
         .pipe($.livereload({auto: false}));
 
@@ -111,12 +118,13 @@ gulp.task('sprites', function(cb) {
             svgPath: '../images/svg-sprites.svg',
             pngPath: '../images/svg-sprites.png',
             common: 'svg',
+            padding: 10,
+            baseSize: 16,
             preview: false
         }))
         .pipe(gulp.dest('')) // Write the sprite-sheet + CSS + Preview
         .pipe($.filter('**/*.svg'))  // Filter out everything except the SVG file
-        .pipe($.svg2png())           // Create a PNG
-        .pipe(gulp.dest('assets'));
+        .pipe(gulp.dest(''));
 
     // PNG Sprites
     var spriteData = gulp.src(srcPath+'sprites/*.png')
@@ -126,7 +134,7 @@ gulp.task('sprites', function(cb) {
             cssFormat: 'scss',
             imgPath: '../images/sprites.png',
             algorithm: 'binary-tree',
-            padding: 20,
+            padding: 10,
             cssVarMap: function (sprite) {
                 sprite.name = 'sprite-' + sprite.name;
             },
@@ -154,8 +162,8 @@ gulp.task('images', ['sprites'], function () {
         .pipe($.size({title: 'images'}));
 });
 
-// Optimize and combine SVGs & generate fallback PNGs
-gulp.task('svg', function() {
+// Optimize SVGs & generate fallback PNGs
+gulp.task('svg', ['sprites'], function() {
     return gulp.src(srcPath+'images/*.svg')
         .pipe($.svgmin())
         .pipe(gulp.dest(distPath+'images'))
@@ -173,7 +181,8 @@ gulp.task('watch', function () {
     gulp.watch([srcPath+'coffee/**/*.coffee'], ['coffee']);
     gulp.watch([srcPath+'js/**/*.js'], ['scripts']);
     gulp.watch([srcPath+'sprites/**/*'], ['sprites']);
-    gulp.watch([srcPath+'images/**/*.{png,jpg,jpeg,gif}'], ['images']);
+    gulp.watch([srcPath+'images/**/*.png'], ['images']);
+    gulp.watch([srcPath+'images/**/*.jpg'], ['images']);
     gulp.watch([srcPath+'images/**/*.svg'], ['svg']);
 });
 

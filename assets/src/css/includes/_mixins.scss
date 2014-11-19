@@ -6,6 +6,20 @@
     }
 }
 
+// Media queries
+@mixin respond($size, $direction: min, $aspect: width) {
+    @media all and (#{$direction}-#{$aspect}: $size) {
+        @content;
+    }
+}
+@mixin hidpi($density: 1.3) {
+    @media only screen and (-Webkit-min-device-pixel-ratio: $density),
+    only screen and (-moz-min-device-pixel-ratio: $density),
+    only screen and (min-device-pixel-ratio: $density) {
+        @content;
+    }
+}
+
 // Vertically align an element
 // http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
 @mixin vertical-align {
@@ -77,6 +91,25 @@
     @if ($height) {
         width: $height;
     }
+}
+
+@mixin hide-visually {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+// Show an ellipsis on text overflow
+// Requires inline-block or block for proper styling
+@mixin text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 // Undo list styling

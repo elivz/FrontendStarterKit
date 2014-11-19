@@ -1,6 +1,5 @@
 body {
-    font-feature-settings: "kern", "liga", "frac", "pnum";
-    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "kern", "liga", "pnum";
     background-color: $base-background-color;
     color: $base-font-color;
     font-family: $base-font-family;
@@ -16,44 +15,43 @@ h5,
 h6 {
     margin: 0;
     font-family: $header-font-family;
-    text-rendering: optimizelegibility;
 }
 
-h1 {
+h1, .h1 {
     @include font-size($h1-font-size, auto);
     margin-bottom: space(1, $h1-font-size);
 }
 
-h2 {
+h2, .h2 {
     @include font-size($h2-font-size, auto);
     margin-bottom: space(0.5, $h2-font-size);
 }
 
-h3 {
+h3, .h3 {
     @include font-size($h3-font-size, auto);
     margin-bottom: space(0.25, $h3-font-size);
 }
 
-h4 {
+h4, .h4 {
     @include font-size($h4-font-size, auto);
 }
 
-h5 {
+h5, .h5 {
     @include font-size($h6-font-size, auto);
 }
 
-h6 {
+h6, .h6 {
     @include font-size($h6-font-size, auto);
 }
 
 p {
-    margin: 0 0 ($base-spacing / 2);
+    margin: 0 0 space(0.5);
 }
 
 a {
-    transition: color $base-transition;
     color: $base-link-color;
     text-decoration: none;
+    transition: color $base-transition;
     &:hover {
         color: $hover-link-color;
     }
@@ -61,6 +59,10 @@ a {
         color: $hover-link-color;
         outline: none;
     }
+}
+
+small {
+    color: $base-muted-color;
 }
 
 hr {

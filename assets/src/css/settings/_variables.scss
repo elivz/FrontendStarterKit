@@ -31,6 +31,7 @@ $base-background-color: white;
 // Font Colors
 $base-font-color: $dark-gray;
 $base-accent-color: $blue;
+$base-muted-color: $medium-gray;
 
 // Link Colors
 $base-link-color: $base-accent-color;
@@ -56,3 +57,9 @@ $form-box-shadow: inset 0 1px 3px rgba(black,0.06);
 $form-box-shadow-focus: $form-box-shadow, 0 0 5px rgba(darken($form-border-color-focus, 5), 0.7);
 $form-font-size: $base-font-size;
 $form-font-family: $base-font-family;
+
+// Breakpoints
+$small: em(450px);
+$medium: em(640px);
+$large: em(960px);
+$xlarge: em(1100px);

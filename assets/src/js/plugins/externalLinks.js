@@ -11,4 +11,4 @@
        }
     });
 
-}(jQuery, window.body));
+}( jQuery, document.body ));
