@@ -154,9 +154,9 @@ gulp.task('images', ['sprites'], function () {
     return gulp.src(srcPath+'images/**/*')
         .pipe($.imagemin({
             progressive: true,
-            interlaced: true
+            interlaced: true,
+            use: [pngquant({ quality: '65-80' })]
         }))
-        .pipe(pngquant({ quality: '65-80' }))
         .pipe(gulp.dest(distPath+'images'))
         .pipe($.livereload({auto: false}))
         .pipe($.size({title: 'images'}));
