@@ -29,7 +29,10 @@ gulp.task('styles', function() {
         .pipe($.rename({suffix: '.min'}))
         .pipe(gulp.dest(distPath+'css'))
         .pipe($.livereload({auto: false}))
-        .pipe($.size({title: 'styles'}));
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }));
 });
 
 // Compile CoffeeScript down to JS
@@ -55,7 +58,10 @@ gulp.task('scripts', ['coffee'], function() {
         .pipe($.rename({suffix: '.min'}))
         .pipe(gulp.dest(distPath+'js'))
         .pipe($.livereload({auto: false}))
-        .pipe($.size({title: 'scripts'}));
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }));
 
     // Compile compatibility scripts that should load in the head
     gulp.src([
@@ -151,7 +157,7 @@ gulp.task('sprites', function(cb) {
 
 // Optimize Images
 gulp.task('images', ['sprites'], function () {
-    return gulp.src(srcPath+'images/**/*')
+    return gulp.src(srcPath+'images/**/*.{jpg,jpeg,png,gif}')
         .pipe($.imagemin({
             progressive: true,
             interlaced: true,
@@ -159,7 +165,10 @@ gulp.task('images', ['sprites'], function () {
         }))
         .pipe(gulp.dest(distPath+'images'))
         .pipe($.livereload({auto: false}))
-        .pipe($.size({title: 'images'}));
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }));
 });
 
 // Optimize SVGs & generate fallback PNGs
@@ -167,8 +176,16 @@ gulp.task('svg', ['sprites'], function() {
     return gulp.src(srcPath+'images/*.svg')
         .pipe($.svgmin())
         .pipe(gulp.dest(distPath+'images'))
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }))
         .pipe($.svg2png())
-        .pipe(pngquant({ quality: '65-80' }))
+        .pipe($.imagemin({
+            progressive: true,
+            interlaced: true,
+            use: [pngquant({ quality: '65-80' })]
+        }))
         .pipe(gulp.dest(distPath+'images'));
 });
 
@@ -181,8 +198,7 @@ gulp.task('watch', function () {
     gulp.watch([srcPath+'coffee/**/*.coffee'], ['coffee']);
     gulp.watch([srcPath+'js/**/*.js'], ['scripts']);
     gulp.watch([srcPath+'sprites/**/*'], ['sprites']);
-    gulp.watch([srcPath+'images/**/*.png'], ['images']);
-    gulp.watch([srcPath+'images/**/*.jpg'], ['images']);
+    gulp.watch([srcPath+'images/**/*.{jpg,jpeg,png,gif}'], ['images']);
     gulp.watch([srcPath+'images/**/*.svg'], ['svg']);
 });
 
