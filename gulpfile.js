@@ -4,10 +4,12 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')({
         pattern: 'gulp{-,.}*',
-        replaceString: /gulp(\-|\.)/
+        replaceString: /gulp(\-|\.)/,
+        rename: {
+            'gulp-6to5': 'to5'
+        }
     });
 var del = require('del');
-var pagespeed = require('psi');
 var reload = require('gulp-livereload');
 var pngquant = require('imagemin-pngquant');
 
@@ -51,6 +53,7 @@ gulp.task('scripts', ['coffee'], function() {
             '!'+srcPath+'js/compatibility{,/**}'
         ])
         .pipe($.sourcemaps.init())
+        .pipe($.to5())
         .pipe($.concat('scripts.js'))
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(distPath+'js'))
@@ -214,14 +217,4 @@ gulp.task('clean', function(cb) {
 // Default Task
 gulp.task('default', ['clean'], function() {
     gulp.start('styles', 'scripts', 'images', 'svg');
-});
-
-// Run PageSpeed Insights
-// Update `url` below to the public URL for your site
-gulp.task('pagespeed', function(cb) {
-    pagespeed({
-        key: 'AIzaSyAA9firvfB61E4-8jdVfY6MfZQz_8ndfhU',
-        url: 'http://xyz.com',
-        strategy: 'mobile'
-    }, cb);
 });

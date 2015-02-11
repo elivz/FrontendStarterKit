@@ -3,7 +3,7 @@
  * Fades them out when the input is selected, and hides
  * when the user begins to type.
  */
- ;(function( $ ) {
+ (function( $ ) {
 
     $.fn.autoHideLabels = function(options) {
 
@@ -31,7 +31,7 @@
                 }
             });
 
-            $this.on('keyup', function() {
+            $this.on('input keyup', function() {
                 if ($this.find(settings.input).val() === '') {
                     $this.find(settings.label).fadeTo(100, 0.4);
                 } else {

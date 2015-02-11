@@ -1,14 +1,15 @@
 /*
  * Open links to a different domain in a new window
  */
-;(function($, body) {
+(function(document) {
 
-    var a = new RegExp('/' + window.location.host + '/');
+    var matchExternal = new RegExp('/' + window.location.host + '/'),
+        links = document.getElementsByTagName('a');
 
-    $(body).find('a').each(function() {
-       if (!a.test(this.href)) {
-           $(this).attr("target", "_blank");
+    for (i = 0; i < links.length; i++) {
+       if (!matchExternal.test(links[i].href)) {
+           links[i].target = '_blank';
        }
-    });
+    };
 
-}( jQuery, document.body ));
+}(document));
