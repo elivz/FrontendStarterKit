@@ -7,6 +7,7 @@ var distPath = webroot+'assets/dist/';
 
 // Uncomment to test static files without a local server
 // var browserSyncConfig = { server: { baseDir: './'+webroot, open: 'external', xip: true } };
+// ----- OR -----
 // Uncomment when running a local server, and enter the test domain
 var browserSyncConfig = { proxy: 'http://frontend.dev', open: 'external', xip: true };
 
@@ -25,8 +26,8 @@ var jsComponents = [
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
 var jsCompatibilityComponents = [
-    srcPath+'components/respondJs/src/respond.js',
-    srcPath+'components/fitvids/jquery.fitvids.js'
+    srcPath+'components/respondJs/src/respond.js'
+    srcPath+'components/picturefill/src/picturefill.js'
 ];
 
 // Acceptible range of quality for PNG compressions
@@ -92,9 +93,9 @@ gulp.task('scripts', function() {
         }));
 
     // Compile compatibility scripts that should load in the head
-    gulp.src(jsCompatibilityComponents.concat([
+    gulp.src([
             srcPath+'js/compatibility/*',
-        ]))
+        ].concat(jsCompatibilityComponents))
         .pipe($.concat('compatibility.min.js'))
         .pipe($.uglify())
         .pipe(gulp.dest(distPath+'js'));

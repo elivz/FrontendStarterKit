@@ -3,4 +3,4 @@
 *.sublime-workspace
 .sass-cache
 node_modules
-assets/dist
+public/assets/dist
