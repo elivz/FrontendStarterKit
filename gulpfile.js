@@ -26,7 +26,7 @@ var jsComponents = [
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
 var jsCompatibilityComponents = [
-    srcPath+'components/respondJs/src/respond.js'
+    srcPath+'components/respondJs/src/respond.js',
     srcPath+'components/picturefill/src/picturefill.js'
 ];
 
