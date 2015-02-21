@@ -10,17 +10,19 @@
         - js        # Concatenated Javascript files, both expanded and minified
       - src
         - components # Third-party components, installed via Bower
+        - css       # SCSS source files
+                    # Autoprefixer will add browser support as appropriate
+        - fonts     # Any webfont files here will be copied verbatim to the dist folder
         - images    # Unoptimized image files, as exported from Photoshop, etc.
-        - js        # All custom scripts for the theme - files with a .coffee extension will be automatically compiled from CoffeeScript
+        - js        # All custom scripts for the theme
           - compatibility   # JS files that need to run in the head, before the DOM is parsed
           - plugins         # Custom-written jQuery plugins to perform specific tasks
-        - css       # SCSS source files
         - sprites   # PNG and SVG image files that will be collected into two sprite files
         - svg       # SVG source files
 
 ## Installing Front-End Dependancies
 
-We use [Bower](http://bower.io) to manage front-end components like JS libraries & plugins. Add the dependancy to the `bower.json` file and then run `bower install` from the command line. 
+We use [Bower](http://bower.io) to manage front-end components like JS libraries & plugins. Run `bower install --save [package-name]` to install a new component.
 
 
 ## Front-End Build Process
@@ -37,7 +39,7 @@ Use Gulp to compile SASS source files to CSS, minify JS and CSS, and optimize im
 
     gulp
 
-While actively developing, watch source files and rebuild as needed:
+While actively developing, watch source files and rebuild as needed. This command will open a new browser tab using BrowserSync, which will automatically update to reflect changes you make to the source files. Additionally, it will provide you with an "external url" that you can use to view the site from other computers or devices on the same network, again with instant updates as you make changes.
 
     gulp watch
 
@@ -48,9 +50,15 @@ To regenerate a custom Modernizr build with support for all the tests you are us
 
 ## Specific Notes
 
+### CSS
+
+We run Autoprefixer on the compiled CSS files to add additional browser support wherever possible.
+
 ### Scripts
 
-Both plain Javascript and CoffeeScript files will be compiled from the `assets/src/js` folder. Files saved in the `plugins` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
+Both plain Javascript and CoffeeScript files will be compiled from the `assets/src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Files saved in the `plugins` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
+
+Files in the `js/compatibility` folder will be loaded in the head of the document. These would include things like Modernizr and Respond.js.
 
 ### Image Sprites
 
