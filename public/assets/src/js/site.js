@@ -4,9 +4,6 @@ var site = {
 
     init: function() {
 
-        // Site-specific functions
-
-
         // Run jQuery plugins
         $('.inplace').autoHideLabels();
 
