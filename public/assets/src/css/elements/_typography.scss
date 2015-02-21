@@ -18,7 +18,6 @@ h6 {
 }
 
 h1, .h1 {
-    color: red;
     @include font-size($h1-font-size, auto);
     margin-bottom: space(1, $h1-font-size);
 }

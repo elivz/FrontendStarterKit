@@ -50,10 +50,10 @@ gulp.task('styles', function() {
     return gulp.src(cssComponents.concat([
             srcPath+'css/*.scss'
         ]))
+        .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.sass({
             precision: 4,
-            onError: console.error.bind(console, 'Sass error:')
         }))
         .pipe($.autoprefixer({ browsers: autoprefixerOpts }))
         .pipe($.sourcemaps.write())
@@ -68,30 +68,15 @@ gulp.task('styles', function() {
         }));
 });
 
-// Copy Web Fonts To Dist
-gulp.task('fonts', function () {
-    return gulp.src(srcPath+'fonts/*')
-        .pipe(gulp.dest(distPath+'fonts'))
-        .pipe($.size({
-            gzip: true,
-            showFiles: true
-        }));
-});
-
-// Compile CoffeeScript down to JS
-gulp.task('coffee', function() {
-    return gulp.src(srcPath+'coffee/**/*.coffee')
-        .pipe(gulp.dest(srcPath+'js/'))
-});
-
 // Concatenate & Minify JS
-gulp.task('scripts', ['coffee'], function() {
+gulp.task('scripts', function() {
     // Compile main site scripts
     gulp.src(jsComponents.concat([
-            srcPath+'js/*/*',
-            srcPath+'js/*',
+            srcPath+'js/*/**/*.js',
+            srcPath+'js/*.js',
             '!'+srcPath+'js/compatibility{,/**}'
         ]))
+        .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.babel())
         .pipe($.concat('scripts.js'))
@@ -140,6 +125,16 @@ gulp.task('modernizr', ['styles', 'scripts'], function() {
             ]
         }))
         .pipe(gulp.dest(srcPath+'js/compatibility'));
+});
+
+// Copy Web Fonts To Dist
+gulp.task('fonts', function () {
+    return gulp.src(srcPath+'fonts/*')
+        .pipe(gulp.dest(distPath+'fonts'))
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }));
 });
 
 // Buld SVG Sprites
@@ -227,8 +222,8 @@ gulp.task('watch', function () {
 
     gulp.watch([webroot+'/**/*.html'], reload);
     gulp.watch([srcPath+'css/**/*.scss'], ['styles']);
-    gulp.watch([srcPath+'coffee/**/*.coffee'], ['coffee']);
     gulp.watch([srcPath+'js/**/*.js'], ['scripts']);
+    gulp.watch([srcPath+'fonts/*'], ['fonts']);
     gulp.watch([srcPath+'sprites/**/*.svg'], ['svgSprites']);
     gulp.watch([srcPath+'sprites/**/*.png'], ['pngSprites']);
     gulp.watch([srcPath+'images/**/*.{jpg,jpeg,png,gif}'], ['images']);

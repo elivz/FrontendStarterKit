@@ -56,7 +56,7 @@ We run Autoprefixer on the compiled CSS files to add additional browser support 
 
 ### Scripts
 
-Both plain Javascript and CoffeeScript files will be compiled from the `assets/src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Files saved in the `plugins` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
+Javascript files will be compiled from the `assets/src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Files saved in the `plugins` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
 
 Files in the `js/compatibility` folder will be loaded in the head of the document. These would include things like Modernizr and Respond.js.
 
