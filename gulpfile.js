@@ -4,6 +4,7 @@
 var webroot  = 'public/';
 var srcPath  = webroot+'assets/src/';
 var distPath = webroot+'assets/dist/';
+var vendorPath = srcPath+'vendor/'
 
 // Uncomment to test static files without a local server
 // var browserSyncConfig = { server: { baseDir: './'+webroot, open: 'external', xip: true } };
@@ -20,14 +21,13 @@ var cssComponents = [
 
 // Additional Javascript files to include (outside of the src/js folder)
 var jsComponents = [
-    srcPath+'components/fitvids/jquery.fitvids.js'
 ];
 
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
 var jsCompatibilityComponents = [
-    srcPath+'components/respondJs/src/respond.js',
-    srcPath+'components/picturefill/src/picturefill.js'
+    vendorPath+'respondJs/src/respond.js',
+    vendorPath+'picturefill/src/picturefill.js'
 ];
 
 // Acceptible range of quality for PNG compressions
@@ -72,14 +72,15 @@ gulp.task('styles', function() {
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
     // Compile main site scripts
-    gulp.src(jsComponents.concat([
+    return gulp.src(jsComponents.concat([
             srcPath+'js/*/**/*.js',
             srcPath+'js/*.js',
-            '!'+srcPath+'js/compatibility{,/**}'
+            '!'+srcPath+'js/compatibility{,/**}',
+            '!'+srcPath+'js/jquery/*'
         ]))
         .pipe($.plumber())
-        .pipe($.sourcemaps.init())
         .pipe($.babel())
+        .pipe($.sourcemaps.init())
         .pipe($.concat('scripts.js'))
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(distPath+'js'))
@@ -91,17 +92,27 @@ gulp.task('scripts', function() {
             gzip: true,
             showFiles: true
         }));
+});
 
-    // Compile compatibility scripts that should load in the head
-    gulp.src([
+// Compile compatibility scripts that should load in the head
+gulp.task('compatibilityScripts', function() {
+    return gulp.src([
             srcPath+'js/compatibility/*',
         ].concat(jsCompatibilityComponents))
         .pipe($.concat('compatibility.min.js'))
         .pipe($.uglify())
-        .pipe(gulp.dest(distPath+'js'));
+        .pipe(gulp.dest(distPath+'js'))
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }));
+});
 
-    // Copy jQuery to the dist path
-    gulp.src(srcPath+'components/jquery/dist/jquery.min.js')
+// Get the most recent 1.x version of jQuery
+gulp.task('jquery', function () {
+    $.jquery.src({ release: 1 })
+        .pipe($.uglify())
+        .pipe($.rename('jquery.min.js'))
         .pipe(gulp.dest(distPath+'js'));
 });
 
@@ -239,6 +250,8 @@ gulp.task('default', ['clean'], function() {
     gulp.start(
         'styles',
         'scripts',
+        'compatibilityScripts',
+        'jquery',
         'fonts',
         'svg',
         'images'

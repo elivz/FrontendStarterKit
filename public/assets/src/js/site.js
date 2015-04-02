@@ -1,15 +1,19 @@
-// Site-Specific Scripts
+(function($, document) {
 
-var site = {
+    "use strict";
 
-    init: function() {
+    var site = {
 
-        // Run jQuery plugins
-        $('.inplace').autoHideLabels();
+        init: function() {
 
-    }
+            // Run jQuery plugins
+            $('.inplace').autoHideLabels();
 
-};
+        }
 
-// Start things off
-$(document).ready(site.init);
+    };
+
+    // Start things off
+    site.init();
+
+}(jQuery, document));

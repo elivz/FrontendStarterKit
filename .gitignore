@@ -1,6 +1,14 @@
+# OS and editor files
 .DS_Store
 *.sublime-project
 *.sublime-workspace
+.sublime-gulp.cache
+*.tmp
+
+# Vagrant
+.vagrant
+
+# Asset pipeline files
 .sass-cache
 node_modules
-public/assets/dist
+dist

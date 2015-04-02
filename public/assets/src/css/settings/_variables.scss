@@ -58,8 +58,12 @@ $form-box-shadow-focus: $form-box-shadow, 0 0 5px rgba(darken($form-border-color
 $form-font-size: $base-font-size;
 $form-font-family: $base-font-family;
 
+// Overal dimensions
+$page-width: 70em; // 1120px
+$page-padding: $base-spacing;
+
 // Breakpoints
-$small: em(450px);
-$medium: em(640px);
-$large: em(960px);
-$xlarge: em(1100px);
+$small: 400px;
+$medium: 620px;
+$large: 900px;
+$xlarge: 1000px;

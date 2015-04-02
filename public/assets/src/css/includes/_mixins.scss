@@ -36,6 +36,16 @@
     }
 }
 
+// Position an element to cover the entirety of it's parent
+@mixin cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 5;
+}
+
 // Set all the link colors at once
 @mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
     color: $normal;

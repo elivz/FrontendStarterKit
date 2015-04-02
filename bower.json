@@ -1,9 +1,7 @@
 {
   "name": "frontend-starter-kit",
   "dependencies": {
-    "jquery": "~1.11",
     "respondJs": "~1.4.2",
-    "picturefill": "~2.1.0",
-    "fitvids": "~1.1.0"
+    "picturefill": "~2.1.0"
   }
 }
