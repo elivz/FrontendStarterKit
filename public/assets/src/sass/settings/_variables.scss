@@ -1,0 +1,89 @@
+// Typography
+$base-font-family: Helvetica, Arial, sans-serif;
+$header-font-family: $base-font-family;
+
+// Font Sizes
+$base-font-size: 1em;         // 16px
+$font-size-biggest: 1.75em;   // 28px
+$font-size-bigger: 1.5em;     // 24px
+$font-size-big: 1.125em;      // 18px
+$font-size-normal: 1em;       // 16px
+$font-size-small: 0.875em;    // 14px
+$font-size-smaller: 0.75em;   // 12px
+$font-size-smallest: 0.6875em;// 11px
+
+// Line height
+$base-line-height: 1.5; // 24px
+$base-spacing: $base-line-height * 1em;
+
+// Other Sizes
+$base-border-radius: 3px;
+$base-z-index: 0;
+
+// Colors
+$blue: #477dca;
+$blue-dark: shade($blue, 15%);
+$white: #fff;
+$black: #222;
+$gray: #999;
+$gray-dark: #555;
+$gray-light: #ddd;
+
+// Background Color
+$base-background-color: white;
+
+// Font Colors
+$base-font-color: $black;
+$base-accent-color: $blue;
+$base-muted-color: $gray;
+
+// Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: $blue-dark;
+$base-button-color: $base-link-color;
+$hover-button-color: $hover-link-color;
+
+// Border color
+$base-border-color: $gray-light;
+$base-border: 1px solid $base-border-color;
+
+// Transitions
+$base-timing: 0.2s;
+$base-easing: ease-in-out;
+$base-transition: $base-timing $base-easing;
+
+// Forms
+$form-border-color: $base-border-color;
+$form-border-color-hover: shade($base-border-color, 10%);
+$form-border-color-focus: $base-accent-color;
+$form-border-radius: $base-border-radius;
+$form-box-shadow: inset 0 1px 3px rgba(black, 0.1);
+$form-box-shadow-focus: $form-box-shadow, 0 0 5px rgba(shade($form-border-color-focus, 5%), 0.7);
+$form-font-size: $base-font-size;
+$form-font-family: $base-font-family;
+
+// Overal dimensions
+$page-width: 75em; // 1200px
+$page-padding: 3em;
+$page-padding-medium: 1.5em;
+$page-padding-narrow: 1em;
+
+// Breakpoints
+$breakpoint-to-ems: true;
+$break-1: 400px;
+$break-2: 695px;
+$break-3: 900px;
+$break-4: 1100px;
+
+// Breakpoint shortcuts
+$tiny-only: (max-width: $break-1);
+$small-only: (min-width: $break-1) and (max-width: $break-2);
+$small-down: (max-width: $break-2);
+$small-up: $break-1;
+$medium-only: (min-width: $break-2) and (max-width: $break-3);
+$medium-down: (max-width: $break-3);
+$medium-up: $break-2;
+$large-only: (min-width: $break-3) and (max-width: $break-4);
+$large-down: (max-width: $break-4);
+$large-up: $break-3;
+$xlarge-only: $break-4;

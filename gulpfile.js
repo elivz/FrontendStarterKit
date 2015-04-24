@@ -1,16 +1,33 @@
 'use strict';
 
+var baseUrl = 'http://frontend.dev';
+
 // File paths
-var webroot  = 'public/';
-var srcPath  = webroot+'assets/src/';
-var distPath = webroot+'assets/dist/';
-var vendorPath = srcPath+'vendor/'
+var basePath   = 'public/';
+var srcPath    = basePath+'assets/src/';
+var distPath   = basePath+'assets/dist/';
+var vendorPath = srcPath+'vendor/';
+
+var src = {
+    fonts:   srcPath+'fonts/',
+    images:  srcPath+'images/',
+    scripts: srcPath+'js/',
+    sprites: srcPath+'sprites/',
+    styles:  srcPath+'sass/'
+};
+var dist = {
+    fonts:   distPath+'fonts/',
+    images:  distPath+'images/',
+    scripts: distPath+'js/',
+    sprites: distPath+'images/',
+    styles:  distPath+'css/'
+};
 
 // Uncomment to test static files without a local server
-// var browserSyncConfig = { server: { baseDir: './'+webroot, open: 'external', xip: true } };
+// var browserSyncConfig = { server: { baseDir: './'+basePath, open: 'external', xip: true } };
 // ----- OR -----
 // Uncomment when running a local server, and enter the test domain
-var browserSyncConfig = { proxy: 'http://frontend.dev', open: 'external', xip: true };
+var browserSyncConfig = { proxy: baseUrl, open: 'external', xip: true };
 
 // Options for AutoPrefixer
 var autoprefixerOpts = ['last 2 versions', "> 1%", "ie 8", "ie 9"];
@@ -49,20 +66,21 @@ var reload = browserSync.reload;
 // Compile Sass
 gulp.task('styles', function() {
     return gulp.src(cssComponents.concat([
-            srcPath+'css/*.scss'
+            src.styles+'*.scss'
         ]))
         .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.sass({
-            precision: 4,
+            errLogToConsole: true,
+            precision: 4
         }))
         .pipe($.autoprefixer({ browsers: autoprefixerOpts }))
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest(distPath+'css'))
+        .pipe(gulp.dest(dist.styles))
         .pipe(reload({stream: true}))
         .pipe($.csso())
         .pipe($.rename({suffix: '.min'}))
-        .pipe(gulp.dest(distPath+'css'))
+        .pipe(gulp.dest(dist.styles))
         .pipe($.size({
             gzip: true,
             showFiles: true
@@ -73,21 +91,20 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
     // Compile main site scripts
     return gulp.src(jsComponents.concat([
-            srcPath+'js/*/**/*.js',
-            srcPath+'js/*.js',
-            '!'+srcPath+'js/compatibility{,/**}',
-            '!'+srcPath+'js/jquery/*'
+            src.scripts+'*/**/*.js',
+            src.scripts+'*.js',
+            '!'+src.scripts+'compatibility{,/**}'
         ]))
         .pipe($.plumber())
         .pipe($.babel())
         .pipe($.sourcemaps.init())
         .pipe($.concat('scripts.js'))
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest(distPath+'js'))
+        .pipe(gulp.dest(dist.scripts))
         .pipe(reload({stream: true}))
         .pipe($.uglify())
         .pipe($.rename({suffix: '.min'}))
-        .pipe(gulp.dest(distPath+'js'))
+        .pipe(gulp.dest(dist.scripts))
         .pipe($.size({
             gzip: true,
             showFiles: true
@@ -97,11 +114,11 @@ gulp.task('scripts', function() {
 // Compile compatibility scripts that should load in the head
 gulp.task('compatibilityScripts', function() {
     return gulp.src([
-            srcPath+'js/compatibility/*',
+            src.scripts+'compatibility/*',
         ].concat(jsCompatibilityComponents))
         .pipe($.concat('compatibility.min.js'))
         .pipe($.uglify())
-        .pipe(gulp.dest(distPath+'js'))
+        .pipe(gulp.dest(dist.scripts))
         .pipe($.size({
             gzip: true,
             showFiles: true
@@ -113,14 +130,14 @@ gulp.task('jquery', function () {
     $.jquery.src({ release: 1 })
         .pipe($.uglify())
         .pipe($.rename('jquery.min.js'))
-        .pipe(gulp.dest(distPath+'js'));
+        .pipe(gulp.dest(dist.scripts));
 });
 
 // Generate a custom Modernizr build
 gulp.task('modernizr', ['styles', 'scripts'], function() {
     gulp.src([
-            distPath+'js/scripts.js',
-            distPath+'css/site.css'
+            dist.scripts+'scripts.js',
+            dist.styles+'site.css'
         ])
         .pipe($.modernizr('modernizr.min.js', {
             "options" : [
@@ -136,13 +153,13 @@ gulp.task('modernizr', ['styles', 'scripts'], function() {
                 'hidden'
             ]
         }))
-        .pipe(gulp.dest(srcPath+'js/compatibility'));
+        .pipe(gulp.dest(src.scripts+'compatibility'));
 });
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
-    return gulp.src(srcPath+'fonts/*')
-        .pipe(gulp.dest(distPath+'fonts'))
+    return gulp.src(src.fonts)
+        .pipe(gulp.dest(dist.fonts))
         .pipe($.size({
             gzip: true,
             showFiles: true
@@ -152,28 +169,32 @@ gulp.task('fonts', function () {
 // Buld SVG Sprites
 gulp.task('svgSprites', function(cb) {
     return gulp.src(srcPath+'sprites/*.svg')
-        .pipe($.svgSprites({
-            svg: {
-                sprite: srcPath+'images/svg-sprites.svg'
-            },
-            cssFile: srcPath+'css/generated/_svg_sprites.scss',
-            svgPath: '../images/svg-sprites.svg',
-            pngPath: '../images/svg-sprites.png',
-            common: 'svg',
-            padding: 10,
-            baseSize: 16,
-            preview: false
+        .pipe($.plumber())
+        .pipe($.svgmin())
+        .pipe($.svgSprite({
+            mode: {
+                css: {
+                    dest: "./",
+                    layout: "vertical",
+                    sprite: "images/sprites.svg",
+                    bust: false,
+                    render: {
+                        scss: {
+                            dest: "sass/settings/_sprites.scss",
+                            template: srcPath+"build/sprites-template.scss"
+                        }
+                    }
+                }
+            }
         }))
-        .pipe(gulp.dest('')) // Write the sprite-sheet + CSS + Preview
-        .pipe($.filter('**/*.svg'))  // Filter out everything except the SVG file
-        .pipe(gulp.dest(''));
+        .pipe(gulp.dest(srcPath));
 });
 
 // Optimize SVGs & generate fallback PNGs
 gulp.task('svg', ['svgSprites'], function() {
-    return gulp.src(srcPath+'images/*.svg')
+    return gulp.src(src.images+'*.svg')
         .pipe($.svgmin())
-        .pipe(gulp.dest(distPath+'images'))
+        .pipe(gulp.dest(dist.images))
         .pipe($.size({
             gzip: true,
             showFiles: true
@@ -184,13 +205,13 @@ gulp.task('svg', ['svgSprites'], function() {
             interlaced: true,
             use: [pngquant({ quality: pngQuality })]
         }))
-        .pipe(reload({stream: true}))
-        .pipe(gulp.dest(distPath+'images'));
+        .pipe(gulp.dest(dist.images))
+        .pipe(reload({stream: true}));
 });
 
 // Build PNG Sprites
 gulp.task('pngSprites', function(cb) {
-    var spriteData = gulp.src(srcPath+'sprites/*.png')
+    var spriteData = gulp.src(src.sprites+'*.png')
         .pipe($.spritesmith({
             imgName: 'sprites.png',
             cssName: '_sprites.scss',
@@ -208,19 +229,19 @@ gulp.task('pngSprites', function(cb) {
             }
         }));
 
-    spriteData.css.pipe(gulp.dest(srcPath+'css/generated'));
-    return spriteData.img.pipe(gulp.dest(srcPath+'images'));
+    spriteData.css.pipe(gulp.dest(src.styles+'generated'));
+    return spriteData.img.pipe(gulp.dest(src.images));
 });
 
 // Optimize Images
 gulp.task('images', ['pngSprites'], function () {
-    return gulp.src(srcPath+'images/**/*.{jpg,jpeg,png,gif}')
+    return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif}')
         .pipe($.imagemin({
             progressive: true,
             interlaced: true,
             use: [pngquant({ quality: pngQuality })]
         }))
-        .pipe(gulp.dest(distPath+'images'))
+        .pipe(gulp.dest(dist.images))
         .pipe(reload({stream: true}))
         .pipe($.size({
             gzip: true,
@@ -232,14 +253,14 @@ gulp.task('images', ['pngSprites'], function () {
 gulp.task('watch', function () {
     browserSync(browserSyncConfig);
 
-    gulp.watch([webroot+'/**/*.html'], reload);
-    gulp.watch([srcPath+'css/**/*.scss'], ['styles']);
-    gulp.watch([srcPath+'js/**/*.js'], ['scripts']);
-    gulp.watch([srcPath+'fonts/*'], ['fonts']);
-    gulp.watch([srcPath+'sprites/**/*.svg'], ['svgSprites']);
-    gulp.watch([srcPath+'sprites/**/*.png'], ['pngSprites']);
-    gulp.watch([srcPath+'images/**/*.{jpg,jpeg,png,gif}'], ['images']);
-    gulp.watch([srcPath+'images/**/*.svg'], ['svg']);
+    gulp.watch([basePath+'/**/*.html'], reload);
+    gulp.watch([src.styles+'**/*.scss'], ['styles']);
+    gulp.watch([src.scripts+'**/*.js'], ['scripts']);
+    gulp.watch([src.fonts+'*'], ['fonts']);
+    gulp.watch([src.sprites+'**/*.svg'], ['svgSprites']);
+    gulp.watch([src.sprites+'**/*.png'], ['pngSprites']);
+    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif}'], ['images']);
+    gulp.watch([src.images+'**/*.svg'], ['svg']);
 });
 
 // Clean distribution directories

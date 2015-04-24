@@ -1,7 +1,8 @@
 {
   "name": "frontend-starter-kit",
   "dependencies": {
-    "respondJs": "~1.4.2",
-    "picturefill": "~2.1.0"
+    "breakpoint-sass": "~2.5",
+    "respondJs": "^1.4.0",
+    "picturefill": "^2.0.0"
   }
 }

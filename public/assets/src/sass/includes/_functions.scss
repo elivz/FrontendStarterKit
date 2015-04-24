@@ -1,0 +1,24 @@
+@function strip-unit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+// Return a number of 'line-heights', in ems, at a particular font site
+// Useful for maintaining a vertical rhythm
+@function space($multiplier: 1, $font-size: $base-font-size) {
+    @return $multiplier * $base-spacing / ($font-size / 1em);
+}
+
+// Get a color and shade
+@function color($hue, $tone: base) {
+    @return map-get(map-get($colors, $hue), $tone);
+}
+
+/// Lighten a color by mixing with white
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+/// Darken a color by mixing with black
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}

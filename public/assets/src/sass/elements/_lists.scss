@@ -1,0 +1,38 @@
+ul, ol {
+    margin: 0 0 space(0.25) space(1.25);
+}
+
+ul {
+    list-style: disc;
+}
+
+ol {
+    list-style: decimal;
+}
+
+li {
+    margin-bottom: space(0.25);
+}
+
+li > ul,
+li > ol {
+    margin-bottom: 0;
+    margin-left: space();
+    font-size: 0.95em;
+
+    > li {
+        margin-bottom: 0;
+    }
+}
+
+dl {
+    margin-bottom: space(0.25);
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin: 0 0 space(0.25);
+}

@@ -1,0 +1,165 @@
+$text-inputs: 'textarea,
+              input[type="email"],
+              input[type="number"],
+              input[type="password"],
+              input[type="search"],
+              input[type="tel"],
+              input[type="text"],
+              input[type="url"],
+              input[type="file"],
+              select[multiple=multiple]';
+
+fieldset {
+    background: tint($base-border-color, 10%);
+    border: $base-border;
+    margin: 0 0 space(0.5) 0;
+    padding: space(0.5);
+}
+
+input,
+label,
+select,
+textarea {
+    display: block;
+    font-family: $form-font-family;
+    font-size: $form-font-size;
+    line-height: $base-line-height;
+    color: $gray;
+}
+
+label {
+    font-weight: bold;
+
+    &.required:after {
+        content: "*";
+        color: $base-muted-color;
+    }
+}
+
+#{$text-inputs} {
+    width: 100%;
+    margin: 0;
+    padding: space(0.25, $form-font-size) space(0.5, $form-font-size);
+    border-radius: $form-border-radius;
+    border: 1px solid $form-border-color;
+    box-shadow: $form-box-shadow;
+    background-color: white;
+    transition: border-color;
+
+    &:hover {
+        border-color: $form-border-color-hover;
+    }
+
+    &:focus {
+        border-color: $form-border-color-focus;
+        box-shadow: $form-box-shadow-focus;
+        outline: none;
+    }
+
+    &::placeholder {
+        color: $base-muted-color;
+    }
+}
+
+textarea {
+    height: auto;
+    resize: vertical;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    display: inline;
+    margin-right: space(0.25);
+}
+
+select {
+    width: 100%;
+    border: 1px solid $form-border-color;
+}
+
+
+// Form layouts
+.field {
+    margin-bottom: space(0.75);
+
+    .msg {
+        position: relative;
+        z-index: -1;
+        margin: (-$form-border-radius) 0 0;
+        padding: space(0.35, 0.8125em) space(1/3, 0.8125em) space(0.25, 0.8125em);
+        border-radius: 0 0 $form-border-radius $form-border-radius;
+    }
+}
+
+.field-group {
+    @extend %clearfix;
+    margin-bottom: space(0.75);
+
+    .field {
+        float: left;
+        margin: 0;
+        width: 50%;
+
+        &:first-child {
+            padding-right: space(0.375);
+        }
+
+        &:last-child {
+            padding-left: space(0.375);
+        }
+    }
+}
+
+.field--inline {
+    @extend %clearfix;
+    @extend .field;
+
+    @include breakpoint($small-down) {
+        label {
+            float: left;
+            width: 25%;
+        }
+
+        #{$text-inputs},
+        select {
+            float: left;
+            width: 75%;
+        }
+    }
+}
+
+.field--inplace {
+    @extend .field;
+    position: relative;
+
+    label {
+        position: absolute;
+        left: 1px;
+        top: 1px;
+        padding: space(0.25, $font-size-smaller) space(0.5, $font-size-smaller);
+        font-size: $font-size-smaller;
+        line-height: space(1, $font-size-smaller);
+        font-weight: normal;
+        color: $base-muted-color;
+        cursor: text;
+    }
+}
+
+.button-set {
+    text-align: right;
+
+    a,
+    button,
+    input {
+        margin-left: 1em;
+        vertical-align: middle;
+    }
+
+    a:not(.button) {
+        font-size: 0.85em;
+    }
+}

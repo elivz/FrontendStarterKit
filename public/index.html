@@ -2,18 +2,33 @@
 <html lang="en" class="no-js">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/dist/css/site.css">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <script src="/assets/dist/js/compatibility.min.js"></script>
 </head>
 <body>
 
+    <a href="#content" class="screen-reader-text">Skip to content</a>
+
     <div class="wrapper">
-        <h1>Frontend Starter Kit</h1>
+
+        <header id="masthead" class="header" role="banner">
+            <div class="header__logo">
+                <a href="/">Site Name</a>
+            </div>
+        </header>
+
+        <main id="content" class="content" role="main" tabindex="-1">
+            <h1>Frontend Starter Kit</h1>
+        </main>
+
+        <footer class="footer" role="contentinfo">
+            <p class="footer__copyright">&copy; 2015</p>
+        </footer>
+
     </div>
 
     <!--[if lt IE 9]><script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script><![endif]-->
