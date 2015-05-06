@@ -42,9 +42,14 @@ var jsComponents = [
 
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
-var jsCompatibilityComponents = [
-    vendorPath+'respondJs/src/respond.js',
-    vendorPath+'picturefill/src/picturefill.js'
+var jsHeaderComponents = [
+    vendorPath+'picturefill/dist/picturefill.js'
+];
+
+// Javascript that is only needed for IE8 and below
+var jsIE8Components = [
+    vendorPath+'htmlshiv/dist/html5shiv.js',
+    vendorPath+'respondJs/dest/respond.src.js'
 ];
 
 // Acceptible range of quality for PNG compressions
@@ -112,10 +117,15 @@ gulp.task('scripts', function() {
 });
 
 // Compile compatibility scripts that should load in the head
-gulp.task('compatibilityScripts', function() {
+gulp.task('headerScripts', function() {
+    gulp.src(jsIE8Components)
+        .pipe($.concat('ie8.min.js'))
+        .pipe($.uglify())
+        .pipe(gulp.dest(dist.scripts));
+
     return gulp.src([
-            src.scripts+'compatibility/*',
-        ].concat(jsCompatibilityComponents))
+            src.scripts+'header/*',
+        ].concat(jsHeaderComponents))
         .pipe($.concat('compatibility.min.js'))
         .pipe($.uglify())
         .pipe(gulp.dest(dist.scripts))
@@ -131,29 +141,6 @@ gulp.task('jquery', function () {
         .pipe($.uglify())
         .pipe($.rename('jquery.min.js'))
         .pipe(gulp.dest(dist.scripts));
-});
-
-// Generate a custom Modernizr build
-gulp.task('modernizr', ['styles', 'scripts'], function() {
-    gulp.src([
-            dist.scripts+'scripts.js',
-            dist.styles+'site.css'
-        ])
-        .pipe($.modernizr('modernizr.min.js', {
-            "options" : [
-                "setClasses",
-                "addTest",
-                "html5printshiv",
-                "testProp",
-                "fnBind",
-                "prefixed",
-                "testMediaQuery"
-            ],
-            excludeTests: [
-                'hidden'
-            ]
-        }))
-        .pipe(gulp.dest(src.scripts+'compatibility'));
 });
 
 // Copy Web Fonts To Dist
@@ -218,7 +205,7 @@ gulp.task('pngSprites', function(cb) {
             cssFormat: 'scss',
             imgPath: '../images/sprites.png',
             algorithm: 'binary-tree',
-            padding: 10,
+            padding: 5,
             cssVarMap: function (sprite) {
                 sprite.name = 'sprite-' + sprite.name;
             },
@@ -271,7 +258,7 @@ gulp.task('default', ['clean'], function() {
     gulp.start(
         'styles',
         'scripts',
-        'compatibilityScripts',
+        'headerScripts',
         'jquery',
         'fonts',
         'svg',

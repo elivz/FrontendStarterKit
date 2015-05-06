@@ -7,7 +7,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/dist/css/site.css">
-    <script src="/assets/dist/js/compatibility.min.js"></script>
+    <!--[if lt IE 9]><script src="/assets/dist/js/ie8.min.js"></script><![endif]-->
+    <script src="/assets/dist/js/compatibility.min.js" async></script>
 </head>
 <body>
 
@@ -31,11 +32,6 @@
 
     </div>
 
-    <!--[if lt IE 9]><script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script><![endif]-->
-    <!--[if gte IE 9]><!--><script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><!--<![endif]-->
-    <script>window.jQuery || document.write('<script src="/assets/dist/js/jquery.min.js"><\/script>')</script>
-    <script src="/assets/dist/js/scripts.js"></script>
-
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,5 +40,11 @@
         ga('create', 'UA-xxxx', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
+    <!--[if lt IE 9]><script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><![endif]-->
+    <!--[if gte IE 9]><!--><script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><!--<![endif]-->
+    <script>window.jQuery || document.write('<script src="/assets/dist/js/jquery.min.js"><\/script>')</script>
+    <script src="/assets/dist/js/scripts.js"></script>
 </body>
 </html>
