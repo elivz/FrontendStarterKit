@@ -1,0 +1,145 @@
+:root {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow-y: scroll;
+}
+
+*,
+:before,
+:after {
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+::before,
+::after {
+    text-decoration: inherit;
+    vertical-align: inherit;
+}
+
+html {
+    font-feature-settings: "kern", "liga", "pnum";
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    cursor: default;
+}
+
+body {
+    font-size: 16px;
+}
+
+main,
+summary {
+    display: block;
+}
+
+pre {
+    overflow: auto;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+nav {
+    ol,
+    ul {
+        list-style: none;
+    }
+
+    li {
+        display: inline-block;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: 0;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+input {
+    &[type="number"] {
+        width: auto;
+    }
+
+    &[type="search"] {
+        -webkit-appearance: textfield;
+
+        &::-webkit-search-cancel-button,
+        &::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+    }
+}
+
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &::-ms-value {
+        color: currentColor;
+    }
+}
+
+::selection {
+    text-shadow: none;
+}
+
+[hidden] {
+    display: none;
+}
+
+[unselectable] {
+    user-select: none;
+}
+
+@media screen {
+    [hidden~="screen"] {
+        display: inherit;
+    }
+
+    [hidden~="screen"]:not(:active):not(:focus):not(:target) {
+        clip: rect(0 0 0 0) !important;
+        position: absolute !important;
+    }
+}

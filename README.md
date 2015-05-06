@@ -2,7 +2,7 @@
 
 ## Project Tree
 
-    assets
+    public/assets
       - dist
         - css       # The compiled CSS files, both expanded and minified
         - images    # Optimized image files
@@ -19,6 +19,7 @@
           - plugins         # Custom-written jQuery plugins to perform specific tasks
         - sprites   # PNG and SVG image files that will be collected into two sprite files
         - svg       # SVG source files
+
 
 ## Installing Front-End Dependancies
 
@@ -43,10 +44,6 @@ While actively developing, watch source files and rebuild as needed. This comman
 
     gulp watch
 
-To regenerate a custom Modernizr build with support for all the tests you are using, run:
-
-    gulp modernizr; gulp scripts
-
 
 ## Specific Notes
 
@@ -58,7 +55,7 @@ We run Autoprefixer on the compiled CSS files to add additional browser support 
 
 Javascript files will be compiled from the `assets/src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Files saved in the `plugins` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
 
-Files in the `js/compatibility` folder will be loaded in the head of the document. These would include things like Modernizr and Respond.js.
+Files in the `js/header` folder will be loaded in the head of the document.
 
 ### Image Sprites
 
