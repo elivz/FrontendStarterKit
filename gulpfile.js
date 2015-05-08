@@ -68,15 +68,25 @@ var pngquant = require('imagemin-pngquant');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
+// Error handler for Plumber
+var handleError = function(error) {
+    $.notify.onError({
+        title:    "Gulp Error",
+        message:  "<%= error.message %>",
+        sound:    "Beep"
+    })(error);
+
+    this.emit('end');
+};
+
 // Compile Sass
 gulp.task('styles', function() {
     return gulp.src(cssComponents.concat([
             src.styles+'*.scss'
         ]))
-        .pipe($.plumber())
+        .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.sourcemaps.init())
         .pipe($.sass({
-            errLogToConsole: true,
             precision: 4
         }))
         .pipe($.autoprefixer({ browsers: autoprefixerOpts }))
@@ -100,7 +110,7 @@ gulp.task('scripts', function() {
             src.scripts+'*.js',
             '!'+src.scripts+'compatibility{,/**}'
         ]))
-        .pipe($.plumber())
+        .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.babel())
         .pipe($.sourcemaps.init())
         .pipe($.concat('scripts.js'))
@@ -156,7 +166,7 @@ gulp.task('fonts', function () {
 // Buld SVG Sprites
 gulp.task('svgSprites', function(cb) {
     return gulp.src(srcPath+'sprites/*.svg')
-        .pipe($.plumber())
+        .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.svgmin())
         .pipe($.svgSprite({
             mode: {
