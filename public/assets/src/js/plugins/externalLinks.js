@@ -1,7 +1,9 @@
 /*
  * Open links to a different domain in a new window
  */
-;(function(document) {
+(function(document, window) {
+
+    'use strict';
 
     var externalTest = new RegExp('/' + window.location.host + '/');
     var links = document.getElementsByTagName('a');
@@ -12,4 +14,4 @@
        }
     }
 
-}(document));
+}(document, window));

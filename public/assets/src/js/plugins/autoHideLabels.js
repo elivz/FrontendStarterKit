@@ -3,7 +3,9 @@
  * Fades them out when the input is selected, and hides
  * when the user begins to type.
  */
- (function( $ ) {
+ (function($) {
+
+    'use strict';
 
     $.fn.autoHideLabels = function(options) {
 
@@ -46,4 +48,4 @@
 
     };
 
-}( jQuery ));
+}(jQuery));

@@ -52,6 +52,20 @@ var jsIE8Components = [
     vendorPath+'respondJs/dest/respond.src.js'
 ];
 
+// Custom rules for JS linting
+// http://eslint.org/docs/user-guide/configuring
+var esLintConfig = {
+    'env': {
+        'browser': true,
+        'jquery': true,
+        'es6': true
+    },
+    'rules': {
+        'quotes': 'single',
+        'no-console': false
+    }
+};
+
 // Acceptible range of quality for PNG compressions
 var pngQuality = '65-80';
 
@@ -71,9 +85,9 @@ var reload = browserSync.reload;
 // Error handler for Plumber
 var handleError = function(error) {
     $.notify.onError({
-        title:    "Gulp Error",
-        message:  "<%= error.message %>",
-        sound:    "Beep"
+        title: "Gulp Error",
+        message: "<%= error.message %>",
+        sound: "Beep"
     })(error);
 
     this.emit('end');
@@ -102,8 +116,16 @@ gulp.task('styles', function() {
         }));
 });
 
+// Lint our Javascript
+gulp.task('lintScripts', function() {
+    return gulp.src([src.scripts+'*/**/*.js'])
+        .pipe($.cached('esLint'))
+        .pipe($.eslint(esLintConfig))
+        .pipe($.eslint.format());
+});
+
 // Concatenate & Minify JS
-gulp.task('scripts', function() {
+gulp.task('scripts', ['lintScripts'], function() {
     // Compile main site scripts
     return gulp.src(jsComponents.concat([
             src.scripts+'*/**/*.js',
@@ -189,7 +211,8 @@ gulp.task('svgSprites', function(cb) {
 
 // Optimize SVGs & generate fallback PNGs
 gulp.task('svg', ['svgSprites'], function() {
-    return gulp.src(src.images+'*.svg')
+    return gulp.src(src.images+'**/*.svg')
+        .pipe($.cached('svgs'))
         .pipe($.svgmin())
         .pipe(gulp.dest(dist.images))
         .pipe($.size({
@@ -200,7 +223,9 @@ gulp.task('svg', ['svgSprites'], function() {
         .pipe($.imagemin({
             progressive: true,
             interlaced: true,
-            use: [pngquant({ quality: pngQuality })]
+            use: [
+                pngquant({ quality: pngQuality })
+            ]
         }))
         .pipe(gulp.dest(dist.images))
         .pipe(reload({stream: true}));
@@ -233,10 +258,13 @@ gulp.task('pngSprites', function(cb) {
 // Optimize Images
 gulp.task('images', ['pngSprites'], function () {
     return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif}')
+        .pipe($.cached('images'))
         .pipe($.imagemin({
             progressive: true,
             interlaced: true,
-            use: [pngquant({ quality: pngQuality })]
+            use: [
+                pngquant({ quality: pngQuality })
+            ]
         }))
         .pipe(gulp.dest(dist.images))
         .pipe(reload({stream: true}))
