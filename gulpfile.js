@@ -1,4 +1,33 @@
+/**
+ *
+ * Frontend Starter Kit
+ * Copyright 2015 Eli Van Zoeren
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ */
+
 'use strict';
+
+/************************************************
+ * CONFIGURATION
+ ************************************************/
 
 var baseUrl = 'http://frontend.dev';
 
@@ -15,6 +44,7 @@ var src = {
     sprites: srcPath+'sprites/',
     styles:  srcPath+'sass/'
 };
+
 var dist = {
     fonts:   distPath+'fonts/',
     images:  distPath+'images/',
@@ -24,13 +54,28 @@ var dist = {
 };
 
 // Uncomment to test static files without a local server
-// var browserSyncConfig = { server: { baseDir: './'+basePath, open: 'external', xip: true } };
+// var browserSyncConfig = {
+//     server: {
+//         baseDir: './'+basePath,
+//         open: 'external',
+//         xip: true
+//     }
+// };
 // ----- OR -----
 // Uncomment when running a local server, and enter the test domain
-var browserSyncConfig = { proxy: baseUrl, open: 'external', xip: true };
+var browserSyncConfig = {
+    proxy: baseUrl,
+    open: 'external',
+    xip: true
+};
 
 // Options for AutoPrefixer
-var autoprefixerOpts = ['last 2 versions', "> 1%", "ie 8", "ie 9"];
+var autoprefixerOpts = [
+    'last 2 versions',
+    '> 1%',
+    'ie >= 8',
+    'android >= 4'
+];
 
 // Additional CSS files to include (outside of the src/css folder)
 var cssComponents = [
@@ -69,7 +114,9 @@ var esLintConfig = {
 // Acceptible range of quality for PNG compressions
 var pngQuality = '65-80';
 
-// ----------------------------------------------------------------------------
+//***********************************************
+// SET UP GULP
+//***********************************************
 
 // Include Gulp & Tools We'll Use
 var gulp = require('gulp');
@@ -92,6 +139,10 @@ var handleError = function(error) {
 
     this.emit('end');
 };
+
+//***********************************************
+// STYLES
+//***********************************************
 
 // Compile Sass
 gulp.task('styles', function() {
@@ -116,16 +167,25 @@ gulp.task('styles', function() {
         }));
 });
 
+//***********************************************
+// JAVASCRIPT
+//***********************************************
+
+// Concatenate & Minify JS
+gulp.task('scripts', [
+    'scripts:lint',
+    'scripts:compile'
+]);
+
 // Lint our Javascript
-gulp.task('lintScripts', function() {
+gulp.task('scripts:lint', function() {
     return gulp.src([src.scripts+'*/**/*.js'])
         .pipe($.cached('esLint'))
         .pipe($.eslint(esLintConfig))
         .pipe($.eslint.format());
 });
 
-// Concatenate & Minify JS
-gulp.task('scripts', ['lintScripts'], function() {
+gulp.task('scripts:compile', function() {
     // Compile main site scripts
     return gulp.src(jsComponents.concat([
             src.scripts+'*/**/*.js',
@@ -148,13 +208,16 @@ gulp.task('scripts', ['lintScripts'], function() {
         }));
 });
 
-// Compile compatibility scripts that should load in the head
-gulp.task('headerScripts', function() {
-    gulp.src(jsIE8Components)
+// Compile IE8 compatibility scripts that should load in the head
+gulp.task('scripts:ie8', function() {
+    return gulp.src(jsIE8Components)
         .pipe($.concat('ie8.min.js'))
         .pipe($.uglify())
         .pipe(gulp.dest(dist.scripts));
+});
 
+// Compile general-purpose compatibility scripts that should load in the head
+gulp.task('scripts:compatibility', function() {
     return gulp.src([
             src.scripts+'header/*',
         ].concat(jsHeaderComponents))
@@ -168,12 +231,16 @@ gulp.task('headerScripts', function() {
 });
 
 // Get the most recent 1.x version of jQuery
-gulp.task('jquery', function () {
+gulp.task('scripts:jquery', function () {
     $.jquery.src({ release: 1 })
         .pipe($.uglify())
         .pipe($.rename('jquery.min.js'))
         .pipe(gulp.dest(dist.scripts));
 });
+
+//***********************************************
+// WEBFONTS
+//***********************************************
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
@@ -185,41 +252,21 @@ gulp.task('fonts', function () {
         }));
 });
 
-// Buld SVG Sprites
-gulp.task('svgSprites', function(cb) {
-    return gulp.src(srcPath+'sprites/*.svg')
-        .pipe($.plumber({ errorHandler: handleError }))
-        .pipe($.svgmin())
-        .pipe($.svgSprite({
-            mode: {
-                css: {
-                    dest: "./",
-                    layout: "vertical",
-                    sprite: "images/sprites.svg",
-                    bust: false,
-                    render: {
-                        scss: {
-                            dest: "sass/settings/_sprites.scss",
-                            template: srcPath+"build/sprites-template.scss"
-                        }
-                    }
-                }
-            }
-        }))
-        .pipe(gulp.dest(srcPath));
-});
+//***********************************************
+// IMAGES
+//***********************************************
 
-// Optimize SVGs & generate fallback PNGs
-gulp.task('svg', ['svgSprites'], function() {
-    return gulp.src(src.images+'**/*.svg')
-        .pipe($.cached('svgs'))
-        .pipe($.svgmin())
-        .pipe(gulp.dest(dist.images))
-        .pipe($.size({
-            gzip: true,
-            showFiles: true
-        }))
-        .pipe($.svg2png())
+gulp.task('images', [
+    'images:svgs:sprites',
+    'images:sprites',
+    'images:svgs',
+    'images:copy'
+]);
+
+// Optimize Images
+gulp.task('images:copy', function () {
+    return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif}')
+        .pipe($.cached('images'))
         .pipe($.imagemin({
             progressive: true,
             interlaced: true,
@@ -228,11 +275,15 @@ gulp.task('svg', ['svgSprites'], function() {
             ]
         }))
         .pipe(gulp.dest(dist.images))
-        .pipe(reload({stream: true}));
+        .pipe(reload({stream: true}))
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }));
 });
 
 // Build PNG Sprites
-gulp.task('pngSprites', function(cb) {
+gulp.task('images:sprites', function() {
     var spriteData = gulp.src(src.sprites+'*.png')
         .pipe($.spritesmith({
             imgName: 'sprites.png',
@@ -255,10 +306,17 @@ gulp.task('pngSprites', function(cb) {
     return spriteData.img.pipe(gulp.dest(src.images));
 });
 
-// Optimize Images
-gulp.task('images', ['pngSprites'], function () {
-    return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif}')
-        .pipe($.cached('images'))
+// Optimize SVGs & generate fallback PNGs
+gulp.task('images:svgs', function() {
+    return gulp.src(src.images+'**/*.svg')
+        .pipe($.cached('svgs'))
+        .pipe($.svgmin())
+        .pipe(gulp.dest(dist.images))
+        .pipe($.size({
+            gzip: true,
+            showFiles: true
+        }))
+        .pipe($.svg2png())
         .pipe($.imagemin({
             progressive: true,
             interlaced: true,
@@ -267,12 +325,36 @@ gulp.task('images', ['pngSprites'], function () {
             ]
         }))
         .pipe(gulp.dest(dist.images))
-        .pipe(reload({stream: true}))
-        .pipe($.size({
-            gzip: true,
-            showFiles: true
-        }));
+        .pipe(reload({stream: true}));
 });
+
+// Buld SVG Sprites
+gulp.task('images:svgs:sprites', function() {
+    return gulp.src(srcPath+'sprites/*.svg')
+        .pipe($.plumber({ errorHandler: handleError }))
+        .pipe($.svgmin())
+        .pipe($.svgSprite({
+            mode: {
+                css: {
+                    dest: "./",
+                    layout: "vertical",
+                    sprite: "images/sprites.svg",
+                    bust: false,
+                    render: {
+                        scss: {
+                            dest: "sass/settings/_sprites.scss",
+                            template: srcPath+"build/sprites-template.scss"
+                        }
+                    }
+                }
+            }
+        }))
+        .pipe(gulp.dest(srcPath));
+});
+
+//***********************************************
+// WATCH FOR CHANGES
+//***********************************************
 
 // Watch Files For Changes & Reload
 gulp.task('watch', function () {
@@ -282,10 +364,10 @@ gulp.task('watch', function () {
     gulp.watch([src.styles+'**/*.scss'], ['styles']);
     gulp.watch([src.scripts+'**/*.js'], ['scripts']);
     gulp.watch([src.fonts+'*'], ['fonts']);
-    gulp.watch([src.sprites+'**/*.svg'], ['svgSprites']);
-    gulp.watch([src.sprites+'**/*.png'], ['pngSprites']);
-    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif}'], ['images']);
-    gulp.watch([src.images+'**/*.svg'], ['svg']);
+    gulp.watch([src.sprites+'**/*.svg'], ['images:svgs:sprites']);
+    gulp.watch([src.images+'**/*.svg'], ['svgs']);
+    gulp.watch([src.sprites+'**/*.png'], ['images:sprites']);
+    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif}'], ['images:copy']);
 });
 
 // Clean distribution directories
@@ -296,10 +378,10 @@ gulp.task('default', ['clean'], function() {
     gulp.start(
         'styles',
         'scripts',
-        'headerScripts',
-        'jquery',
+        'scripts:ie8',
+        'scripts:compatibility',
+        'scripts:jquery',
         'fonts',
-        'svg',
         'images'
     );
 });
