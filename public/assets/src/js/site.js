@@ -1,19 +1,11 @@
-(function($, document) {
-
-    "use strict";
-
-    var site = {
-
-        init: function() {
-
+(($, document) => {
+    const site = {
+        init() {
             // Run jQuery plugins
             $('.inplace').autoHideLabels();
-
         }
-
     };
 
     // Start things off
     site.init();
-
 }(jQuery, document));

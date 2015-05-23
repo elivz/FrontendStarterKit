@@ -88,6 +88,7 @@ var jsComponents = [
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
 var jsHeaderComponents = [
+    vendorPath+'svg4everybody/svg4everybody.ie8.js',
     vendorPath+'picturefill/dist/picturefill.js'
 ];
 
@@ -96,20 +97,6 @@ var jsIE8Components = [
     vendorPath+'htmlshiv/dist/html5shiv.js',
     vendorPath+'respondJs/dest/respond.src.js'
 ];
-
-// Custom rules for JS linting
-// http://eslint.org/docs/user-guide/configuring
-var esLintConfig = {
-    'env': {
-        'browser': true,
-        'jquery': true,
-        'es6': true
-    },
-    'rules': {
-        'quotes': 'single',
-        'no-console': false
-    }
-};
 
 // Acceptible range of quality for PNG compressions
 var pngQuality = '65-80';
@@ -155,11 +142,13 @@ gulp.task('styles', function() {
             precision: 4
         }))
         .pipe($.autoprefixer({ browsers: autoprefixerOpts }))
-        .pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(dist.styles))
+        .pipe($.filter(['*.css']))
         .pipe(reload({stream: true}))
         .pipe($.csso())
         .pipe($.rename({suffix: '.min'}))
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(dist.styles))
         .pipe($.size({
             gzip: true,
@@ -179,9 +168,12 @@ gulp.task('scripts', [
 
 // Lint our Javascript
 gulp.task('scripts:lint', function() {
-    return gulp.src([src.scripts+'*/**/*.js'])
+    return gulp.src([
+            src.scripts+'*/**/*.js',
+            '!'+src.scripts+'header{,/**}'
+        ])
         .pipe($.cached('esLint'))
-        .pipe($.eslint(esLintConfig))
+        .pipe($.eslint())
         .pipe($.eslint.format());
 });
 
@@ -190,18 +182,20 @@ gulp.task('scripts:compile', function() {
     return gulp.src(jsComponents.concat([
             src.scripts+'*/**/*.js',
             src.scripts+'*.js',
-            '!'+src.scripts+'compatibility{,/**}'
+            '!'+src.scripts+'header{,/**}'
         ]))
         .pipe($.plumber({ errorHandler: handleError }))
-        .pipe($.babel())
         .pipe($.sourcemaps.init())
         .pipe($.concat('scripts.js'))
-        .pipe($.sourcemaps.write())
+        .pipe($.babel())
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(dist.scripts))
-        .pipe(reload({stream: true}))
+        .pipe($.filter(['*.js']))
         .pipe($.uglify())
         .pipe($.rename({suffix: '.min'}))
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(dist.scripts))
+        .pipe(reload({stream: true}))
         .pipe($.size({
             gzip: true,
             showFiles: true
@@ -211,8 +205,10 @@ gulp.task('scripts:compile', function() {
 // Compile IE8 compatibility scripts that should load in the head
 gulp.task('scripts:ie8', function() {
     return gulp.src(jsIE8Components)
+        .pipe($.sourcemaps.init())
         .pipe($.concat('ie8.min.js'))
         .pipe($.uglify())
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(dist.scripts));
 });
 
@@ -221,8 +217,10 @@ gulp.task('scripts:compatibility', function() {
     return gulp.src([
             src.scripts+'header/*',
         ].concat(jsHeaderComponents))
+        .pipe($.sourcemaps.init())
         .pipe($.concat('compatibility.min.js'))
         .pipe($.uglify())
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(dist.scripts))
         .pipe($.size({
             gzip: true,
@@ -257,23 +255,25 @@ gulp.task('fonts', function () {
 //***********************************************
 
 gulp.task('images', [
-    'images:svgs:sprites',
     'images:sprites',
-    'images:svgs',
-    'images:copy'
+    'images:svg',
+    'images:raster'
 ]);
 
+var imageminOpts = {
+    progressive: true,
+    interlaced: true,
+    use: [
+        pngquant({ quality: pngQuality })
+    ]
+};
+
 // Optimize Images
-gulp.task('images:copy', function () {
+gulp.task('images:raster', function () {
     return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif}')
+        .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.cached('images'))
-        .pipe($.imagemin({
-            progressive: true,
-            interlaced: true,
-            use: [
-                pngquant({ quality: pngQuality })
-            ]
-        }))
+        .pipe($.imagemin(imageminOpts))
         .pipe(gulp.dest(dist.images))
         .pipe(reload({stream: true}))
         .pipe($.size({
@@ -282,33 +282,10 @@ gulp.task('images:copy', function () {
         }));
 });
 
-// Build PNG Sprites
-gulp.task('images:sprites', function() {
-    var spriteData = gulp.src(src.sprites+'*.png')
-        .pipe($.spritesmith({
-            imgName: 'sprites.png',
-            cssName: '_sprites.scss',
-            cssFormat: 'scss',
-            imgPath: '../images/sprites.png',
-            algorithm: 'binary-tree',
-            padding: 5,
-            cssVarMap: function (sprite) {
-                sprite.name = 'sprite-' + sprite.name;
-            },
-            cssOpts: {
-                cssClass: function (item) {
-                    return '.sprite-' + item.name;
-                }
-            }
-        }));
-
-    spriteData.css.pipe(gulp.dest(src.styles+'generated'));
-    return spriteData.img.pipe(gulp.dest(src.images));
-});
-
 // Optimize SVGs & generate fallback PNGs
-gulp.task('images:svgs', function() {
+gulp.task('images:svg', function() {
     return gulp.src(src.images+'**/*.svg')
+        .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.cached('svgs'))
         .pipe($.svgmin())
         .pipe(gulp.dest(dist.images))
@@ -317,20 +294,14 @@ gulp.task('images:svgs', function() {
             showFiles: true
         }))
         .pipe($.svg2png())
-        .pipe($.imagemin({
-            progressive: true,
-            interlaced: true,
-            use: [
-                pngquant({ quality: pngQuality })
-            ]
-        }))
+        .pipe($.imagemin(imageminOpts))
         .pipe(gulp.dest(dist.images))
         .pipe(reload({stream: true}));
 });
 
 // Buld SVG Sprites
-gulp.task('images:svgs:sprites', function() {
-    return gulp.src(srcPath+'sprites/*.svg')
+gulp.task('images:sprites', function() {
+    return gulp.src(src.sprites+'*.svg')
         .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.svgmin())
         .pipe($.svgSprite({
@@ -338,18 +309,22 @@ gulp.task('images:svgs:sprites', function() {
                 css: {
                     dest: "./",
                     layout: "vertical",
-                    sprite: "images/sprites.svg",
+                    sprite: "sprites.svg",
                     bust: false,
                     render: {
                         scss: {
-                            dest: "sass/settings/_sprites.scss",
+                            dest: "../../src/sass/generated/_sprites.scss",
                             template: srcPath+"build/sprites-template.scss"
                         }
                     }
                 }
             }
         }))
-        .pipe(gulp.dest(srcPath));
+        .pipe(gulp.dest(dist.sprites))
+        .pipe($.filter(['*.svg']))
+        .pipe($.svg2png())
+        .pipe($.imagemin(imageminOpts))
+        .pipe(gulp.dest(dist.sprites))
 });
 
 //***********************************************
