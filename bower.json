@@ -3,7 +3,7 @@
   "dependencies": {
     "breakpoint-sass": "~2.5",
     "respondJs": "^1.4",
-    "picturefill": "^2.0",
+    "picturefill": "^2.3",
     "html5shiv": "~3.7"
   }
 }

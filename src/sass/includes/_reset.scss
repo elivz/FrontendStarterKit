@@ -81,7 +81,9 @@ a {
 img {
     max-width: 100%;
     height: auto;
+    margin: 0;
     border: 0;
+    -ms-interpolation-mode: bicubic;
 }
 
 svg:not(:root) {

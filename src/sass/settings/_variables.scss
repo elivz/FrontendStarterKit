@@ -48,9 +48,9 @@ $base-border-color: $gray-light;
 $base-border: 1px solid $base-border-color;
 
 // Transitions
-$base-timing: 0.2s;
-$base-easing: ease-in-out;
-$base-transition: $base-timing $base-easing;
+$base-duration: 0.2s;
+$base-easing: cubic-bezier(0.200, 0.070, 0.100, 1.025);
+$base-transition: $base-duration $base-easing;
 
 // Forms
 $form-border-color: $base-border-color;
@@ -65,11 +65,8 @@ $form-font-family: $base-font-family;
 // Overal dimensions
 $page-width: 75em; // 1200px
 $page-padding: 3em;
-$page-padding-medium: 1.5em;
-$page-padding-narrow: 1em;
 
 // Breakpoints
-$breakpoint-to-ems: true;
 $break-1: 400px;
 $break-2: 695px;
 $break-3: 900px;

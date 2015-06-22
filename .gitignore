@@ -12,3 +12,6 @@
 .sass-cache
 node_modules
 dist
+
+# Keep empty folders
+!.gitkeep

@@ -32,9 +32,9 @@
 var baseUrl = 'http://frontend.dev';
 
 // File paths
+var srcPath    = 'src/';
 var basePath   = 'public/';
-var srcPath    = basePath+'assets/src/';
-var distPath   = basePath+'assets/dist/';
+var distPath   = basePath+'assets/';
 var vendorPath = srcPath+'vendor/';
 
 var src = {
@@ -88,7 +88,6 @@ var jsComponents = [
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
 var jsHeaderComponents = [
-    vendorPath+'svg4everybody/svg4everybody.ie8.js',
     vendorPath+'picturefill/dist/picturefill.js'
 ];
 
@@ -138,9 +137,7 @@ gulp.task('styles', function() {
         ]))
         .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.sourcemaps.init())
-        .pipe($.sass({
-            precision: 4
-        }))
+        .pipe($.sass())
         .pipe($.autoprefixer({ browsers: autoprefixerOpts }))
         .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(dist.styles))
@@ -213,7 +210,7 @@ gulp.task('scripts:ie8', function() {
 });
 
 // Compile general-purpose compatibility scripts that should load in the head
-gulp.task('scripts:compatibility', function() {
+gulp.task('scripts:header', function() {
     return gulp.src([
             src.scripts+'header/*',
         ].concat(jsHeaderComponents))
@@ -339,10 +336,9 @@ gulp.task('watch', function () {
     gulp.watch([src.styles+'**/*.scss'], ['styles']);
     gulp.watch([src.scripts+'**/*.js'], ['scripts']);
     gulp.watch([src.fonts+'*'], ['fonts']);
-    gulp.watch([src.sprites+'**/*.svg'], ['images:svgs:sprites']);
+    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif}'], ['images:raster']);
     gulp.watch([src.images+'**/*.svg'], ['svgs']);
-    gulp.watch([src.sprites+'**/*.png'], ['images:sprites']);
-    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif}'], ['images:copy']);
+    gulp.watch([src.sprites+'**/*.svg'], ['images:sprites']);
 });
 
 // Clean distribution directories
@@ -354,7 +350,7 @@ gulp.task('default', ['clean'], function() {
         'styles',
         'scripts',
         'scripts:ie8',
-        'scripts:compatibility',
+        'scripts:header',
         'scripts:jquery',
         'fonts',
         'images'
