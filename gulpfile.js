@@ -130,16 +130,6 @@ var handleError = function(error) {
     this.emit('end');
 };
 
-// Image optimization settings
-var imageminOpts = {
-    progressive: true,
-    interlaced: true,
-    multipass: true,
-    use: [
-        pngquant({ quality: '65-80' })
-    ]
-};
-
 
 //***********************************************
 // STYLES
@@ -281,7 +271,7 @@ gulp.task('scripts:jquery', function() {
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
-    return gulp.src(src.fonts)
+    return gulp.src(src.fonts+'**/*')
         .pipe($.flatten())
         .pipe(gulp.dest(dist.fonts))
         .pipe(browserSync.stream())
@@ -296,9 +286,19 @@ gulp.task('fonts', function () {
 // IMAGES
 //***********************************************
 
+// Image optimization settings
+var imageminOpts = {
+    progressive: true,
+    interlaced: true,
+    multipass: true,
+    use: [
+        pngquant({ quality: '65-80' })
+    ]
+};
+
 // Optimize Images
 gulp.task('images', function () {
-    return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif,svg}')
+    return gulp.src(src.images+'**/*')
         .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.cached('images'))
         .pipe($.imagemin(imageminOpts))
@@ -355,8 +355,8 @@ gulp.task('watch', function () {
     gulp.watch([src.styles+'**/*.scss'], ['styles']);
     gulp.watch([src.scripts+'**/*.js'], ['scripts:main']);
     gulp.watch([src.scripts+'header/**/*.js'], ['scripts:header']);
-    gulp.watch([src.fonts+'*'], ['fonts']);
-    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif,svg}'], ['images']);
+    gulp.watch([src.fonts+'**/*'], ['fonts']);
+    gulp.watch([src.images+'**/*'], ['images']);
     gulp.watch([src.sprites+'**/*.svg'], ['sprites']);
 });
 

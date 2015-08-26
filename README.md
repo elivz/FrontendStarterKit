@@ -35,13 +35,17 @@ The front-end build process required Node v0.10.0 or higher. Once Node is instal
 
 ### Building Front-End Assets
 
-Use Gulp to compile SASS source files to CSS, minify JS and CSS, and optimize images. This command will also build a custom Modernizr script that includes all necessary tests (based on the existing CSS and JS).
+Use Gulp to compile SASS source files to CSS, minify JS and CSS, and optimize images. This command will also build a custom jQuery script, with only the modules you specify.
 
     gulp
 
 While actively developing, watch source files and rebuild as needed. This command will open a new browser tab using BrowserSync, which will automatically update to reflect changes you make to the source files. Additionally, it will provide you with an "external url" that you can use to view the site from other computers or devices on the same network, again with instant updates as you make changes.
 
     gulp watch
+
+To generate minified copies of all the assets without sourcemaps, run the following command:
+
+    gulp --production
 
 
 ## Specific Notes
