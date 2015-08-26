@@ -351,7 +351,7 @@ gulp.task('sprites', function() {
 gulp.task('watch', function () {
     browserSync.init(browserSyncConfig);
 
-    gulp.watch([basePath+'/**/*.html'], reload);
+    gulp.watch([basePath+'/**/*.html'], browserSync.reload);
     gulp.watch([src.styles+'**/*.scss'], ['styles']);
     gulp.watch([src.scripts+'**/*.js'], ['scripts:main']);
     gulp.watch([src.scripts+'header/**/*.js'], ['scripts:header']);

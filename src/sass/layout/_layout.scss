@@ -9,6 +9,21 @@
     box-shadow: 2px 2px 8px $gray-light;
 }
 
+.browserupgrade {
+    width: 100%;
+    padding: space(0.25) space();
+    font-size: $font-size-small;
+    font-weight: bold;
+    text-align: center;
+    color: $base-background-color;
+    background-color: $base-accent-color;
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+}
+
 .wrapper {
     @include clearfix;
     max-width: $page-width;
