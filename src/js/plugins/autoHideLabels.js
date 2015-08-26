@@ -7,7 +7,7 @@
     $.fn.autoHideLabels = function autoHideLabels(options) {
         const settings = {
             label: 'label',
-            input: 'textarea, input:not([type="checkbox"], [type="radio"], [type="button"], [type="submit"], [type="reset"], [type="file"], [type="hidden"])'
+            input: 'textarea, input:not([type="checkbox"], [type="radio"], [type="button"], [type="submit"], [type="reset"], [type="file"], [type="hidden"])',
         };
 
         if (options) {

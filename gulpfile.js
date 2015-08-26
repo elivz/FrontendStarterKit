@@ -33,7 +33,7 @@ var baseUrl = 'http://frontend.dev';
 
 // File paths
 var srcPath    = 'src/';
-var basePath   = 'public/';
+var basePath   = 'public_html/';
 var distPath   = basePath+'assets/';
 var vendorPath = srcPath+'vendor/';
 
@@ -83,37 +83,41 @@ var cssComponents = [
 
 // Additional Javascript files to include (outside of the src/js folder)
 var jsComponents = [
+    vendorPath+'respimage/respimage.js'
 ];
 
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
 var jsHeaderComponents = [
-    vendorPath+'picturefill/dist/picturefill.js'
 ];
 
 // Javascript that is only needed for IE8 and below
 var jsIE8Components = [
-    vendorPath+'htmlshiv/dist/html5shiv.js',
+    vendorPath+'htmlshiv/dist/html5shiv-printshiv.js',
     vendorPath+'respondJs/dest/respond.src.js'
 ];
 
-// Acceptible range of quality for PNG compressions
-var pngQuality = '65-80';
+// Enable or disable particular jQuery modules
+var jqueryFlags = ['-deprecated', '-core/ready', '-css', '-effects', '-event-alias'];
+
 
 //***********************************************
 // SET UP GULP
 //***********************************************
 
 // Include Gulp & Tools We'll Use
+var argv = require('yargs').argv;
 var gulp = require('gulp');
+var lazypipe = require('lazypipe');
+var pngquant = require('imagemin-pngquant');
+var browserSync = require('browser-sync').create();
 var $ = require('gulp-load-plugins')({
         pattern: 'gulp{-,.}*',
         replaceString: /gulp(\-|\.)/
     });
-var del = require('del');
-var pngquant = require('imagemin-pngquant');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
+
+// Set environment
+var devMode = !argv.production;
 
 // Error handler for Plumber
 var handleError = function(error) {
@@ -126,42 +130,82 @@ var handleError = function(error) {
     this.emit('end');
 };
 
+// Image optimization settings
+var imageminOpts = {
+    progressive: true,
+    interlaced: true,
+    multipass: true,
+    use: [
+        pngquant({ quality: '65-80' })
+    ]
+};
+
+
 //***********************************************
 // STYLES
 //***********************************************
 
+var stylesDevelopment = lazypipe()
+    .pipe($.plumber, { errorHandler: handleError })
+    .pipe($.sourcemaps.init)
+    .pipe($.sass)
+    .pipe($.autoprefixer, { browsers: autoprefixerOpts })
+    .pipe($.sourcemaps.write, './')
+    .pipe(gulp.dest, dist.styles)
+    .pipe($.filter, ['*.css'])
+    .pipe(browserSync.stream)
+    .pipe($.csso)
+    .pipe($.size, {
+        gzip: true,
+        showFiles: true
+    });
+
+var stylesProduction = lazypipe()
+    .pipe($.plumber, { errorHandler: handleError })
+    .pipe($.sass)
+    .pipe($.autoprefixer, { browsers: autoprefixerOpts })
+    .pipe($.csso)
+    .pipe(gulp.dest, dist.styles);
+
 // Compile Sass
 gulp.task('styles', function() {
+    var stylesTask = devMode ? stylesDevelopment : stylesProduction;
+
     return gulp.src(cssComponents.concat([
             src.styles+'*.scss'
         ]))
-        .pipe($.plumber({ errorHandler: handleError }))
-        .pipe($.sourcemaps.init())
-        .pipe($.sass())
-        .pipe($.autoprefixer({ browsers: autoprefixerOpts }))
-        .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(dist.styles))
-        .pipe($.filter(['*.css']))
-        .pipe(reload({stream: true}))
-        .pipe($.csso())
-        .pipe($.rename({suffix: '.min'}))
-        .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(dist.styles))
-        .pipe($.size({
-            gzip: true,
-            showFiles: true
-        }));
+        .pipe(stylesTask());
 });
+
 
 //***********************************************
 // JAVASCRIPT
 //***********************************************
 
-// Concatenate & Minify JS
-gulp.task('scripts', [
-    'scripts:lint',
-    'scripts:compile'
-]);
+var scriptsDevelopment = function(filename) {
+    return lazypipe()
+        .pipe($.plumber, { errorHandler: handleError })
+        .pipe($.sourcemaps.init)
+        .pipe($.concat, filename)
+        .pipe($.babel)
+        .pipe($.sourcemaps.write, './')
+        .pipe(gulp.dest, dist.scripts)
+        .pipe($.filter, ['*.js'])
+        .pipe(browserSync.stream)
+        .pipe($.uglify)
+        .pipe($.size, {
+            gzip: true,
+            showFiles: true
+        });
+};
+
+var scriptsProduction = function(filename) {
+    return lazypipe()
+        .pipe($.concat, filename)
+        .pipe($.babel)
+        .pipe($.uglify)
+        .pipe(gulp.dest, dist.scripts);
+};
 
 // Lint our Javascript
 gulp.task('scripts:lint', function() {
@@ -174,64 +218,62 @@ gulp.task('scripts:lint', function() {
         .pipe($.eslint.format());
 });
 
-gulp.task('scripts:compile', function() {
-    // Compile main site scripts
+// Compile main scripts to be included at the bottom of the page
+gulp.task('scripts:main', ['scripts:lint'], function() {
+    var fileName = 'scripts.js';
+    var scriptsTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
+
     return gulp.src(jsComponents.concat([
             src.scripts+'*/**/*.js',
             src.scripts+'*.js',
             '!'+src.scripts+'header{,/**}'
         ]))
         .pipe($.plumber({ errorHandler: handleError }))
-        .pipe($.sourcemaps.init())
-        .pipe($.concat('scripts.js'))
-        .pipe($.babel())
-        .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(dist.scripts))
-        .pipe($.filter(['*.js']))
-        .pipe($.uglify())
-        .pipe($.rename({suffix: '.min'}))
-        .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(dist.scripts))
-        .pipe(reload({stream: true}))
-        .pipe($.size({
-            gzip: true,
-            showFiles: true
-        }));
+        .pipe(scriptsTask());
 });
 
 // Compile IE8 compatibility scripts that should load in the head
 gulp.task('scripts:ie8', function() {
+    var fileName = 'ie8.js';
+    var scriptsTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
+
     return gulp.src(jsIE8Components)
-        .pipe($.sourcemaps.init())
-        .pipe($.concat('ie8.min.js'))
-        .pipe($.uglify())
-        .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(dist.scripts));
+        .pipe($.plumber({ errorHandler: handleError }))
+        .pipe(scriptsTask());
 });
 
 // Compile general-purpose compatibility scripts that should load in the head
 gulp.task('scripts:header', function() {
+    var fileName = 'header.js';
+    var scriptsTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
+
     return gulp.src([
-            src.scripts+'header/*',
+            src.scripts+'header/**/*.js',
         ].concat(jsHeaderComponents))
-        .pipe($.sourcemaps.init())
-        .pipe($.concat('compatibility.min.js'))
-        .pipe($.uglify())
-        .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(dist.scripts))
-        .pipe($.size({
-            gzip: true,
-            showFiles: true
-        }));
+        .pipe($.plumber({ errorHandler: handleError }))
+        .pipe(scriptsTask());
 });
 
 // Get the most recent 1.x version of jQuery
-gulp.task('scripts:jquery', function () {
-    $.jquery.src({ release: 1 })
-        .pipe($.uglify())
-        .pipe($.rename('jquery.min.js'))
-        .pipe(gulp.dest(dist.scripts));
+gulp.task('scripts:jquery', function() {
+    var fileName = 'jquery.1.js';
+    var verOneTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
+    fileName = 'jquery.2.js';
+    var verTwoTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
+
+    $.jquery.src({
+            release: 1,
+            flags: jqueryFlags
+        })
+        .pipe(verOneTask());
+
+    $.jquery.src({
+            release: 2,
+            flags: jqueryFlags
+        })
+        .pipe(verTwoTask());
 });
+
 
 //***********************************************
 // WEBFONTS
@@ -240,67 +282,42 @@ gulp.task('scripts:jquery', function () {
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
     return gulp.src(src.fonts)
+        .pipe($.flatten())
         .pipe(gulp.dest(dist.fonts))
+        .pipe(browserSync.stream())
         .pipe($.size({
             gzip: true,
             showFiles: true
         }));
 });
+
 
 //***********************************************
 // IMAGES
 //***********************************************
 
-gulp.task('images', [
-    'images:sprites',
-    'images:svg',
-    'images:raster'
-]);
-
-var imageminOpts = {
-    progressive: true,
-    interlaced: true,
-    use: [
-        pngquant({ quality: pngQuality })
-    ]
-};
-
 // Optimize Images
-gulp.task('images:raster', function () {
-    return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif}')
+gulp.task('images', function () {
+    return gulp.src(src.images+'**/*.{jpg,jpeg,png,gif,svg}')
         .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.cached('images'))
         .pipe($.imagemin(imageminOpts))
         .pipe(gulp.dest(dist.images))
-        .pipe(reload({stream: true}))
-        .pipe($.size({
-            gzip: true,
-            showFiles: true
-        }));
-});
-
-// Optimize SVGs & generate fallback PNGs
-gulp.task('images:svg', function() {
-    return gulp.src(src.images+'**/*.svg')
-        .pipe($.plumber({ errorHandler: handleError }))
-        .pipe($.cached('svgs'))
-        .pipe($.svgmin())
-        .pipe(gulp.dest(dist.images))
+        .pipe(browserSync.stream())
         .pipe($.size({
             gzip: true,
             showFiles: true
         }))
+        .pipe($.filter(['*.svg']))
         .pipe($.svg2png())
         .pipe($.imagemin(imageminOpts))
-        .pipe(gulp.dest(dist.images))
-        .pipe(reload({stream: true}));
+        .pipe(gulp.dest(dist.images));
 });
 
 // Buld SVG Sprites
-gulp.task('images:sprites', function() {
+gulp.task('sprites', function() {
     return gulp.src(src.sprites+'*.svg')
         .pipe($.plumber({ errorHandler: handleError }))
-        .pipe($.svgmin())
         .pipe($.svgSprite({
             mode: {
                 css: {
@@ -317,6 +334,7 @@ gulp.task('images:sprites', function() {
                 }
             }
         }))
+        .pipe($.imagemin(imageminOpts))
         .pipe(gulp.dest(dist.sprites))
         .pipe($.filter(['*.svg']))
         .pipe($.svg2png())
@@ -324,35 +342,37 @@ gulp.task('images:sprites', function() {
         .pipe(gulp.dest(dist.sprites))
 });
 
+
 //***********************************************
 // WATCH FOR CHANGES
 //***********************************************
 
 // Watch Files For Changes & Reload
 gulp.task('watch', function () {
-    browserSync(browserSyncConfig);
+    browserSync.init(browserSyncConfig);
 
     gulp.watch([basePath+'/**/*.html'], reload);
     gulp.watch([src.styles+'**/*.scss'], ['styles']);
-    gulp.watch([src.scripts+'**/*.js'], ['scripts']);
+    gulp.watch([src.scripts+'**/*.js'], ['scripts:main']);
+    gulp.watch([src.scripts+'header/**/*.js'], ['scripts:header']);
     gulp.watch([src.fonts+'*'], ['fonts']);
-    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif}'], ['images:raster']);
-    gulp.watch([src.images+'**/*.svg'], ['svgs']);
-    gulp.watch([src.sprites+'**/*.svg'], ['images:sprites']);
+    gulp.watch([src.images+'**/*.{jpg,jpeg,png,gif,svg}'], ['images']);
+    gulp.watch([src.sprites+'**/*.svg'], ['sprites']);
 });
 
 // Clean distribution directories
-gulp.task('clean', del.bind(null, [distPath], {dot: true}));
+gulp.task('clean', require('del').bind(null, [distPath], {dot: true}));
 
 // Default Task
 gulp.task('default', ['clean'], function() {
     gulp.start(
         'styles',
-        'scripts',
+        'scripts:main',
         'scripts:ie8',
         'scripts:header',
         'scripts:jquery',
         'fonts',
-        'images'
+        'images',
+        'sprites'
     );
 });
