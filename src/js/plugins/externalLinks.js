@@ -1,14 +1,23 @@
 /*
  * Open links to a different domain in a new window
  */
-((document, window) => {
-    const externalTest = new RegExp('/' + window.location.host + '/');
-    const links = document.getElementsByTagName('a');
-    const length = links.length;
 
-    for (let i = 0; i < length; i++) {
-        if (!externalTest.test(links[i].href)) {
-            links[i].target = '_blank';
-        }
-    }
+((document, window) => {
+    window.externalLinks = {
+        // RegEx to test if a link goes to a different hostname
+        localTest: new RegExp('/' + window.location.host + '/'),
+
+        init: function init(parent = document.body) {
+            // Find the links
+            const links = parent.getElementsByTagName('a');
+            let length = links.length;
+
+            // Add a target attribute to any links that match
+            while (length--) {
+                if (!this.localTest.test(links[length].href)) {
+                    links[length].target = '_blank';
+                }
+            }
+        },
+    };
 }(document, window));

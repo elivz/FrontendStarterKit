@@ -1,11 +1,10 @@
-(($, document) => {
-    const site = {
-        init() {
-            // Run jQuery plugins
-            $('.inplace').autoHideLabels();
-        }
-    };
+(($) => {
+    // Open external links in a new tab
+    externalLinks.init();
 
-    // Start things off
-    site.init();
-}(jQuery, document));
+    // Replace SVGs with PNGs in older browsers
+    svgFallback.init();
+
+    // Run jQuery plugins
+    $('.inplace').autoHideLabels();
+}(jQuery));

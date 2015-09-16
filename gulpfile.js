@@ -23,8 +23,6 @@
  *
  */
 
-'use strict';
-
 /************************************************
  * CONFIGURATION
  ************************************************/
@@ -33,7 +31,7 @@ var baseUrl = 'http://frontend.dev';
 
 // File paths
 var srcPath    = 'src/';
-var basePath   = 'public_html/';
+var basePath   = 'dist/public_html/';
 var distPath   = basePath+'assets/';
 var vendorPath = srcPath+'vendor/';
 
@@ -56,10 +54,10 @@ var dist = {
 // Uncomment to test static files without a local server
 // var browserSyncConfig = {
 //     server: {
-//         baseDir: './'+basePath,
-//         open: 'external',
-//         xip: true
-//     }
+//         baseDir: './'+basePath
+//     },
+//     open: 'external',
+//     xip: true
 // };
 // ----- OR -----
 // Uncomment when running a local server, and enter the test domain
@@ -81,14 +79,15 @@ var autoprefixerOpts = [
 var cssComponents = [
 ];
 
-// Additional Javascript files to include (outside of the src/js folder)
-var jsComponents = [
-    vendorPath+'respimage/respimage.js'
-];
-
 // Additional Javascript files to load in the head
 // (outside of the src/js/compatibility folder)
 var jsHeaderComponents = [
+];
+
+// Additional Javascript files to include (outside of the src/js folder)
+var jsComponents = [
+    vendorPath+'window.requestanimationframe/requestanimationframe.js',
+    vendorPath+'respimage/respimage.js'
 ];
 
 // Javascript that is only needed for IE8 and below
@@ -111,10 +110,7 @@ var gulp = require('gulp');
 var lazypipe = require('lazypipe');
 var pngquant = require('imagemin-pngquant');
 var browserSync = require('browser-sync').create();
-var $ = require('gulp-load-plugins')({
-        pattern: 'gulp{-,.}*',
-        replaceString: /gulp(\-|\.)/
-    });
+var $ = require('gulp-load-plugins')();
 
 // Set environment
 var devMode = !argv.production;
@@ -200,7 +196,7 @@ var scriptsProduction = function(filename) {
 // Lint our Javascript
 gulp.task('scripts:lint', function() {
     return gulp.src([
-            src.scripts+'*/**/*.js',
+            src.scripts+'**/*.js',
             '!'+src.scripts+'header{,/**}'
         ])
         .pipe($.cached('esLint'))
@@ -222,16 +218,6 @@ gulp.task('scripts:main', ['scripts:lint'], function() {
         .pipe(scriptsTask());
 });
 
-// Compile IE8 compatibility scripts that should load in the head
-gulp.task('scripts:ie8', function() {
-    var fileName = 'ie8.js';
-    var scriptsTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
-
-    return gulp.src(jsIE8Components)
-        .pipe($.plumber({ errorHandler: handleError }))
-        .pipe(scriptsTask());
-});
-
 // Compile general-purpose compatibility scripts that should load in the head
 gulp.task('scripts:header', function() {
     var fileName = 'header.js';
@@ -244,7 +230,17 @@ gulp.task('scripts:header', function() {
         .pipe(scriptsTask());
 });
 
-// Get the most recent 1.x version of jQuery
+// Compile IE8 compatibility scripts that should load in the head
+gulp.task('scripts:ie8', function() {
+    var fileName = 'ie8.js';
+    var scriptsTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
+
+    return gulp.src(jsIE8Components)
+        .pipe($.plumber({ errorHandler: handleError }))
+        .pipe(scriptsTask());
+});
+
+// Get the most recent copies of jQuery
 gulp.task('scripts:jquery', function() {
     var fileName = 'jquery.1.js';
     var verOneTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
@@ -297,7 +293,9 @@ var imageminOpts = {
 };
 
 // Optimize Images
-gulp.task('images', function () {
+gulp.task('images', function() {
+    var retinaFilter = $.filter(['**/*@2x.png'], {restore: true});
+
     return gulp.src(src.images+'**/*')
         .pipe($.plumber({ errorHandler: handleError }))
         .pipe($.cached('images'))
@@ -308,6 +306,11 @@ gulp.task('images', function () {
             gzip: true,
             showFiles: true
         }))
+        .pipe(retinaFilter)
+        .pipe($.unretina())
+        .pipe($.imagemin(imageminOpts))
+        .pipe(gulp.dest(dist.images))
+        .pipe(retinaFilter.restore)
         .pipe($.filter(['*.svg']))
         .pipe($.svg2png())
         .pipe($.imagemin(imageminOpts))
@@ -368,8 +371,8 @@ gulp.task('default', ['clean'], function() {
     gulp.start(
         'styles',
         'scripts:main',
-        'scripts:ie8',
         'scripts:header',
+        'scripts:ie8',
         'scripts:jquery',
         'fonts',
         'images',

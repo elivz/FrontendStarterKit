@@ -73,14 +73,14 @@ $break-3: 900px;
 $break-4: 1100px;
 
 // Breakpoint shortcuts
-$tiny-only: (max-width: $break-1);
-$small-only: (min-width: $break-1) and (max-width: $break-2);
-$small-down: (max-width: $break-2);
-$small-up: $break-1;
-$medium-only: (min-width: $break-2) and (max-width: $break-3);
-$medium-down: (max-width: $break-3);
-$medium-up: $break-2;
-$large-only: (min-width: $break-3) and (max-width: $break-4);
-$large-down: (max-width: $break-4);
-$large-up: $break-3;
-$xlarge-only: $break-4;
+$tiny-only: max-width $break-1;
+$small-only: ($break-1 + 1) ($break-2);
+$small-down: max-width $break-2;
+$small-up: $break-1 + 1;
+$medium-only: ($break-2 + 1) ($break-3);
+$medium-down: max-width $break-3;
+$medium-up: $break-2 + 1;
+$large-only: ($break-3 + 1) ($break-4);
+$large-down: max-width $break-4;
+$large-up: $break-3 + 1;
+$xlarge-only: $break-4 + 1;

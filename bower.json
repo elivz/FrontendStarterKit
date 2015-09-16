@@ -4,6 +4,7 @@
     "breakpoint-sass": "~2.5",
     "html5shiv": "~3.7",
     "respimage": "~1.4.2",
-    "respondJs": "^1.4"
+    "respondJs": "^1.4",
+    "window.requestanimationframe": "~1.0.0"
   }
 }

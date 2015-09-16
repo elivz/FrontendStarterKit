@@ -1,5 +1,8 @@
 // Avoid `console` errors in browsers that lack a console.
-(function(window) {
+"use strict";
+
+(function (window) {
     var console = window.console = window.console || {};
-    console.log = console.log || function() {};
+    console.log = console.log || function () {};
 })(window);
+//# sourceMappingURL=header.js.map
