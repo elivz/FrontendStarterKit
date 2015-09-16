@@ -79,11 +79,6 @@ var autoprefixerOpts = [
 var cssComponents = [
 ];
 
-// Additional Javascript files to load in the head
-// (outside of the src/js/compatibility folder)
-var jsHeaderComponents = [
-];
-
 // Additional Javascript files to include (outside of the src/js folder)
 var jsComponents = [
     vendorPath+'window.requestanimationframe/requestanimationframe.js',
@@ -92,8 +87,9 @@ var jsComponents = [
 
 // Javascript that is only needed for IE8 and below
 var jsIE8Components = [
-    vendorPath+'htmlshiv/dist/html5shiv-printshiv.js',
-    vendorPath+'respondJs/dest/respond.src.js'
+    vendorPath+'html5shiv/dist/html5shiv-printshiv.js',
+    vendorPath+'respondJs/dest/respond.src.js',
+    vendorPath+'selectivizr/selectivizr.js'
 ];
 
 // Enable or disable particular jQuery modules
@@ -196,8 +192,7 @@ var scriptsProduction = function(filename) {
 // Lint our Javascript
 gulp.task('scripts:lint', function() {
     return gulp.src([
-            src.scripts+'**/*.js',
-            '!'+src.scripts+'header{,/**}'
+            src.scripts+'**/*.js'
         ])
         .pipe($.cached('esLint'))
         .pipe($.eslint())
@@ -209,23 +204,12 @@ gulp.task('scripts:main', ['scripts:lint'], function() {
     var fileName = 'scripts.js';
     var scriptsTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
 
-    return gulp.src(jsComponents.concat([
-            src.scripts+'*/**/*.js',
+    return gulp.src([src.scripts+'libs/**/*.js']
+        .concat(jsComponents)
+        .concat([
+            src.scripts+'plugins/**/*.js',
             src.scripts+'*.js',
-            '!'+src.scripts+'header{,/**}'
         ]))
-        .pipe($.plumber({ errorHandler: handleError }))
-        .pipe(scriptsTask());
-});
-
-// Compile general-purpose compatibility scripts that should load in the head
-gulp.task('scripts:header', function() {
-    var fileName = 'header.js';
-    var scriptsTask = devMode ? scriptsDevelopment(fileName) : scriptsProduction(fileName);
-
-    return gulp.src([
-            src.scripts+'header/**/*.js',
-        ].concat(jsHeaderComponents))
         .pipe($.plumber({ errorHandler: handleError }))
         .pipe(scriptsTask());
 });
@@ -357,7 +341,6 @@ gulp.task('watch', function () {
     gulp.watch([basePath+'/**/*.html'], browserSync.reload);
     gulp.watch([src.styles+'**/*.scss'], ['styles']);
     gulp.watch([src.scripts+'**/*.js'], ['scripts:main']);
-    gulp.watch([src.scripts+'header/**/*.js'], ['scripts:header']);
     gulp.watch([src.fonts+'**/*'], ['fonts']);
     gulp.watch([src.images+'**/*'], ['images']);
     gulp.watch([src.sprites+'**/*.svg'], ['sprites']);
@@ -371,7 +354,6 @@ gulp.task('default', ['clean'], function() {
     gulp.start(
         'styles',
         'scripts:main',
-        'scripts:header',
         'scripts:ie8',
         'scripts:jquery',
         'fonts',

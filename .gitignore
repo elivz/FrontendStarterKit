@@ -11,8 +11,7 @@
 # Asset pipeline files
 .sass-cache
 node_modules
-src/vendor/*
-public_html/assets/*
+src/vendor
 
 # Keep empty folders
 !.gitkeep

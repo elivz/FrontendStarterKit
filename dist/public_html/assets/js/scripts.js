@@ -1,3 +1,11 @@
+// Avoid `console` errors in browsers that lack a console.
+"use strict";
+
+(function (window) {
+    var console = window.console = window.console || {};
+    console.log = console.log || function () {};
+})(window);
+
 /**
  * requestAnimationFrame polyfill v1.0.0
  * requires Date.now
@@ -6,8 +14,6 @@
  * Released under the MIT license
  * github.com/Polyfiller/requestAnimationFrame
  */
-"use strict";
-
 window.requestAnimationFrame || (function (window) {
 
     'use strict';
@@ -402,9 +408,9 @@ window.requestAnimationFrame || (function (window) {
 
             // Find the links
             var links = parent.getElementsByTagName('a');
-            var length = links.length;
 
             // Add a target attribute to any links that match
+            var length = links.length;
             while (length--) {
                 if (!this.localTest.test(links[length].href)) {
                     links[length].target = '_blank';
@@ -448,6 +454,13 @@ window.requestAnimationFrame || (function (window) {
 })(document, window);
 
 (function ($) {
+    if (document.classList) {
+        document.classList.remove('no-js');
+        document.classList.add('js');
+    } else {
+        document.className = 'js';
+    }
+
     // Open external links in a new tab
     externalLinks.init();
 

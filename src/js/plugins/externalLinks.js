@@ -10,9 +10,9 @@
         init: function init(parent = document.body) {
             // Find the links
             const links = parent.getElementsByTagName('a');
-            let length = links.length;
 
             // Add a target attribute to any links that match
+            let length = links.length;
             while (length--) {
                 if (!this.localTest.test(links[length].href)) {
                     links[length].target = '_blank';
