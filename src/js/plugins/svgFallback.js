@@ -10,10 +10,16 @@
 ((document, window) => {
     window.svgFallback = {
         svgSupport: (() => {
-            return document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1');
+            return !!document.createElementNS &&
+                   !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect;
         }()),
 
         init: function init(attr = 'data-png') {
+            this.replaceImgSrc(attr);
+            this.addClass();
+        },
+
+        replaceImgSrc: function replaceImgSrc(attr) {
             if (!this.svgSupport) {
                 const images = document.getElementsByTagName('img');
                 let imgLength = images.length;
@@ -25,6 +31,11 @@
                     }
                 }
             }
+        },
+
+        addClass: function addClass() {
+            const className = this.svgSupport ? ' svg' : ' no-svg';
+            document.documentElement.className = document.documentElement.className + className;
         },
     };
 }(document, window));

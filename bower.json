@@ -2,10 +2,7 @@
   "name": "frontend-starter-kit",
   "devDependencies": {
     "breakpoint-sass": "~2.5",
-    "html5shiv": "~3.7",
     "respimage": "~1.4.2",
-    "respondJs": "^1.4",
-    "selectivizr": "~1.0.2",
-    "window.requestanimationframe": "~1.0.0"
+    "respondJs": "^1.4"
   }
 }

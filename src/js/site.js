@@ -1,10 +1,5 @@
 (($) => {
-    if (document.classList) {
-        document.classList.remove('no-js');
-        document.classList.add('js');
-    } else {
-        document.className = 'js';
-    }
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 
     // Open external links in a new tab
     externalLinks.init();

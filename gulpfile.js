@@ -52,20 +52,20 @@ var dist = {
 };
 
 // Uncomment to test static files without a local server
-// var browserSyncConfig = {
-//     server: {
-//         baseDir: './'+basePath
-//     },
-//     open: 'external',
-//     xip: true
-// };
-// ----- OR -----
-// Uncomment when running a local server, and enter the test domain
 var browserSyncConfig = {
-    proxy: baseUrl,
+    server: {
+        baseDir: './'+basePath
+    },
     open: 'external',
     xip: true
 };
+// ----- OR -----
+// Uncomment when running a local server, and enter the test domain
+// var browserSyncConfig = {
+//     proxy: baseUrl,
+//     open: 'external',
+//     xip: true
+// };
 
 // Options for AutoPrefixer
 var autoprefixerOpts = [
@@ -81,15 +81,12 @@ var cssComponents = [
 
 // Additional Javascript files to include (outside of the src/js folder)
 var jsComponents = [
-    vendorPath+'window.requestanimationframe/requestanimationframe.js',
     vendorPath+'respimage/respimage.js'
 ];
 
 // Javascript that is only needed for IE8 and below
 var jsIE8Components = [
-    vendorPath+'html5shiv/dist/html5shiv-printshiv.js',
-    vendorPath+'respondJs/dest/respond.src.js',
-    vendorPath+'selectivizr/selectivizr.js'
+    vendorPath+'respondJs/src/respond.js'
 ];
 
 // Enable or disable particular jQuery modules
