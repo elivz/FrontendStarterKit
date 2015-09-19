@@ -1,5 +1,10 @@
 {
   "name": "frontend-starter-kit",
+  "homepage": "https://elivz.com/",
+  "authors": [
+    "Eli Van Zoeren <eli@elivz.com>"
+  ],
+  "private": true,
   "devDependencies": {
     "breakpoint-sass": "~2.5",
     "respimage": "~1.4.2",

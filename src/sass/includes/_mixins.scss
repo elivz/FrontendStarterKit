@@ -174,7 +174,7 @@ $line-height-precision: 4 !default;
 
 // Show an ellipsis on text overflow
 // Requires inline-block or block for proper styling
-@mixin text-overflow() {
+@mixin text-overflow {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -183,7 +183,7 @@ $line-height-precision: 4 !default;
 // Turn off the bullets for an entire list
 @mixin list-unstyled($no-margin: true) {
     list-style-type: none;
-    padding-left: 0;
+    margin-left: 0;
 
     @if $no-margin {
         margin-top: 0;
@@ -212,7 +212,7 @@ $line-height-precision: 4 !default;
 
 // Create a CSS triangle - best applied to empty or generated elements
 // https://davidtheclark.github.io/scut/triangle.html
-@mixin scut-triangle($direction: right, $size: 0.75em, $color: inherit) {
+@mixin triangle($direction: right, $size: 0.75em, $ratio: 2 $color: inherit) {
     display: inline-block;
     height: 0;
     width: 0;
@@ -236,17 +236,17 @@ $line-height-precision: 4 !default;
     @if ($direction == up) or ($direction == down) {
         // For up and down, width gets two borders but height only one,
         // so divide second border-width value by 2
-        $border-widths: $height ($width / 2);
+        $border-widths: $height ($width / $ratio);
     }
     @else if ($direction == right) or ($direction == left) {
         // For right and left, height gets two borders but width only one,
-        // so divide first border-width value by 2
-        $border-widths: ($height / 2) $width;
+        // so divide first border-width value by $ratio
+        $border-widths: ($height / $ratio) $width;
     }
     @else {
         // For right triangles (the rest), both sides get two borders,
-        // so divide both by 2
-        $border-widths: ($height / 2) ($width / 2);
+        // so divide both by $ratio
+        $border-widths: ($height / $ratio) ($width / $ratio);
     }
 
     border-width: $border-widths;

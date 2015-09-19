@@ -1,4 +1,21 @@
 {
+  "name": "frontend-starter-kit",
+  "version": "1.0",
+  "author": "Eli Van Zoeren <eli@elivz.com>",
+  "homepage": "https://elivz.com/",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:elivz/FrontendStarterKit.git"
+  },
+  "scripts": {
+    "build": "bower install && gulp",
+    "jshint": "gulp scripts:lint"
+  },
+  "engines": {
+    "node": ">= 0.12.0",
+    "npm": ">=2.1.5"
+  },
   "devDependencies": {
     "babel": "^5.8.23",
     "babel-eslint": "^4.1.0",
@@ -33,9 +50,5 @@
     "lazypipe": "^1.0.1",
     "vinyl": "^0.5.0",
     "yargs": "^3.21.0"
-  },
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "private": true
+  }
 }

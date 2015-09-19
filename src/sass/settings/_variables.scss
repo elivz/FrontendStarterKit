@@ -49,7 +49,8 @@ $base-border: 1px solid $base-border-color;
 
 // Transitions
 $base-duration: 0.2s;
-$base-easing: cubic-bezier(0.200, 0.070, 0.100, 1.025);
+$duration-slow: 0.45s;
+$base-easing: $ease-out;
 $base-transition: $base-duration $base-easing;
 
 // Forms
@@ -70,7 +71,7 @@ $page-padding: 3em;
 $break-1: 400px;
 $break-2: 695px;
 $break-3: 900px;
-$break-4: 1100px;
+$break-4: 1200px;
 
 // Breakpoint shortcuts
 $tiny-only: max-width $break-1;
