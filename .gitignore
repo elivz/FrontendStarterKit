@@ -5,13 +5,14 @@
 .sublime-gulp.cache
 *.tmp
 
-# Vagrant
-.vagrant
-
 # Asset pipeline files
 .sass-cache
 node_modules
+npm-debug.log
 src/vendor
+
+# Distribution files
+dist/public_html/assets
 
 # Keep empty folders
 !.gitkeep

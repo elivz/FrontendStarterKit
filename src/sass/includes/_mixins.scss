@@ -212,7 +212,7 @@ $line-height-precision: 4 !default;
 
 // Create a CSS triangle - best applied to empty or generated elements
 // https://davidtheclark.github.io/scut/triangle.html
-@mixin triangle($direction: right, $size: 0.75em, $ratio: 2 $color: inherit) {
+@mixin triangle($direction: right, $size: 0.75em, $ratio: 2, $color: inherit) {
     display: inline-block;
     height: 0;
     width: 0;

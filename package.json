@@ -1,6 +1,6 @@
 {
   "name": "frontend-starter-kit",
-  "version": "1.0",
+  "version": "1.1.0",
   "author": "Eli Van Zoeren <eli@elivz.com>",
   "homepage": "https://elivz.com/",
   "private": true,
@@ -8,16 +8,20 @@
     "type": "git",
     "url": "git@github.com:elivz/FrontendStarterKit.git"
   },
-  "scripts": {
-    "build": "bower install && gulp",
-    "jshint": "gulp scripts:lint"
-  },
   "engines": {
     "node": ">= 0.12.0",
     "npm": ">=2.1.5"
   },
+  "scripts": {
+    "watch": "gulp watch",
+    "build": "gulp",
+    "production": "gulp --production",
+    "lint": "gulp scripts:lint"
+  },
+  "dependencies": {},
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-core": "^5.8.3",
     "babel-eslint": "^4.1.0",
     "bower": "~1.5.2",
     "browser-sync": "~2.9.3",
@@ -34,12 +38,12 @@
     "gulp-flatten": "^0.2.0",
     "gulp-imagemin": "^2.3",
     "gulp-jquery": "^1.0.2",
-    "gulp-load-plugins": "~0.10",
-    "gulp-modernizr": "^1.0.0-alpha",
+    "gulp-minify-css": "^1.2.1",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "~1.0.1",
     "gulp-rename": "~1.2.2",
     "gulp-sass": "^2.0",
+    "gulp-sequence": "^0.4.1",
     "gulp-size": "^2.0.0",
     "gulp-sourcemaps": "~1.5.2",
     "gulp-svg-sprite": "^1.2.4",
@@ -48,6 +52,8 @@
     "gulp-unretina": "^0.1.2",
     "imagemin-pngquant": "^4.1",
     "lazypipe": "^1.0.1",
+    "path": "^0.12.7",
+    "require-dir": "^0.3.0",
     "vinyl": "^0.5.0",
     "yargs": "^3.21.0"
   }

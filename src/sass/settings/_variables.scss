@@ -50,7 +50,7 @@ $base-border: 1px solid $base-border-color;
 // Transitions
 $base-duration: 0.2s;
 $duration-slow: 0.45s;
-$base-easing: $ease-out;
+$base-easing: ease-out;
 $base-transition: $base-duration $base-easing;
 
 // Forms
