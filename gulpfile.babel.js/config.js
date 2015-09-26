@@ -63,7 +63,8 @@ const config = {
                     filename: 'main.js',
                     src: path.join(paths.src, 'js/main'),
                     dependencies: [
-                        path.join(paths.vendor, 'respimage/respimage.js')
+                        path.join(paths.vendor, 'respimage/respimage.js'),
+                        path.join(paths.vendor, 'fastclick/lib/fastclick.js')
                     ]
                 },
                 header: {

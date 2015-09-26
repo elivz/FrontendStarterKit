@@ -7,6 +7,7 @@
   "private": true,
   "devDependencies": {
     "breakpoint-sass": "~2.5",
+    "fastclick": "~1.0.6",
     "respimage": "~1.4.2",
     "respondJs": "^1.4"
   }
