@@ -2,20 +2,25 @@
 
 ## Project Tree
 
-    public_html/assets
-      - css       # The compiled CSS files
-      - images    # Optimized image files
-      - fonts     # Locally-hosted webfont files
-      - js        # Concatenated Javascript files
+    dist/public_html # This will be your webroot
+      - assets   
+        - css     # The compiled CSS files
+        - images  # Optimized image files
+        - fonts   # Locally-hosted webfont files
+        - js      # Concatenated Javascript files
     src
       - fonts     # Any webfont files here will be copied verbatim to the dist folder
       - images    # Unoptimized image files, as exported from Photoshop, etc.
       - js        # All custom scripts for the theme
-        - header  # JS files that need to run in the head, before the DOM is parsed
-        - plugins # Custom-written jQuery plugins to perform specific tasks
+        - header  # Scripts that should be included in the header of the document
+        - ie8     # Scripts that are only needed for IE8 compatibility
+        - main    # Everything in here will be compiled into the main script and included at the bottom of the document
+          - libs    # JS files that should be included first, as other scripts depend on them
+          - plugins # Custom-written plugins to perform specific tasks
       - sass      # SCSS source files
                   # Autoprefixer will add browser support as appropriate
       - sprites   # SVG image files that will be collected into a single sprite file
+      - templates # HTML/PHP/Twig templates
       - vendor    # Third-party components, installed via Bower
 
 
@@ -50,13 +55,15 @@ To generate minified copies of all the assets without sourcemaps, run the follow
 
 ## Specific Notes
 
+Most project-specific configuration can be accomplished via the `gulpfile.babel.js/config.js` file.
+
 ### CSS
 
 We run Autoprefixer on the compiled CSS files to add additional browser support wherever possible.
 
 ### Scripts
 
-Javascript files will be compiled from the `src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Files saved in the `plugins` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
+Javascript files will be compiled from the `src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Files saved in the `libs` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
 
 Files in the `src/js/header` folder will be loaded in the head of the document.
 
