@@ -21,12 +21,11 @@
                   # Autoprefixer will add browser support as appropriate
       - sprites   # SVG image files that will be collected into a single sprite file
       - templates # HTML/PHP/Twig templates
-      - vendor    # Third-party components, installed via Bower
 
 
 ## Installing Front-End Dependancies
 
-We use [Bower](http://bower.io) to manage front-end components like JS libraries & plugins. Run `bower install --save-dev [package-name]` to install a new component.
+We use [NPM](http://npmjs.com) to manage all dependencies, including front-end JS libraries & plugins. Run `npm install --save-dev [package-name]` to install a new component.
 
 
 ## Front-End Build Process
@@ -36,7 +35,6 @@ We use [Bower](http://bower.io) to manage front-end components like JS libraries
 The front-end build process required Node v0.10.0 or higher. Once Node is installed, run the following commands to install all project dependancies:
 
     npm install
-    bower install
 
 ### Building Front-End Assets
 

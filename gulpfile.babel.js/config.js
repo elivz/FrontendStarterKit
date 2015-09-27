@@ -8,7 +8,7 @@ const paths = {
     src: './src',
     dist: './dist/public_html/assets',
     webroot: './dist/public_html',
-    vendor: './src/vendor'
+    vendor: './node_modules'
 };
 
 const config = {
@@ -59,24 +59,17 @@ const config = {
             dist: path.join(paths.dist, 'scripts'),
             extensions: ['js', 'js'],
             entries: {
+                header: {
+                    src: path.join(paths.src, 'js/header'),
+                    filename: 'header.js',
+                    dependencies: []
+                },
                 main: {
                     filename: 'main.js',
                     src: path.join(paths.src, 'js/main'),
                     dependencies: [
                         path.join(paths.vendor, 'respimage/respimage.js'),
                         path.join(paths.vendor, 'fastclick/lib/fastclick.js')
-                    ]
-                },
-                header: {
-                    src: path.join(paths.src, 'js/header'),
-                    filename: 'header.js',
-                    dependencies: []
-                },
-                ie8: {
-                    src: path.join(paths.src, 'js/ie8'),
-                    filename: 'ie8.js',
-                    dependencies: [
-                        path.join(paths.vendor, 'respondJs/src/respond.js')
                     ]
                 }
             }

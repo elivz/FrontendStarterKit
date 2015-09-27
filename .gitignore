@@ -9,7 +9,6 @@
 .sass-cache
 node_modules
 npm-debug.log
-src/vendor
 
 # Distribution files
 dist/public_html/assets

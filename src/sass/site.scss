@@ -9,8 +9,7 @@
 @import "settings/variables";
 
 // Third-party libraries
-@import "../vendor/sassy-maps/sass/memo";
-@import "../vendor/breakpoint-sass/stylesheets/breakpoint";
+@import "../../node_modules/breakpoint-sass/stylesheets/breakpoint";
 
 // Auto-generated files
 @import "generated/sprites";

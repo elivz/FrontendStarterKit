@@ -52,6 +52,14 @@ gulp.task('scripts:lint', () => {
         .pipe(eslint.format());
 });
 
+gulp.task('scripts:header', () => {
+    const task = tasks[config.mode](config.tasks.scripts.entries.header.filename);
+    const src = config.tasks.scripts.entries.header.dependencies
+        .concat(path.join(config.tasks.scripts.entries.header.src, '**/*.js'));
+
+    return gulp.src(src).pipe(task());
+});
+
 gulp.task('scripts:main', ['scripts:lint'], () => {
     const task = tasks[config.mode](config.tasks.scripts.entries.main.filename);
     const srcPath = config.tasks.scripts.entries.main.src;
@@ -63,27 +71,10 @@ gulp.task('scripts:main', ['scripts:lint'], () => {
     return gulp.src(src).pipe(task());
 });
 
-gulp.task('scripts:header', () => {
-    const task = tasks[config.mode](config.tasks.scripts.entries.header.filename);
-    const src = config.tasks.scripts.entries.header.dependencies
-        .concat(path.join(config.tasks.scripts.entries.header.src, '**/*.js'));
-
-    return gulp.src(src).pipe(task());
-});
-
-gulp.task('scripts:ie8', () => {
-    const task = tasks[config.mode](config.tasks.scripts.entries.ie8.filename);
-    const src = config.tasks.scripts.entries.ie8.dependencies
-        .concat(path.join(config.tasks.scripts.entries.ie8.src, '**/*.js'));
-
-    return gulp.src(config.tasks.scripts.entries.ie8.dependencies).pipe(task());
-});
-
 // Default Task
 gulp.task('scripts', () => {
     gulp.start(
-        'scripts:main',
         'scripts:header',
-        'scripts:ie8'
+        'scripts:main'
     );
 });
