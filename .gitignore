@@ -7,8 +7,9 @@
 
 # Asset pipeline files
 .sass-cache
-node_modules
 npm-debug.log
+node_modules
+src/rev-manifest.json
 
 # Distribution files
 dist/public_html/assets

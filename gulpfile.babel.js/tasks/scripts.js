@@ -10,13 +10,16 @@ import filter from 'gulp-filter';
 import lazypipe from 'lazypipe';
 import path from 'path';
 import plumber from 'gulp-plumber';
+import rev from 'gulp-rev';
+import sequence from  'gulp-sequence';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 
 const paths = {
     src: config.tasks.scripts.src,
-    dist: config.tasks.scripts.dist
+    dist: config.tasks.scripts.dist,
+    manifest: path.join(config.paths.src, 'rev-manifest.json')
 };
 
 const tasks = {
@@ -28,7 +31,7 @@ const tasks = {
             .pipe(babel)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(filter, ['*.js'])
+            .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
             .pipe(browserSync.stream)
             .pipe(uglify)
             .pipe(size, config.output.size);
@@ -37,11 +40,15 @@ const tasks = {
         return lazypipe()
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
-            .pipe(concat, filename)
+            .pipe(concat, {path: filename, cwd: ''})
             .pipe(babel)
             .pipe(uglify)
+            .pipe(rev)
             .pipe(sourcemaps.write, '.')
-            .pipe(gulp.dest, paths.dist);
+            .pipe(gulp.dest, paths.dist)
+            .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
+            .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})
+            .pipe(gulp.dest, config.paths.src);
     }
 };
 
@@ -72,9 +79,7 @@ gulp.task('scripts:main', ['scripts:lint'], () => {
 });
 
 // Default Task
-gulp.task('scripts', () => {
-    gulp.start(
-        'scripts:header',
-        'scripts:main'
-    );
-});
+gulp.task('scripts', sequence(
+    'scripts:header',
+    'scripts:main'
+));

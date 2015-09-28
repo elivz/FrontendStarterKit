@@ -9,6 +9,7 @@ body {
 %header {
     margin: 0;
     font-family: $header-font-family;
+    text-rendering: optimizeLegibility;
 }
 
 h1, .h1 {
@@ -53,13 +54,8 @@ a {
     text-decoration: none;
     transition: color $base-transition;
 
-    &:hover {
+    &:hover, &:active, &:focus {
         color: $hover-link-color;
-    }
-
-    &:active, &:focus {
-        color: $hover-link-color;
-        outline: none;
     }
 }
 

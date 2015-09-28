@@ -10,10 +10,10 @@ gulp.task('default', sequence(
     [
         'scripts',
         'jquery',
-        'templates',
         'fonts',
         'images',
         'sprites'
     ],
-    'styles'
+    'styles',
+    'templates'
 ));
