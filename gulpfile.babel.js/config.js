@@ -76,6 +76,7 @@ const config = {
         },
 
         jquery: {
+            src: path.join(paths.vendor, 'jquery/dist/jquery.js'),
             dist: path.join(paths.dist, 'scripts'),
             extensions: ['js'],
             flags: [
