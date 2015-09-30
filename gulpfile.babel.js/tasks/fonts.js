@@ -8,8 +8,8 @@ import path from 'path';
 import size from 'gulp-size';
 
 const paths = {
-    src: path.join(config.tasks.fonts.src, '/*.{' + config.tasks.fonts.extensions + '}'),
-    dist: config.tasks.fonts.dist
+    src: path.join(config.tasks.fonts.src, '/**/*.{' + config.tasks.fonts.extensions + '}'),
+    dist: config.tasks.fonts.dist,
 };
 
 // Copy web fonts to dist
@@ -19,5 +19,5 @@ gulp.task('fonts', () => {
         .pipe(flatten())
         .pipe(gulp.dest(paths.dist))
         .pipe(browserSync.stream())
-        .pipe(size(config.output.size))
+        .pipe(size(config.output.size));
 });

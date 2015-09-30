@@ -49,9 +49,9 @@ const config = {
                     'last 2 versions',
                     '> 1%',
                     'ie >= 8',
-                    'android >= 4'
-                ]
-            }
+                    'android >= 4',
+                ],
+            },
         },
 
         scripts: {
@@ -62,14 +62,14 @@ const config = {
                 header: {
                     src: path.join(paths.src, 'js/header'),
                     filename: 'header.js',
-                    dependencies: []
+                    dependencies: [],
                 },
                 main: {
                     filename: 'main.js',
                     src: path.join(paths.src, 'js/main'),
                     dependencies: [
                         path.join(paths.vendor, 'respimage/respimage.js'),
-                        path.join(paths.vendor, 'fastclick/lib/fastclick.js')
+                        path.join(paths.vendor, 'fastclick/lib/fastclick.js'),
                     ]
                 }
             }
@@ -84,16 +84,14 @@ const config = {
                 '-core/ready',
                 '-css',
                 '-effects',
-                '-event-alias'
-            ]
+                '-event-alias',
+            ],
         },
 
         templates: {
             src: path.join(paths.src, 'templates'),
             dist: paths.webroot,
             extensions: ['html', 'php', 'twig'],
-            dataFile: 'data/global.json',
-            excludeFolders: []
         },
 
         images: {
@@ -105,22 +103,22 @@ const config = {
                 interlaced: true,
                 multipass: true,
                 use: [
-                    pngquant({ quality: '65-80' })
-                ]
-            }
+                    pngquant({ quality: '65-80' }),
+                ],
+            },
         },
 
         fonts: {
             src: path.join(paths.src, 'fonts'),
             dist: path.join(paths.dist, 'fonts'),
-            extensions: ['woff2', 'woff', 'eot', 'ttf', 'svg']
+            extensions: ['woff2', 'woff', 'eot', 'ttf', 'svg'],
         },
 
         sprites: {
             src: path.join(paths.src, 'sprites'),
             dist: path.join(paths.dist, 'images'),
-            extensions: ['svg']
-        }
-    }
+            extensions: ['svg'],
+        },
+    },
 };
 export default config;

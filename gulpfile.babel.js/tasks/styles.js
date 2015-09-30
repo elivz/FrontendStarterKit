@@ -15,9 +15,9 @@ import sourcemaps from 'gulp-sourcemaps';
 
 const paths = {
     src: config.tasks.styles.dependencies
-        .concat(path.join(config.tasks.styles.src, '/*.{' + config.tasks.styles.extensions + '}')),
+        .concat(path.join(config.tasks.styles.src, '/**/*.{' + config.tasks.styles.extensions + '}')),
     dist: config.tasks.styles.dist,
-    manifest: path.join(config.paths.src, 'rev-manifest.json')
+    manifest: path.join(config.paths.src, 'rev-manifest.json'),
 };
 
 const tasks = {
@@ -47,7 +47,7 @@ const tasks = {
             .pipe(filter, ['*.{' + config.tasks.styles.extensions + '}'])
             .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})
             .pipe(gulp.dest, config.paths.src);
-    }()
+    }(),
 };
 
 gulp.task('styles', () => {

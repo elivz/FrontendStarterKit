@@ -9,14 +9,16 @@ gulp.task('watch', ['browserSync'], () => {
         'templates-watch',
         'fonts',
         'images',
-        'sprites'
+        'sprites',
     ];
 
-    watchableTasks.forEach(function(taskName) {
+    watchableTasks.forEach((taskName) => {
         const task = config.tasks[taskName.replace('-watch', '')];
         if (task) {
             const filePattern = path.join(task.src, '**/*.{' + task.extensions.join(',') + '}');
-            gulp.watch(filePattern, () => { gulp.start(taskName) });
+            gulp.watch(filePattern, () => {
+                gulp.start(taskName);
+            });
         }
     });
 
@@ -26,11 +28,13 @@ gulp.task('watch', ['browserSync'], () => {
         'ie8',
     ];
 
-    scriptTasks.forEach(function(taskName) {
+    scriptTasks.forEach((taskName) => {
         const task = config.tasks.scripts.entries[taskName];
         if (task) {
             const filePattern = path.join(task.src, '**/*.{' + config.tasks.scripts.extensions.join(',') + '}');
-            gulp.watch(filePattern, () => { gulp.start('scripts:'+taskName) });
+            gulp.watch(filePattern, () => {
+                gulp.start('scripts:' + taskName);
+            });
         }
     });
 });

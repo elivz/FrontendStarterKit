@@ -12,7 +12,7 @@ import svgSprite from 'gulp-svg-sprite';
 
 const paths = {
     src: path.join(config.tasks.sprites.src, '/*.svg'),
-    dist: config.tasks.sprites.dist
+    dist: config.tasks.sprites.dist,
 };
 
 // Buld SVG Sprites
@@ -22,17 +22,17 @@ gulp.task('sprites', function() {
         .pipe(svgSprite({
             mode: {
                 css: {
-                    dest: "./",
-                    layout: "vertical",
-                    sprite: "sprites.svg",
+                    dest: './',
+                    layout: 'vertical',
+                    sprite: 'sprites.svg',
                     render: {
                         scss: {
                             dest: path.resolve('../../../../', config.tasks.styles.src, 'generated/_sprites.scss'),
-                            template: path.resolve(__dirname, 'template.sass')
-                        }
-                    }
-                }
-            }
+                            template: path.resolve(__dirname, 'template.sass'),
+                        },
+                    },
+                },
+            },
         }))
         .pipe(imagemin(config.tasks.images.optimization))
         .pipe(gulp.dest(paths.dist))

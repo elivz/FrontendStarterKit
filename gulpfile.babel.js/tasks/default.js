@@ -12,7 +12,7 @@ gulp.task('default', sequence(
         'jquery',
         'fonts',
         'images',
-        'sprites'
+        'sprites',
     ],
     'styles',
     'templates'

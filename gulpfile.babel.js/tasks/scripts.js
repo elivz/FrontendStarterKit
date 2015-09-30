@@ -19,7 +19,7 @@ import uglify from 'gulp-uglify';
 const paths = {
     src: config.tasks.scripts.src,
     dist: config.tasks.scripts.dist,
-    manifest: path.join(config.paths.src, 'rev-manifest.json')
+    manifest: path.join(config.paths.src, 'rev-manifest.json'),
 };
 
 const tasks = {
@@ -49,7 +49,7 @@ const tasks = {
             .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
             .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})
             .pipe(gulp.dest, config.paths.src);
-    }
+    },
 };
 
 gulp.task('scripts:lint', () => {

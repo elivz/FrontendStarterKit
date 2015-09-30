@@ -17,7 +17,7 @@ const tasks = {
             .pipe(uglify)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, config.tasks.jquery.dist);
-    }()
+    }(),
 };
 
 // Get the most recent copies of jQuery

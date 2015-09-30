@@ -12,13 +12,13 @@ import svg2png from 'gulp-svg2png';
 import unretina from 'gulp-unretina';
 
 const paths = {
-    src: path.join(config.tasks.images.src, '/*.{' + config.tasks.images.extensions + '}'),
-    dist: config.tasks.images.dist
+    src: path.join(config.tasks.images.src, '/**/*.{' + config.tasks.images.extensions + '}'),
+    dist: config.tasks.images.dist,
 };
 
 // Optimize Images
-gulp.task('images', function() {
-    var retinaFilter = filter(['**/*@2x.png'], {restore: true});
+gulp.task('images', () => {
+    const retinaFilter = filter(['**/*@2x.png'], {restore: true});
 
     return gulp.src(paths.src)
         .pipe(plumber(config.plumber))
