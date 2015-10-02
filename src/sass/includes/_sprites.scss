@@ -1,75 +1,49 @@
-/// Class for <IE9 sprite fallback
-$pngSprite: '.no-svg' !default;
+// Class for <IE9 sprite fallback
+$noSvgClass: '.no-svg' !default;
 
 %sprite {
     display: inline-block;
     background-image: url(map-get($sprite, svgPath));
     background-size: map-get($sprite, width) map-get($sprite, height);
 }
+
 %png-sprite {
-     background-image: url(map-get($sprite, pngPath));
+    background-image: url(map-get($sprite, pngPath));
 }
 
-/// Retrive an attributes value for a specific icon in the sprite map
-@function sprite-attr($icon, $attr) {
-    $newIcon: map-get($sprites, $icon);
-    @if $newIcon == null {
-        @warn "Can't find an icon with the name #{$icon}";
+// Retrive a specific sprite from the sprite map
+@function get-sprite($sprite) {
+    $newsprite: map-get($sprites, $sprite);
+    @if $newsprite == null {
+        @warn "Can't find an sprite with the name #{$sprite}";
     }
-    @return map-get($newIcon, $attr);
+    @return $newsprite;
 }
 
-/// Create a map with the specified icon of attributes
-@function icon-attr($icon) {
-    $attr: (
-        width: sprite-attr($icon, width),
-        height: sprite-attr($icon, height),
-        x: sprite-attr($icon, offsetX),
-        y: sprite-attr($icon, offsetY)
-    );
-    @return $attr;
-}
+// Output the sprite rules to the stylesheet
+@mixin sprite($sprite, $type: all) {
+    $spriteMap: get-sprite($sprite);
 
-@mixin sprite($icon, $type: all) {
     @if ($type == all) {
         // Shares the backgrounds
         @extend %sprite;
-    }
 
-    $iconMap: icon-attr($icon);
-
-    // Outputs dimensions in em
-    @if ($type == all or $type == size) {
-        width: map-get($iconMap, width);
-        height: map-get($iconMap, height);
-    }
-
-    // Outputs background position in em
-    @if ($type == all or $type == bg) {
-        background-position: map-get($iconMap, x) map-get($iconMap, y);
-    }
-
-    // Add png fallback
-    @include png-sprite($icon, $type);
-}
-
-@mixin png-sprite($icon, $type: all) {
-    @if $pngSprite {
-        $iconMap: icon-attr($icon);
-
-        #{$pngSprite} & {
-            @if ($type == all) {
+        // Add png fallback
+        @if ($noSvgClass) {
+            #{$noSvgClass} & {
                 @extend %png-sprite;
             }
-            // Outputs dimensions of icon
-            @if ($type == all or $type == size) {
-                width: map-get($iconMap, width);
-                height: map-get($iconMap, height);
-            }
-            // Outputs background position
-            @if ($type == all or $type == bg) {
-                background-position: (map-get($iconMap, x)) (map-get($iconMap, y));
-            }
         }
+    }
+
+    // Outputs dimensions
+    @if ($type == all or $type == size) {
+        width: map-get($spriteMap, width);
+        height: map-get($spriteMap, height);
+    }
+
+    // Outputs background position
+    @if ($type == all or $type == pos) {
+        background-position: map-get($spriteMap, offsetX) map-get($spriteMap, offsetY);
     }
 }
