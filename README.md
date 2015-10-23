@@ -28,6 +28,23 @@
 We use [NPM](http://npmjs.com) to manage all dependencies, including front-end JS libraries & plugins. Run `npm install --save-dev [package-name]` to install a new component.
 
 
+## Starting a Docker server
+
+The local server uses [Docker Compose](http://docs.docker.com/compose/). Once you have that set up, run the following commands to control the server:
+
+    docker-compose up -d  # Start the server
+    docker-compose kill   # Stop the server
+
+You will probably want to add Docker's IP address to your `/etc/hosts` file as well for easy access.
+
+You can connect to the database using an app such as [Sequel Pro](http://sequelpro.com). Use the following settings:
+
+    Host: [Docker's external IP]
+    Username: app
+    Password: 123
+    Database: app
+    Port 3306
+
 ## Front-End Build Process
 
 ### Initial Setup

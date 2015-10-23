@@ -1,4 +1,6 @@
 Frontend Starter Kit
+
+MIT License
 Copyright 2015 Eli Van Zoeren
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

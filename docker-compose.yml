@@ -1,0 +1,29 @@
+web:
+  image: nginx
+  ports:
+    - "80:80"
+  volumes:
+    - ./docker/vhost.conf:/etc/nginx/conf.d/vhost.conf
+    - ./dist:/var/www
+  links:
+    - php
+    - db
+
+php:
+  build: ./docker
+  volumes:
+    - ./dist:/var/www
+  links:
+    - db
+
+db:
+  image: mysql
+  ports:
+    - "3306:3306"
+  volumes:
+    - /var/lib
+  environment:
+    MYSQL_ROOT_PASSWORD: r3mN430YmnDKxePd3lrbciHK1
+    MYSQL_DATABASE: app
+    MYSQL_USER: app
+    MYSQL_PASSWORD: "123"
