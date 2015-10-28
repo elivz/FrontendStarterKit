@@ -39,11 +39,10 @@ You will probably want to add Docker's IP address to your `/etc/hosts` file as w
 
 You can connect to the database using an app such as [Sequel Pro](http://sequelpro.com). Use the following settings:
 
-    Host: [Docker's external IP]
+    Host:     [Docker's external IP]
     Username: app
     Password: 123
     Database: app
-    Port 3306
 
 ## Front-End Build Process
 

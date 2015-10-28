@@ -23,6 +23,10 @@ RUN apt-get update && apt-get install -y libmagickwand-6.q16-dev --no-install-re
 RUN pecl install xdebug \
     && echo "zend_extension=xdebug.so" >> "/usr/local/etc/php/conf.d/xdebug.ini"
 
+# Install sSMTP to send email to MailCatcher container
+RUN apt-get install -y ssmtp \
+    && echo "mailhub=mail:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
+
 # Set webroot
 WORKDIR /var/www/public_html
 
