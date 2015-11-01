@@ -30,7 +30,6 @@
     "del": "~2.0.2",
     "eslint": "^1.8.0",
     "eslint-config-airbnb": "~0.1.0",
-    "fastclick": "^1.0.6",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "~3.1",
     "gulp-babel": "~6.0.0",
@@ -41,6 +40,7 @@
     "gulp-flatten": "^0.2.0",
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.3",
+    "gulp-jspm": "^0.5.4",
     "gulp-minify-css": "^1.2.1",
     "gulp-modify": "^0.1.1",
     "gulp-notify": "^2.2.0",
@@ -57,14 +57,30 @@
     "gulp-unretina": "^0.1.2",
     "imagemin-pngquant": "^4.1",
     "jquery": "~1",
+    "jspm": "^0.16.13",
     "lazypipe": "^1.0.1",
     "path": "^0.12.7",
     "require-dir": "^0.3.0",
-    "respimage": "^1.4.2",
     "vinyl": "^1.0.0",
     "yargs": "^3.21.0"
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "src/js"
+    },
+    "dependencies": {
+      "fastclick": "npm:fastclick@^1.0.6",
+      "respimage": "npm:respimage@^1.4.2"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
   }
 }

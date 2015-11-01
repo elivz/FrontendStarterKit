@@ -1,0 +1,46 @@
+{
+  "name": "respimage",
+  "version": "1.4.2",
+  "filename": "respimage.min.js",
+  "browser": "respimage.min.js",
+  "scripts": {
+    "test": "grunt test --verbose"
+  },
+  "author": "Alexander Farkas <info@corrupt-system.de>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aFarkas/respimage.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-bytesize": "~0.1.1",
+    "grunt-cli": "~0.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-qunit": "~0.5.2",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-max-filesize": "^0.1.0"
+  },
+  "npmName": "respimage",
+    "npmFileMap": [{
+      "basePath": "",
+      "files": [
+        "*.min.js",
+        "plugins/**/*.min.js"
+      ]
+  }],
+  "description": "The fast, lightweight and reliable polyfill for responsive images (i.e. picture element and the srcset, sizes and media attributes). With a smart resource selection algorithm, that saves bandwidth.",
+  "keywords": [
+    "responsive",
+    "image",
+    "responsive images",
+    "picture",
+    "srcset",
+    "polyfill",
+    "respimg",
+    "respimage",
+    "picturefill",
+    "performance",
+    "bandwidth"
+  ]
+}

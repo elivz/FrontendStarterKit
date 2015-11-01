@@ -57,22 +57,7 @@ const config = {
         scripts: {
             src: path.join(paths.src, 'js'),
             dist: path.join(paths.dist, 'scripts'),
-            extensions: ['js', 'js'],
-            entries: {
-                header: {
-                    src: path.join(paths.src, 'js/header'),
-                    filename: 'header.js',
-                    dependencies: [],
-                },
-                main: {
-                    filename: 'main.js',
-                    src: path.join(paths.src, 'js/main'),
-                    dependencies: [
-                        path.join(paths.vendor, 'respimage/respimage.js'),
-                        path.join(paths.vendor, 'fastclick/lib/fastclick.js'),
-                    ]
-                }
-            }
+            extensions: ['js', 'js']
         },
 
         jquery: {
