@@ -27,12 +27,12 @@ const tasks = {
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
             .pipe(gulpJspm, {selfExecutingBundle: true})
-            .pipe(sourcemaps.write, '.')
             .pipe(rename, filename)
+            .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
             .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
             .pipe(browserSync.stream)
-            // .pipe(uglify)
+            .pipe(uglify)
             .pipe(size, config.output.size);
     },
     production: (filename) => {
@@ -40,10 +40,10 @@ const tasks = {
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
             .pipe(gulpJspm, {selfExecutingBundle: true})
+            .pipe(rename, filename)
             .pipe(uglify)
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
-            .pipe(rename, filename)
             .pipe(gulp.dest, paths.dist)
             .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
             .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})

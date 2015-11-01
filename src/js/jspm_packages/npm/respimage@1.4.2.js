@@ -1,1 +1,0 @@
-module.exports = require("npm:respimage@1.4.2/respimage.min");

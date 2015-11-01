@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import fastclick from 'fastclick';
 import externalLinks from 'plugins/externalLinks';
 import respimage from 'respimage';

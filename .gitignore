@@ -9,6 +9,7 @@
 .sass-cache
 npm-debug.log
 node_modules
+jspm_packages
 src/rev-manifest.json
 
 # Distribution files
