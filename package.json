@@ -32,9 +32,7 @@
     "eslint-config-airbnb": "~0.1.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "~3.1",
-    "gulp-babel": "~6.0.0",
     "gulp-cached": "^1.1.0",
-    "gulp-concat": "~2.6",
     "gulp-eslint": "^1.0.0",
     "gulp-filter": "~3.0.1",
     "gulp-flatten": "^0.2.0",
@@ -56,7 +54,6 @@
     "gulp-uglify": "^1.2",
     "gulp-unretina": "^0.1.2",
     "imagemin-pngquant": "^4.1",
-    "jquery": "~1",
     "jspm": "^0.16.13",
     "lazypipe": "^1.0.1",
     "path": "^0.12.7",
@@ -75,7 +72,7 @@
     },
     "dependencies": {
       "fastclick": "npm:fastclick@^1.0.6",
-      "jquery": "github:components/jquery@^2.1.4",
+      "jquery/jquery": "github:jquery/jquery@3.0.0-alpha1",
       "respimage": "npm:respimage@^1.4.2"
     },
     "devDependencies": {

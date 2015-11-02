@@ -7,7 +7,7 @@
  * <script>svgFallback.init('data-png');</script>
  */
 
-export default function(attr = 'data-png') {
+export default (() => {
     const svgSupport = (() => {
         return !!document.createElementNS &&
                !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect;
@@ -19,7 +19,7 @@ export default function(attr = 'data-png') {
             let imgLength = images.length;
 
             while (imgLength--) {
-                const newSrc = images[imgLength].getAttribute(attr);
+                const newSrc = images[imgLength].getAttribute('data-png');
                 if (newSrc !== null) {
                     images[imgLength].setAttribute('src', newSrc);
                 }
@@ -34,4 +34,4 @@ export default function(attr = 'data-png') {
 
     replaceImgSrc();
     addClass();
-}
+})();

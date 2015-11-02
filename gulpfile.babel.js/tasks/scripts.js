@@ -21,6 +21,17 @@ const paths = {
     manifest: path.join(config.paths.src, 'rev-manifest.json'),
 };
 
+gulp.task('scripts:lint', () => {
+    return gulp.src([
+            path.join(paths.src, '**/*.js'),
+            '!'+path.join(paths.src, 'config.js'),
+            '!'+path.join(paths.src, 'jspm_packages/**/*.js'),
+        ])
+        .pipe(cached('esLint'))
+        .pipe(eslint())
+        .pipe(eslint.format());
+});
+
 const tasks = {
     development: (filename) => {
         return lazypipe()
@@ -51,18 +62,7 @@ const tasks = {
     },
 };
 
-gulp.task('scripts:lint', () => {
-    return gulp.src([
-            path.join(paths.src, '**/*.js'),
-            '!'+path.join(paths.src, 'config.js'),
-            '!'+path.join(paths.src, 'jspm_packages/**/*.js')
-        ])
-        .pipe(cached('esLint'))
-        .pipe(eslint())
-        .pipe(eslint.format());
-});
-
-gulp.task('scripts', ['scripts:lint'], () => {
+gulp.task('scripts', () => {
     const task = tasks[config.mode]('main.js');
     return gulp.src(path.join(paths.src, 'main.js')).pipe(task());
 });

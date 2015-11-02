@@ -21,7 +21,7 @@ const paths = {
 };
 
 const tasks = {
-    development: () => {
+    development: (() => {
         return lazypipe()
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
@@ -33,8 +33,8 @@ const tasks = {
             .pipe(browserSync.stream)
             .pipe(minifyCss, {compatibility: 'ie8', sourceMap: false})
             .pipe(size, config.output.size);
-    }(),
-    production: () => {
+    })(),
+    production: (() => {
         return lazypipe()
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
@@ -47,7 +47,7 @@ const tasks = {
             .pipe(filter, ['*.{' + config.tasks.styles.extensions + '}'])
             .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})
             .pipe(gulp.dest, config.paths.src);
-    }(),
+    })(),
 };
 
 gulp.task('styles', () => {

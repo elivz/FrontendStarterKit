@@ -60,19 +60,6 @@ const config = {
             extensions: ['js', 'js']
         },
 
-        jquery: {
-            src: path.join(paths.vendor, 'jquery/dist/jquery.js'),
-            dist: path.join(paths.dist, 'scripts'),
-            extensions: ['js'],
-            flags: [
-                '-deprecated',
-                '-core/ready',
-                '-css',
-                '-effects',
-                '-event-alias',
-            ],
-        },
-
         templates: {
             src: path.join(paths.src, 'templates'),
             dist: paths.webroot,

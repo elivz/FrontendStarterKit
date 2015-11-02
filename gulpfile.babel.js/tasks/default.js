@@ -9,7 +9,6 @@ gulp.task('default', sequence(
     'clean',
     [
         'scripts',
-        'jquery',
         'fonts',
         'images',
         'sprites',

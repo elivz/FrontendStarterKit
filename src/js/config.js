@@ -18,7 +18,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.29",
     "core-js": "npm:core-js@1.2.3",
     "fastclick": "npm:fastclick@1.0.6",
-    "jquery": "github:components/jquery@2.1.4",
+    "jquery/jquery": "github:jquery/jquery@3.0.0-alpha1+compat",
     "respimage": "npm:respimage@1.4.2",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
