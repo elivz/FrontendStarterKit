@@ -10,7 +10,7 @@
     "url": "git@github.com:elivz/FrontendStarterKit.git"
   },
   "engines": {
-    "node": ">= 0.12.0",
+    "node": ">=4.0.0",
     "npm": ">=2.1.5"
   },
   "scripts": {

@@ -12,11 +12,10 @@
       - fonts     # Any webfont files here will be copied verbatim to the dist folder
       - images    # Unoptimized image files, as exported from Photoshop, etc.
       - js        # All custom scripts for the theme
-        - header  # Scripts that should be included in the header of the document
-        - ie8     # Scripts that are only needed for IE8 compatibility
-        - main    # Everything in here will be compiled into the main script and included at the bottom of the document
-          - libs    # JS files that should be included first, as other scripts depend on them
-          - plugins # Custom-written plugins to perform specific tasks
+        - jspm_modules # 3rd-party script libraries
+      - plugins   # Custom-written plugins to perform specific tasks
+      - main.js   # Entry-point for the site's JS -
+                  # you should import everything else from here
       - sass      # SCSS source files
                   # Autoprefixer will add browser support as appropriate
       - sprites   # SVG image files that will be collected into a single sprite file
@@ -25,7 +24,7 @@
 
 ## Installing Front-End Dependancies
 
-We use [NPM](http://npmjs.com) to manage all dependencies, including front-end JS libraries & plugins. Run `npm install --save-dev [package-name]` to install a new component.
+We use [JSPM](http://jspm.io) to manage all front-end JavaScript dependencies. Run `jspm install [package-name]` to install a new component. Please [read the docs](https://github.com/jspm/jspm-cli/blob/master/docs/installing-packages.md) for details on getting a particular version or installing from various sources.
 
 
 ## Starting a Docker server
@@ -35,7 +34,7 @@ The local server uses [Docker Compose](http://docs.docker.com/compose/). Once yo
     docker-compose up -d  # Start the server
     docker-compose kill   # Stop the server
 
-You will probably want to add Docker's IP address to your `/etc/hosts` file as well for easy access.
+You will probably want to add Docker's IP address to your `/etc/hosts` file as well for easy access. The virtual host domain name is preset to `docker.dev`, but you can easily change it by modifying the second line of `docker/vhost.conf`. Make sure the domain name you set there matches the domain name in your `hosts` file.
 
 You can connect to the database using an app such as [Sequel Pro](http://sequelpro.com). Use the following settings:
 
@@ -48,7 +47,7 @@ You can connect to the database using an app such as [Sequel Pro](http://sequelp
 
 ### Initial Setup
 
-The front-end build process required Node v0.10.0 or higher. Once Node is installed, run the following commands to install all project dependancies:
+The front-end build process requires Node v4.0.0 or higher. Once Node is installed, run the following command from the project root to install all the build-process dependancies:
 
     npm install
 
@@ -69,7 +68,7 @@ To generate minified copies of all the assets without sourcemaps, run the follow
 
 ## Specific Notes
 
-Most project-specific configuration can be accomplished via the `gulpfile.babel.js/config.js` file.
+Most project-specific build configuration can be accomplished via the `gulpfile.babel.js/config.js` file.
 
 ### CSS
 
@@ -77,9 +76,7 @@ We run Autoprefixer on the compiled CSS files to add additional browser support 
 
 ### Scripts
 
-Javascript files will be compiled from the `src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Files saved in the `libs` sub-folder will be placed first in the final file - these should be reusable plugins and libraries.
-
-Files in the `src/js/header` folder will be loaded in the head of the document.
+Javascript files will be compiled from the `src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Use ES2015-style module imports.
 
 ### SVGs
 
