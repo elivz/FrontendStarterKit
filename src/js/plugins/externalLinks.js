@@ -2,7 +2,7 @@
  * Open links to a different domain in a new window
  */
 
-export default (() => {
+export default ((window, document) => {
     // RegEx to test if a link goes to a different hostname
     const localTest = new RegExp('/' + window.location.host + '/');
 
@@ -16,4 +16,4 @@ export default (() => {
             links[length].target = '_blank';
         }
     }
-})();
+})(window, window.document);

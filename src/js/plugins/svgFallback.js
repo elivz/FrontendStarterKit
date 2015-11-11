@@ -7,7 +7,7 @@
  * <script>svgFallback.init('data-png');</script>
  */
 
-export default (() => {
+export default ((document) => {
     const svgSupport = (() => {
         return !!document.createElementNS &&
                !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect;
@@ -34,4 +34,4 @@ export default (() => {
 
     replaceImgSrc();
     addClass();
-})();
+})(window.document);
