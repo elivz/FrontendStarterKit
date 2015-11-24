@@ -7,17 +7,17 @@ web:
     - ./dist:/var/www
   links:
     - php
-    - db
+    - mysql
 
 php:
   build: ./docker
   volumes:
     - ./dist:/var/www
   links:
-    - db
+    - mysql
     - mail
 
-db:
+mysql:
   image: mysql
   ports:
     - "3306:3306"
