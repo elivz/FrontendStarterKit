@@ -1,10 +1,11 @@
 $sprite: (
     width: 512px,
-    height: 560px,
-    pngPath: '../images/sprites.png',
-    svgPath: '../images/sprites.svg'
+    height: 1536px,
+    svgPath: '../images/sprites-a8dda0f0.svg',
+    pngPath: '../images/sprites-a8dda0f0.png'
 );
 $sprites: (
-    add: (width: 48px, height: 48px, offsetX: 0px, offsetY: 0px),
-    address-book: (width: 512px, height: 512px, offsetX: 0px, offsetY: -48px),
+    airplane: (width: 512px, height: 512px, offsetX: 0px, offsetY: 0px),
+    arrow-down5: (width: 512px, height: 512px, offsetX: 0px, offsetY: -512px),
+    basket: (width: 512px, height: 512px, offsetX: 0px, offsetY: -1024px),
 );

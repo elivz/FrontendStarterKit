@@ -16,12 +16,12 @@ const paths = {
 };
 
 // Buld SVG Sprites
-gulp.task('sprites', function() {
+gulp.task('sprites', () => {
     return gulp.src(paths.src)
         .pipe(plumber(config.plumber))
         .pipe(svgSprite({
             mode: {
-                css: {
+                view: {
                     dest: './',
                     layout: 'vertical',
                     sprite: 'sprites.svg',
@@ -33,8 +33,14 @@ gulp.task('sprites', function() {
                     },
                 },
             },
+            variables: {
+                png: () => {
+                    return (sprite, render) => {
+                        return render(sprite).split('.svg').join('.png');
+                    };
+                },
+            },
         }))
-        .pipe(imagemin(config.tasks.images.optimization))
         .pipe(gulp.dest(paths.dist))
         .pipe(size(config.output.size))
         .pipe(filter(['*.svg']))

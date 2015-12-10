@@ -8,11 +8,12 @@
 @import "settings/fonts";
 @import "settings/variables";
 
+// SVG Spriting
+@import "generated/sprites";
+@import "includes/sprites";
+
 // Third-party libraries
 @import "../../node_modules/breakpoint-sass/stylesheets/breakpoint";
-
-// Auto-generated files
-@import "generated/sprites";
 
 // HTML elements
 @import "elements/typography";
