@@ -1,11 +1,13 @@
-# humanstxt.org/
-# The humans responsible & technology colophon
+# http://humanstxt.org
 
 # TEAM
 
-  Eli Van Zoeren -- Frontend Development & CMS -- @elivz
+    Frontend & CMS Development: Eli Van Zoeren
+    Twitter: @elivz
+    Website: http://elivz.com
+    From: Eugene, OR
 
-# TECHNOLOGY COLOPHON
+# SITE
 
-  Languages: HTML5, CSS3, PHP
-  Content Management:
+    Standards: HTML5, CSS3, ES2015
+    Content Management:

@@ -1,4 +1,4 @@
-FROM php:5-fpm
+FROM php:7-fpm
 
 # Custom configuration
 COPY php-custom.ini /usr/local/etc/php/conf.d/
@@ -14,13 +14,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd
 
 # Install ImageMagick
-RUN apt-get update && apt-get install -y libmagickwand-6.q16-dev --no-install-recommends \
-    && ln -s /usr/lib/x86_64-linux-gnu/ImageMagick-6.8.9/bin-Q16/MagickWand-config /usr/bin \
-    && pecl install imagick \
+RUN apt-get update && apt-get install -y libmagickwand-dev --no-install-recommends \
+    && pecl install imagick-beta \
     && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini
 
 # Install Xdebug
-RUN pecl install xdebug \
+RUN pecl install xdebug-beta \
     && echo "zend_extension=xdebug.so" >> "/usr/local/etc/php/conf.d/xdebug.ini"
 
 # Install sSMTP to send email to MailCatcher container
