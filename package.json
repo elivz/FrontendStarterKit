@@ -56,6 +56,7 @@
     "imagemin-pngquant": "^4.1",
     "jspm": "^0.16.13",
     "lazypipe": "^1.0.1",
+    "modernizr": "^3.2.0",
     "path": "^0.12.7",
     "require-dir": "^0.3.0",
     "vinyl": "^1.0.0",

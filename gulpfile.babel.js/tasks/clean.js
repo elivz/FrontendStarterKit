@@ -8,8 +8,10 @@ gulp.task('clean', (cb) => {
 
     for (const key of Object.keys(config.tasks)) {
         const task = config.tasks[key];
-        const filePattern = path.join(task.dist, '**/*.{' + task.extensions.join(',') + ',map}');
-        files.push(filePattern);
+        if (typeof task.dist !== 'undefined') {
+            const filePattern = path.join(task.dist, '**/*.{' + task.extensions.join(',') + ',map}');
+            files.push(filePattern);
+        }
     }
 
     del(files).then(() => {

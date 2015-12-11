@@ -60,6 +60,20 @@ const config = {
             extensions: ['js', 'js']
         },
 
+        modernizr: {
+            config: {
+                'options': [
+                    'setClasses',
+                ],
+                'feature-detects': [
+                    'css/calc',
+                    'css/flexbox',
+                    'css/transforms',
+                    'svg',
+                ],
+            },
+        },
+
         templates: {
             src: path.join(paths.src, 'templates'),
             dist: paths.webroot,

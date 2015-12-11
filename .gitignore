@@ -14,6 +14,7 @@ src/rev-manifest.json
 
 # Distribution files
 dist/public_html/assets
+src/js/libs/modernizr.js
 
 # Keep empty folders
 !.gitkeep
