@@ -1,5 +1,5 @@
 // import $ from 'jquery/jquery';
-import 'libs/modernizr';
+import 'plugins/modernizr';
 import 'respimage';
 import 'plugins/externalLinks';
 import 'plugins/svgFallback';

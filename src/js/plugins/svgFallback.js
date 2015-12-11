@@ -5,7 +5,7 @@
  * <img src="cat.svg" data-png="cat.png" alt="Cat">
  */
 
-import '../libs/modernizr';
+import '../plugins/modernizr';
 
 export default ((document) => {
     if (!Modernizr.svg) {

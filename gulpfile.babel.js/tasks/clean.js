@@ -9,7 +9,10 @@ gulp.task('clean', (cb) => {
     for (const key of Object.keys(config.tasks)) {
         const task = config.tasks[key];
         if (typeof task.dist !== 'undefined') {
-            const filePattern = path.join(task.dist, '**/*.{' + task.extensions.join(',') + ',map}');
+            let filePattern = task.dist;
+            if (typeof task.extensions === 'object') {
+                filePattern = path.join(task.dist, '**/*.{' + task.extensions.join(',') + ',map}');
+            }
             files.push(filePattern);
         }
     }

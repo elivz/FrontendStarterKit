@@ -8,7 +8,7 @@ const paths = {
     src: './src',
     dist: './dist/public_html/assets',
     webroot: './dist/public_html',
-    vendor: './node_modules'
+    vendor: './node_modules',
 };
 
 const config = {
@@ -19,8 +19,8 @@ const config = {
     output: {
         size: {
             gzip: true,
-            showFiles: true
-        }
+            showFiles: true,
+        },
     },
 
     browserSync: {
@@ -28,14 +28,14 @@ const config = {
         xip: true,
 
         // Uncomment the following line to test static files without a local server
-        server: { baseDir: paths.webroot }
+        server: { baseDir: paths.webroot },
         // ----- OR -----
         // Uncomment the following line when running a local server
         // proxy: paths.url
     },
 
     plumber: {
-        errorHandler: errorHandler
+        errorHandler: errorHandler,
     },
 
     tasks: {
@@ -57,10 +57,11 @@ const config = {
         scripts: {
             src: path.join(paths.src, 'js'),
             dist: path.join(paths.dist, 'scripts'),
-            extensions: ['js', 'js']
+            extensions: ['js', 'js'],
         },
 
         modernizr: {
+            dist: path.join(paths.src, 'js/plugins/modernizr.js'),
             config: {
                 'options': [
                     'setClasses',
