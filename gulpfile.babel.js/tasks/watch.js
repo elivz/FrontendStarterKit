@@ -1,7 +1,7 @@
-import config from  '../config';
+import config from '../config';
 
-import gulp from  'gulp';
-import path from  'path';
+import gulp from 'gulp';
+import path from 'path';
 
 gulp.task('watch', ['browserSync'], () => {
     const watchableTasks = [

@@ -63,7 +63,7 @@ const config = {
         modernizr: {
             dist: path.join(paths.src, 'js/plugins/modernizr.js'),
             config: {
-                'options': [
+                options: [
                     'setClasses',
                 ],
                 'feature-detects': [
@@ -89,6 +89,11 @@ const config = {
                 progressive: true,
                 interlaced: true,
                 multipass: true,
+                svgoPlugins: [{
+                    removeViewBox: false,
+                    removeDimensions: true,
+                    cleanupListOfValues: true,
+                }],
                 use: [
                     pngquant({ quality: '65-80' }),
                 ],

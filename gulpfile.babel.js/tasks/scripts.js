@@ -24,6 +24,7 @@ const paths = {
 gulp.task('scripts:lint', () => {
     return gulp.src([
             path.join(paths.src, '**/*.js'),
+            '!'+path.join(paths.src, 'plugins/modernizr.js'),
             '!'+path.join(paths.src, 'config.js'),
             '!'+path.join(paths.src, 'jspm_packages/**/*.js'),
         ])

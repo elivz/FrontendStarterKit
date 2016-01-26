@@ -23,8 +23,8 @@ gulp.task('sprites', () => {
             mode: {
                 view: {
                     dest: './',
-                    layout: 'vertical',
                     sprite: 'sprites.svg',
+                    bust: false,
                     render: {
                         scss: {
                             dest: path.resolve('../../../../', config.tasks.styles.src, 'generated/_sprites.scss'),

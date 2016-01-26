@@ -1,13 +1,15 @@
 import config from '../config';
 
-import autoprefixer from 'gulp-autoprefixer';
+import autoprefixer from 'autoprefixer';
 import browserSync from 'browser-sync';
+import cssnano from 'cssnano';
 import gulp from 'gulp';
 import filter from 'gulp-filter';
 import lazypipe from 'lazypipe';
-import minifyCss from 'gulp-minify-css';
 import path from 'path';
+import postcss from 'gulp-postcss';
 import plumber from 'gulp-plumber';
+import cssAssets from 'postcss-assets';
 import rev from 'gulp-rev';
 import sass from 'gulp-sass';
 import size from 'gulp-size';
@@ -26,12 +28,17 @@ const tasks = {
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
             .pipe(sass)
-            .pipe(autoprefixer, config.tasks.styles.autoprefixer)
+            .pipe(postcss, [
+                cssAssets({
+                    loadPaths: ['assets/images'],
+                    basePath: config.paths.webroot,
+                }),
+                autoprefixer(config.tasks.styles.autoprefixer),
+            ])
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
             .pipe(filter, ['*.{' + config.tasks.styles.extensions + '}'])
             .pipe(browserSync.stream)
-            .pipe(minifyCss, {compatibility: 'ie8', sourceMap: false})
             .pipe(size, config.output.size);
     })(),
     production: (() => {
@@ -39,8 +46,14 @@ const tasks = {
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
             .pipe(sass)
-            .pipe(autoprefixer, config.tasks.styles.autoprefixer)
-            .pipe(minifyCss, {compatibility: 'ie8'})
+            .pipe(postcss, [
+                cssAssets({
+                    loadPaths: ['assets/images'],
+                    basePath: config.paths.webroot,
+                }),
+                autoprefixer(config.tasks.styles.autoprefixer),
+                cssnano(),
+            ])
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
@@ -50,6 +63,6 @@ const tasks = {
     })(),
 };
 
-gulp.task('styles', () => {
+gulp.task('styles', ['images'], () => {
     return gulp.src(paths.src).pipe(tasks[config.mode]());
 });

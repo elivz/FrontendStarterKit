@@ -4,7 +4,7 @@
 
 export default ((window, document) => {
     // RegEx to test if a link goes to a different hostname
-    const localTest = new RegExp('/' + window.location.host + '/');
+    const localTest = new RegExp(`/${window.location.host}/`);
 
     // Find the links
     const links = document.body.getElementsByTagName('a');
