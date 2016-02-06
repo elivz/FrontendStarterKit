@@ -39,7 +39,7 @@ label {
 #{$text-inputs} {
     width: 100%;
     margin: 0;
-    padding: space(0.25, $form-font-size) space(0.5, $form-font-size);
+    padding: space(0.25) space(0.5);
     border-radius: $form-border-radius;
     border: 1px solid $form-border-color;
     box-shadow: $form-box-shadow;
@@ -85,7 +85,7 @@ select {
         position: relative;
         z-index: -1;
         margin: (-$form-border-radius) 0 0;
-        padding: space(0.35, 0.8125em) space(1/3, 0.8125em) space(0.25, 0.8125em);
+        padding: space(0.35) space(1/3) space(0.25);
         border-radius: 0 0 $form-border-radius $form-border-radius;
     }
 }
@@ -135,16 +135,16 @@ select {
         position: absolute;
         left: 1px;
         top: 1px;
-        padding: space(0.25, $font-size-smaller) space(0.5, $font-size-smaller);
+        padding: space(0.25) space(0.5);
         font-size: $font-size-smaller;
-        line-height: space(1, $font-size-smaller);
+        line-height: space();
         font-weight: normal;
         color: $base-muted-color;
         cursor: text;
     }
 }
 
-.button-set {
+.buttons {
     text-align: right;
 
     a,
@@ -156,5 +156,17 @@ select {
 
     a:not(.button) {
         font-size: 0.85em;
+    }
+}
+
+// Error display
+.form__errors {
+    margin-bottom: space(0.5);
+    color: $base-warning-color;
+
+    li {
+        &:before, &:after {
+            content: " – ";
+        }
     }
 }

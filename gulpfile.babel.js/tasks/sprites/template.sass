@@ -1,9 +1,0 @@
-$sprite: (
-    width: {{spriteWidth}}px,
-    height: {{spriteHeight}}px,
-    svgPath: '../images/{{sprite}}',
-    pngPath: '../images/{{#png}}{{sprite}}{{/png}}'
-);
-$sprites: (
-{{#shapes}}    {{base}}: (width: {{width.inner}}px, height: {{height.inner}}px, offsetX: {{position.absolute.x}}px, offsetY: {{position.absolute.y}}px),
-{{/shapes}});

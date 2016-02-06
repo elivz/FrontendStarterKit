@@ -2,19 +2,23 @@
 $base-font-family: Helvetica, Arial, sans-serif;
 $header-font-family: $base-font-family;
 
+// Sizing
+$base-size: 16px;
+$base-spacing: $base-size * 1.5; // 24px;
+$base-margin: $base-spacing;
+
 // Font Sizes
-$base-font-size: 1em;         // 16px
-$font-size-biggest: 1.75em;   // 28px
-$font-size-bigger: 1.5em;     // 24px
-$font-size-big: 1.125em;      // 18px
-$font-size-normal: 1em;       // 16px
-$font-size-small: 0.875em;    // 14px
-$font-size-smaller: 0.75em;   // 12px
-$font-size-smallest: 0.6875em;// 11px
+$font-size-biggest: 28px;
+$font-size-bigger: 24px;
+$font-size-big: 18px;
+$font-size-normal: 16px;
+$font-size-small: 14px;
+$font-size-smaller: 12px;
+$font-size-smallest: 11px;
 
 // Line height
-$base-line-height: 1.5; // 24px
-$base-spacing: $base-line-height * 1em;
+$base-line-height: 1.5;       // 24px
+$line-height-tight: 1.25;     // 20px
 
 // Other Sizes
 $base-border-radius: 3px;
@@ -23,6 +27,7 @@ $base-z-index: 0;
 // Colors
 $blue: #477dca;
 $blue-dark: shade($blue, 15%);
+$red: #a44;
 $white: #fff;
 $black: #222;
 $gray: #999;
@@ -36,6 +41,7 @@ $base-background-color: white;
 $base-font-color: $black;
 $base-accent-color: $blue;
 $base-muted-color: $gray;
+$base-warning-color: $red;
 
 // Link Colors
 $base-link-color: $base-accent-color;
@@ -50,7 +56,7 @@ $base-border: 1px solid $base-border-color;
 // Transitions
 $base-duration: 0.2s;
 $duration-slow: 0.45s;
-$base-easing: ease-out;
+$base-easing: cubic-bezier(0.140, 0.005, 0.140, 1.000);
 $base-transition: $base-duration $base-easing;
 
 // Forms
@@ -60,15 +66,15 @@ $form-border-color-focus: $base-accent-color;
 $form-border-radius: $base-border-radius;
 $form-box-shadow: inset 0 1px 3px rgba(black, 0.1);
 $form-box-shadow-focus: $form-box-shadow, 0 0 5px rgba(shade($form-border-color-focus, 5%), 0.7);
-$form-font-size: $base-font-size;
+$form-font-size: $font-size-normal;
 $form-font-family: $base-font-family;
 
 // Overal dimensions
-$page-width: 75em; // 1200px
-$page-padding: 3em;
+$page-width: 1200px;
+$page-padding: $base-size * 3;
 
 // Breakpoints
-$break-1: 400px;
+$break-1: 420px;
 $break-2: 695px;
 $break-3: 900px;
 $break-4: 1200px;

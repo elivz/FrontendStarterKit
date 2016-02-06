@@ -57,6 +57,7 @@ const config = {
         scripts: {
             src: path.join(paths.src, 'js'),
             dist: path.join(paths.dist, 'scripts'),
+            files: ['main.js'],
             extensions: ['js', 'js'],
         },
 
@@ -84,7 +85,7 @@ const config = {
         images: {
             src: path.join(paths.src, 'images'),
             dist: path.join(paths.dist, 'images'),
-            extensions: ['jpg', 'png', 'svg', 'gif'],
+            extensions: ['svg', 'png', 'jpg', 'jpeg', 'gif'],
             optimization: {
                 progressive: true,
                 interlaced: true,
@@ -109,7 +110,7 @@ const config = {
         sprites: {
             src: path.join(paths.src, 'sprites'),
             dist: path.join(paths.dist, 'images'),
-            extensions: ['svg'],
+            extensions: ['svg', 'svg'],
         },
     },
 };

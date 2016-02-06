@@ -2,7 +2,7 @@
     @if ($generated) {
         &:after {
             content: "";
-            display: table;
+            display: block;
             clear: both;
         }
     }
@@ -54,28 +54,6 @@
         height: 100%;
         width: 0.1px;
     }
-}
-
-// Set the font-size to a multiplier of the base size.
-// Optionally also set the line height, either to a
-// factor of the base line-height, or automatically
-// based on the font size.
-@mixin font-size($size: $base-font-size, $lines: false) {
-    $font-size: strip-unit($size) * $base-font-size;
-    font-size: $font-size;
-    @if ($lines == auto) {
-        $lines: lines-for-font-size($font-size);
-    }
-    @if ($lines) {
-        line-height: $lines * $base-line-height / ($font-size / 1em);
-    }
-}
-
-// Calculate the minimum multiple of rhythm units needed to contain the font-size.
-$line-height-precision: 4 !default;
-@function lines-for-font-size($font-size, $precision: $line-height-precision) {
-    $lines: ceil($precision * $font-size / $base-spacing) / $precision;
-    @return $lines;
 }
 
 // Hide text visually, leaving it accesible to screen-readers

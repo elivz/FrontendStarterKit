@@ -2,47 +2,48 @@ body {
     background-color: $base-background-color;
     color: $base-font-color;
     font-family: $base-font-family;
-    font-size: $base-font-size;
+    font-size: $font-size-normal;
     line-height: $base-line-height;
 }
 
 %header {
     margin: 0;
     font-family: $header-font-family;
+    line-height: $line-height-tight;
     text-rendering: optimizeLegibility;
 }
 
 h1, .h1 {
     @extend %header;
-    margin-bottom: space(0.5, $font-size-biggest);
-    @include font-size($font-size-biggest, auto);
+    margin-bottom: space(0.5);
+    font-size: $font-size-biggest;
 }
 
 h2, .h2 {
     @extend %header;
-    margin-bottom: space(0.25, $font-size-bigger);
-    @include font-size($font-size-bigger, auto);
+    margin-bottom: space(0.25);
+    font-size: $font-size-bigger;
 }
 
 h3, .h3 {
     @extend %header;
-    margin-bottom: space(0.25, $font-size-big);
-    @include font-size($font-size-big, auto);
+    margin-bottom: space(0.25);
+    font-size: $font-size-big;
 }
 
 h4, .h4 {
     @extend %header;
-    @include font-size($font-size-normal, auto);
+    font-size: $font-size-normal;
 }
 
 h5, .h5 {
     @extend %header;
-    @include font-size($font-size-small, auto);
+    font-size: $font-size-small;
 }
 
 h6, .h6 {
     @extend %header;
-    @include font-size($font-size-smallest, auto);
+    font-size: $font-size-smallest;
 }
 
 p {

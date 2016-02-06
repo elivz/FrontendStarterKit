@@ -8,7 +8,6 @@ import imagemin from 'gulp-imagemin';
 import path from 'path';
 import plumber from 'gulp-plumber';
 import size from 'gulp-size';
-import svg2png from 'gulp-svg2png';
 import unretina from 'gulp-unretina';
 
 const paths = {
@@ -33,12 +32,6 @@ gulp.task('images', () => {
         .pipe(imagemin(config.tasks.images.optimization))
         .pipe(gulp.dest(paths.dist))
         .pipe(retinaFilter.restore)
-
-        // Convert SVGs to PNG format for IE8 fallback
-        .pipe(filter(['*.svg']))
-        .pipe(svg2png())
-        .pipe(imagemin(config.tasks.images.optimization))
-        .pipe(gulp.dest(paths.dist))
 
         // Reload
         .pipe(browserSync.stream());

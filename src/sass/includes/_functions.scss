@@ -2,10 +2,10 @@
     @return $num / ($num * 0 + 1);
 }
 
-// Return a number of 'line-heights', in ems, at a particular font site
+// Return a number of 'line-heights'
 // Useful for maintaining a vertical rhythm
-@function space($multiplier: 1, $font-size: $base-font-size) {
-    @return $multiplier * $base-spacing / ($font-size / 1em);
+@function space($multiplier: 1) {
+    @return $multiplier * $base-spacing;
 }
 
 // Get a color and shade
