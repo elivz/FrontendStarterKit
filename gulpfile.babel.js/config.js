@@ -31,7 +31,7 @@ const config = {
         server: { baseDir: paths.webroot },
         // ----- OR -----
         // Uncomment the following line when running a local server
-        // proxy: paths.url
+        // proxy: paths.url,
     },
 
     plumber: {
@@ -111,6 +111,13 @@ const config = {
             src: path.join(paths.src, 'sprites'),
             dist: path.join(paths.dist, 'images'),
             extensions: ['svg', 'svg'],
+        },
+
+        rootfiles: {
+            src: path.join(paths.src, 'rootfiles'),
+            dist: paths.webroot,
+            extensions: ['*'],
+            noclean: true,
         },
     },
 };

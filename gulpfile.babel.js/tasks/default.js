@@ -9,6 +9,7 @@ gulp.task('default', sequence(
         'fonts',
         'images',
         'sprites',
+        'rootfiles',
     ],
     'scripts',
     'styles',

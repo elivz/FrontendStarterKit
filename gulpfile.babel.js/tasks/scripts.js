@@ -63,7 +63,7 @@ const tasks = {
     },
 };
 
-gulp.task('scripts', () => {
+gulp.task('scripts', ['scripts:lint'], () => {
     for (const file of config.tasks.scripts.files) {
         const task = tasks[config.mode](file);
         return gulp.src(path.join(paths.src, file)).pipe(task());

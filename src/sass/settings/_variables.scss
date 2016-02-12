@@ -56,7 +56,7 @@ $base-border: 1px solid $base-border-color;
 // Transitions
 $base-duration: 0.2s;
 $duration-slow: 0.45s;
-$base-easing: cubic-bezier(0.140, 0.005, 0.140, 1.000);
+$base-easing: cubic-bezier(0.14, 0.005, 0.14, 1);
 $base-transition: $base-duration $base-easing;
 
 // Forms

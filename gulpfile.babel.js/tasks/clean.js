@@ -8,11 +8,8 @@ gulp.task('clean', (cb) => {
 
     for (const key of Object.keys(config.tasks)) {
         const task = config.tasks[key];
-        if (typeof task.dist !== 'undefined') {
-            let filePattern = task.dist;
-            if (typeof task.extensions === 'object') {
-                filePattern = path.join(task.dist, '**/*.{' + task.extensions.join(',') + ',map}');
-            }
+        if (typeof task.dist !== 'undefined' && typeof task.extensions !== 'undefined' && !task.noclean) {
+            const filePattern = path.join(task.dist, '**/*.{' + task.extensions.join(',') + ',map}');
             files.push(filePattern);
         }
     }

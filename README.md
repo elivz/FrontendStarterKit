@@ -12,7 +12,9 @@
       - fonts     # Any webfont files here will be copied verbatim to the dist folder
       - images    # Unoptimized image files, as exported from Photoshop, etc.
       - js        # All custom scripts for the theme
-        - jspm_modules # 3rd-party script libraries
+        - jspm_modules # 3rd-party vendor script libraries
+        - modules # Individual components providing site-specific functionality
+        - plugins # Self-contained generic plugins (not site-specific)
       - plugins   # Custom-written plugins to perform specific tasks
       - main.js   # Entry-point for the site's JS -
                   # you should import everything else from here
@@ -80,8 +82,8 @@ Javascript files will be compiled from the `src/js` folder. Any ES6 features wil
 
 ### SVGs
 
-SVG files saved to `assets/src/images` will be compressed and output to `assets/dist/images`, along with a PNG fallback.
+SVG files saved to `assets/src/images` will be compressed and output to `assets/dist/images`.
 
 ### Sprites
 
-SVG files saved in `src/sprites` will be compiled into a single SVG sprite sheet, and a fallback PNG sprite will be generated as well. CSS classes are automatically generated in `src/sass/generated/_sprites.scss`. You can apply an SVG sprite to an element like: `<span class="svg filename"></span>`.
+SVG files saved in `src/sprites` will be compiled into a single SVG sprite sheet. You can use a sprite image in your HTML like so: `<svg class="sprite"><use xlink:href="/assets/images/sprites.svg#s-[filename]"/></svg>` (where `[filename]` is replaced by the original name of the sprite you want to include).

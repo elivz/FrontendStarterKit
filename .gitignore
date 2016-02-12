@@ -13,7 +13,7 @@ jspm_packages
 src/rev-manifest.json
 
 # Distribution files
-dist/public_html/assets
+dist/public_html
 src/js/plugins/modernizr.js
 
 # Keep empty folders

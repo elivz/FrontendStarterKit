@@ -25,7 +25,7 @@ gulp.task('sprites', () => {
             },
             shape: {
                 id: {
-                    generator: 'sprite-%s',
+                    generator: 's-%s',
                 },
             },
         }))

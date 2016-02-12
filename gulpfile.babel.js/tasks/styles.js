@@ -2,18 +2,20 @@ import config from '../config';
 
 import autoprefixer from 'autoprefixer';
 import browserSync from 'browser-sync';
+import cssAssets from 'postcss-assets';
 import cssnano from 'cssnano';
 import gulp from 'gulp';
 import filter from 'gulp-filter';
 import lazypipe from 'lazypipe';
 import path from 'path';
 import postcss from 'gulp-postcss';
-import plumber from 'gulp-plumber';
-import cssAssets from 'postcss-assets';
+import reporter from 'postcss-reporter';
 import rev from 'gulp-rev';
 import sass from 'gulp-sass';
+import scss from 'postcss-scss';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
+import stylelint from 'stylelint';
 
 const paths = {
     src: config.tasks.styles.dependencies
@@ -25,8 +27,13 @@ const paths = {
 const tasks = {
     development: (() => {
         return lazypipe()
-            .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
+            .pipe(postcss, [
+                    stylelint(),
+                    reporter({ clearMessages: true }),
+                ],
+                { syntax: scss }
+            )
             .pipe(sass)
             .pipe(postcss, [
                 cssAssets({
@@ -34,16 +41,16 @@ const tasks = {
                     basePath: config.paths.webroot,
                 }),
                 autoprefixer(config.tasks.styles.autoprefixer),
+                reporter({ clearMessages: true }),
             ])
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(filter, ['*.{' + config.tasks.styles.extensions + '}'])
+            .pipe(filter, [`*.{${config.tasks.styles.extensions}}`])
             .pipe(browserSync.stream)
             .pipe(size, config.output.size);
     })(),
     production: (() => {
         return lazypipe()
-            .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
             .pipe(sass)
             .pipe(postcss, [
@@ -57,12 +64,12 @@ const tasks = {
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(filter, ['*.{' + config.tasks.styles.extensions + '}'])
+            .pipe(filter, [`*.{${config.tasks.styles.extensions}}`])
             .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})
             .pipe(gulp.dest, config.paths.src);
     })(),
 };
 
-gulp.task('styles', ['images'], () => {
+gulp.task('styles', () => {
     return gulp.src(paths.src).pipe(tasks[config.mode]());
 });

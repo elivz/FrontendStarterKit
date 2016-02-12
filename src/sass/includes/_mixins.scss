@@ -1,6 +1,6 @@
 @mixin clearfix($generated: false) {
     @if ($generated) {
-        &:after {
+        &::after {
             content: "";
             display: block;
             clear: both;
@@ -30,7 +30,7 @@
     // The container's height, as a percentage of the
     // container's width, is set by assigning
     // padding-top to a pseudo-element.
-    &:before {
+    &::before {
         content: "";
         display: block;
         height: 0;
@@ -46,8 +46,9 @@
     transform: translateY(-50%);
     top: 50%;
 }
+
 @mixin ghost-vertical-align {
-    &:before {
+    &::before {
         content: "";
         display: inline-block;
         vertical-align: middle;
@@ -67,19 +68,20 @@
 // If you use this on an inline element, you will need to change the display to block or inline-block.
 @mixin replace-text($img, $x: 50%, $y: 50%, $width: false, $height: false) {
     @include hide-text;
-    background: {
-        @if is-url($img) {
-            image: $img;
-        }
-        @else {
-            image: image-url($img);
-        }
-        repeat: no-repeat;
-        position: $x $y;
-    };
+    background-repeat: no-repeat;
+    background-position: $x $y;
+
+    @if is-url($img) {
+        background-image: $img;
+    }
+    @else {
+        background-image: image-url($img);
+    }
+
     @if ($width) {
         width: $width;
     }
+
     @if ($height) {
         width: $height;
     }
@@ -117,7 +119,8 @@
             }
         }
         @else {
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
                 color: $hover;
             }
         }

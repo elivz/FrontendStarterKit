@@ -6,11 +6,6 @@
  * (---) bottom -> &:after
  */
 
-
-/**
- * Burger
- */
-
 @mixin burger($width: 30px, $height: 5px, $gutter: 3px, $color: #000) {
     $burger-height: $height !global;
     $burger-gutter: $gutter !global;
@@ -19,42 +14,43 @@
     margin-top: $height + $gutter;
     margin-bottom: $height + $gutter;
 
-    &, &:before, &:after {
+    &,
+    &::before,
+    &::after {
         display: block;
         width: $width;
         height: $height;
         background-color: $color;
         transition-property: background-color, transform;
-        transition-duration: $base-timing;
+        transition-duration: $base-duration;
     }
 
-    &:before, &:after {
+    &::before,
+    &::after {
         position: absolute;
         content: "";
     }
 
-    &:before {
+    &::before {
         top: -($height + $gutter);
     }
 
-    &:after {
+    &::after {
         top: $height + $gutter;
     }
 }
 
-
-/**
- * Select parts of the burger
- */
-
+// Select parts of the burger
 @mixin burger-parts {
-    &, &:before, &:after {
+    &,
+    &::before,
+    &::after {
         @content;
     }
 }
 
 @mixin burger-top {
-    &:before {
+    &::before {
         @content;
     }
 }
@@ -66,27 +62,28 @@
 }
 
 @mixin burger-bottom {
-    &:after {
+    &::after {
         @content;
     }
 }
 
-
-/**
- * Burger animations
- */
-
+// Burger animations
 @mixin burger-to-cross($color: #000) {
-    &, &:before, &:after {
+    &,
+    &::before,
+    &::after {
         background-color: $color;
     }
+
     & {
         background-color: transparent;
     }
-    &:before {
+
+    &::before {
         transform: translateY($burger-gutter + $burger-height) rotate(45deg);
     }
-    &:after {
+
+    &::after {
         transform: translateY(-($burger-gutter + $burger-height)) rotate(-45deg);
     }
 }

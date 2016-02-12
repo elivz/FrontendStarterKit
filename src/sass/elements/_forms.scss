@@ -1,13 +1,14 @@
-$text-inputs: 'textarea,
-              input[type="email"],
-              input[type="number"],
-              input[type="password"],
-              input[type="search"],
-              input[type="tel"],
-              input[type="text"],
-              input[type="url"],
-              input[type="file"],
-              select[multiple=multiple]';
+$text-inputs:
+    'textarea,
+    input[type="email"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="text"],
+    input[type="url"],
+    input[type="file"],
+    select[multiple]';
 
 fieldset {
     background: tint($base-border-color, 10%);
@@ -30,8 +31,8 @@ textarea {
 label {
     font-weight: bold;
 
-    &.required:after {
-        content: "*";
+    &.required::after {
+        content: '*';
         color: $base-muted-color;
     }
 }
@@ -65,8 +66,8 @@ textarea {
     height: auto;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
     display: inline;
     margin-right: space(0.25);
 }
@@ -75,7 +76,6 @@ select {
     width: 100%;
     border: 1px solid $form-border-color;
 }
-
 
 // Form layouts
 .field {
@@ -165,8 +165,9 @@ select {
     color: $base-warning-color;
 
     li {
-        &:before, &:after {
-            content: " – ";
+        &::before,
+        &::after {
+            content: ' – ';
         }
     }
 }

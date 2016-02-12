@@ -7,11 +7,11 @@ gulp.task('watch', ['browserSync'], () => {
     const watchableTasks = [
         'styles',
         'scripts',
-        'scripts:lint',
         'templates-watch',
         'fonts',
         'images',
         'sprites',
+        'rootfiles',
     ];
 
     watchableTasks.forEach((taskName) => {
