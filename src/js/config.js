@@ -18,8 +18,8 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.35",
     "core-js": "npm:core-js@1.2.6",
     "jquery": "npm:jquery@3.0.0-beta1",
-    "respimage": "npm:respimage@1.4.2",
-    "svgxuse": "npm:svgxuse@1.1.6",
+    "picturefill": "npm:picturefill@3.0.2",
+    "svgxuse": "npm:svgxuse@1.1.10",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -52,6 +52,9 @@ System.config({
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:picturefill@3.0.2": {
+      "child_process": "github:jspm/nodelibs-child_process@0.1.0"
     },
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"

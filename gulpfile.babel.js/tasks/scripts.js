@@ -43,7 +43,6 @@ const tasks = {
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
             .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
-            .pipe(browserSync.stream)
             .pipe(uglify)
             .pipe(size, config.output.size);
     },
@@ -63,9 +62,11 @@ const tasks = {
     },
 };
 
-gulp.task('scripts', ['scripts:lint'], () => {
+gulp.task('scripts', ['scripts:lint'], (cb) => {
     for (const file of config.tasks.scripts.files) {
         const task = tasks[config.mode](file);
-        return gulp.src(path.join(paths.src, file)).pipe(task());
+        gulp.src(path.join(paths.src, file)).pipe(task());
     }
+    browserSync.reload();
+    cb();
 });

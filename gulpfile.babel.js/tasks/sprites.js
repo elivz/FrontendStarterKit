@@ -17,15 +17,20 @@ gulp.task('sprites', () => {
     return gulp.src(paths.src)
         .pipe(plumber(config.plumber))
         .pipe(svgSprite({
+            shape: {
+                id: {
+                    generator: 's-%s',
+                },
+                transform: [{
+                    svgo: {
+                        plugins: config.tasks.sprites.svgoConfig,
+                    },
+                }],
+            },
             mode: {
                 symbol: {
                     dest: './',
                     sprite: 'sprites.svg',
-                },
-            },
-            shape: {
-                id: {
-                    generator: 's-%s',
                 },
             },
         }))

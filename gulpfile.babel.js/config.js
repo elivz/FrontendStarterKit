@@ -11,6 +11,14 @@ const paths = {
     vendor: './node_modules',
 };
 
+const svgoConfig = [
+    { removeDimensions: true },
+    { convertPathData: { floatPrecision: 1 } },
+    { cleanupNumericValues: { floatPrecision: 1 } },
+    { sortAttrs: true },
+    { cleanupIDs: false },
+];
+
 const config = {
     mode: yargs.argv.production ? 'production' : 'development',
 
@@ -58,7 +66,7 @@ const config = {
             src: path.join(paths.src, 'js'),
             dist: path.join(paths.dist, 'scripts'),
             files: ['main.js'],
-            extensions: ['js', 'js'],
+            extensions: ['js', null],
         },
 
         modernizr: {
@@ -88,13 +96,8 @@ const config = {
             extensions: ['svg', 'png', 'jpg', 'jpeg', 'gif'],
             optimization: {
                 progressive: true,
-                interlaced: true,
                 multipass: true,
-                svgoPlugins: [{
-                    removeViewBox: false,
-                    removeDimensions: true,
-                    cleanupListOfValues: true,
-                }],
+                svgoPlugins: svgoConfig,
                 use: [
                     pngquant({ quality: '65-80' }),
                 ],
@@ -110,7 +113,8 @@ const config = {
         sprites: {
             src: path.join(paths.src, 'sprites'),
             dist: path.join(paths.dist, 'images'),
-            extensions: ['svg', 'svg'],
+            extensions: ['svg', null],
+            svgoConfig: svgoConfig,
         },
 
         rootfiles: {
