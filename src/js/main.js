@@ -1,5 +1,5 @@
 import 'svgxuse';
-import 'respimage';
+import 'picturefill';
 import 'plugins/modernizr';
 import 'plugins/externalLinks';
 // import $ from 'jquery';

@@ -8,7 +8,7 @@ import size from 'gulp-size';
 import svgSprite from 'gulp-svg-sprite';
 
 const paths = {
-    src: path.join(config.tasks.sprites.src, '/*.{' + config.tasks.sprites.extensions + '}'),
+    src: path.join(config.tasks.fonts.src, `/**/*.{${config.tasks.sprites.extensions}}`),
     dist: config.tasks.sprites.dist,
 };
 

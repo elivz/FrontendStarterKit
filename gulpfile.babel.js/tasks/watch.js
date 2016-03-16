@@ -17,7 +17,7 @@ gulp.task('watch', ['browserSync'], () => {
     watchableTasks.forEach((taskName) => {
         const task = config.tasks[taskName.replace('-watch', '')];
         if (task) {
-            const filePattern = path.join(task.src, '**/*.{' + task.extensions.join(',') + '}');
+            const filePattern = path.join(task.src, `**/*.{${task.extensions.join(',')}`);
             gulp.watch(filePattern, () => {
                 gulp.start(taskName);
             });

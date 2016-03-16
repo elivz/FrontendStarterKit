@@ -38,11 +38,11 @@ const tasks = {
         return lazypipe()
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
-            .pipe(gulpJspm, {selfExecutingBundle: true})
+            .pipe(gulpJspm, { selfExecutingBundle: true })
             .pipe(rename, filename)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
+            .pipe(filter, [`*.{${config.tasks.scripts.extensions}}`])
             .pipe(uglify)
             .pipe(size, config.output.size);
     },
@@ -50,14 +50,14 @@ const tasks = {
         return lazypipe()
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
-            .pipe(gulpJspm, {selfExecutingBundle: true})
+            .pipe(gulpJspm, { selfExecutingBundle: true })
             .pipe(rename, filename)
             .pipe(uglify)
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
             .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
-            .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})
+            .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
             .pipe(gulp.dest, config.paths.src);
     },
 };

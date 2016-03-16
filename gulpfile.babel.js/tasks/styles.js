@@ -15,11 +15,10 @@ import sass from 'gulp-sass';
 import scss from 'postcss-scss';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
-import stylelint from 'stylelint';
 
 const paths = {
     src: config.tasks.styles.dependencies
-        .concat(path.join(config.tasks.styles.src, '/**/*.{' + config.tasks.styles.extensions + '}')),
+        .concat(path.join(config.tasks.styles.src, `/**/*.{${config.tasks.styles.extensions}}`)),
     dist: config.tasks.styles.dist,
     manifest: path.join(config.paths.src, 'rev-manifest.json'),
 };
@@ -28,12 +27,6 @@ const tasks = {
     development: (() => {
         return lazypipe()
             .pipe(sourcemaps.init)
-            .pipe(postcss, [
-                    stylelint(),
-                    reporter({ clearMessages: true }),
-                ],
-                { syntax: scss }
-            )
             .pipe(sass)
             .pipe(postcss, [
                 cssAssets({
@@ -65,7 +58,7 @@ const tasks = {
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
             .pipe(filter, [`*.{${config.tasks.styles.extensions}}`])
-            .pipe(rev.manifest, paths.manifest, {base: config.paths.src, merge: true})
+            .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
             .pipe(gulp.dest, config.paths.src);
     })(),
 };

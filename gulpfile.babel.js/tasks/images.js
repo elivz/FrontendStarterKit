@@ -11,13 +11,13 @@ import size from 'gulp-size';
 import unretina from 'gulp-unretina';
 
 const paths = {
-    src: path.join(config.tasks.images.src, '/**/*.{' + config.tasks.images.extensions + '}'),
+    src: path.join(config.tasks.fonts.src, `/**/*.{${config.tasks.images.extensions}}`),
     dist: config.tasks.images.dist,
 };
 
 // Optimize Images
 gulp.task('images', () => {
-    const retinaFilter = filter(['**/*@2x.png'], {restore: true});
+    const retinaFilter = filter(['**/*@2x.png'], { restore: true });
 
     return gulp.src(paths.src)
         .pipe(plumber(config.plumber))

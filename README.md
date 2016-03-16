@@ -86,4 +86,4 @@ SVG files saved to `assets/src/images` will be compressed and output to `assets/
 
 ### Sprites
 
-SVG files saved in `src/sprites` will be compiled into a single SVG sprite sheet. You can use a sprite image in your HTML like so: `<svg class="sprite"><use xlink:href="/assets/images/sprites.svg#s-[filename]"/></svg>` (where `[filename]` is replaced by the original name of the sprite you want to include).
+SVG files saved in `src/sprites` will be compiled into a single SVG sprite sheet. You can use a sprite image in your HTML like so: `<svg class="sprite" width="18" height="18"><use xlink:href="/assets/images/sprites.svg#s-[filename]"/></svg>` (where `[filename]` is replaced by the original name of the sprite you want to include).
