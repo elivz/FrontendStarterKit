@@ -38,8 +38,7 @@ const tasks = {
             ])
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(filter, [`*.{${config.tasks.styles.extensions}}`])
-            .pipe(browserSync.stream)
+            .pipe(browserSync.stream, { match: '**/*.css' })
             .pipe(size, config.output.size);
     })(),
     production: (() => {
