@@ -11,9 +11,11 @@ import path from 'path';
 import plumber from 'gulp-plumber';
 import rename from 'gulp-rename';
 import rev from 'gulp-rev';
+import sequence from 'gulp-sequence';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
+import fs from 'fs';
 
 const paths = {
     src: config.tasks.scripts.src,
@@ -24,9 +26,9 @@ const paths = {
 gulp.task('scripts:lint', () => {
     return gulp.src([
             path.join(paths.src, '**/*.js'),
-            '!'+path.join(paths.src, 'plugins/modernizr.js'),
-            '!'+path.join(paths.src, 'config.js'),
-            '!'+path.join(paths.src, 'jspm_packages/**/*.js'),
+            '!' + path.join(paths.src, 'plugins/modernizr.js'),
+            '!' + path.join(paths.src, 'config.js'),
+            '!' + path.join(paths.src, 'jspm_packages/**/*.js'),
         ])
         .pipe(cached('esLint'))
         .pipe(eslint())
@@ -44,6 +46,7 @@ const tasks = {
             .pipe(gulp.dest, paths.dist)
             .pipe(filter, [`*.{${config.tasks.scripts.extensions}}`])
             .pipe(uglify)
+            .pipe(browserSync.stream, { match: '**/*.js' })
             .pipe(size, config.output.size);
     },
     production: (filename) => {
@@ -56,17 +59,18 @@ const tasks = {
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(filter, ['*.{' + config.tasks.scripts.extensions + '}'])
             .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
             .pipe(gulp.dest, config.paths.src);
     },
 };
 
-gulp.task('scripts', ['scripts:lint'], (cb) => {
-    for (const file of config.tasks.scripts.files) {
+for (const file of config.tasks.scripts.files) {
+    gulp.task(file, () => {
         const task = tasks[config.mode](file);
-        gulp.src(path.join(paths.src, file)).pipe(task());
-    }
-    browserSync.reload();
-    cb();
+        return gulp.src(path.join(paths.src, file)).pipe(task());
+    });
+}
+
+gulp.task('scripts', ['scripts:lint'], (cb) => {
+    sequence.apply(this, config.tasks.scripts.files.concat('browserSync:reload'))(cb);
 });

@@ -6,3 +6,5 @@ import gulp from 'gulp';
 gulp.task('browserSync', () => {
     return browserSync.init(config.browserSync);
 });
+
+gulp.task('browserSync:reload', browserSync.reload);

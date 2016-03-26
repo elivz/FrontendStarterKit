@@ -56,7 +56,6 @@ const tasks = {
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(filter, [`*.{${config.tasks.styles.extensions}}`])
             .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
             .pipe(gulp.dest, config.paths.src);
     })(),

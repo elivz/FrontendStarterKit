@@ -26,11 +26,12 @@ gulp.task('templates', () => {
         .pipe(cached('templates'))
         .pipe(gulpif(config.mode === 'production', modify({
             fileModifier: (file, contents) => {
+                let template = contents;
                 Object.keys(manifest).forEach((originalFile) => {
                     const newFile = manifest[originalFile];
-                    contents = contents.replace(originalFile, newFile);
+                    template = template.replace(originalFile, newFile);
                 });
-                return contents;
+                return template;
             },
         })))
         .pipe(gulp.dest(paths.dist));

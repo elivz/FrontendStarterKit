@@ -11,7 +11,7 @@ gulp.task('default', sequence(
         'sprites',
         'rootfiles',
     ],
-    'scripts',
     'styles',
+    'scripts',
     'templates'
 ));

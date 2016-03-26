@@ -7,3 +7,4 @@ import 'plugins/externalLinks';
 // Add "js" class to the html element
 // Uncomment this line if not using Modernizr
 // document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+document.documentElement.className = document.documentElement.className + ' test';
