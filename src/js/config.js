@@ -19,7 +19,7 @@ System.config({
     "core-js": "npm:core-js@1.2.6",
     "jquery": "npm:jquery@3.0.0-beta1",
     "picturefill": "npm:picturefill@3.0.2",
-    "svgxuse": "npm:svgxuse@1.1.15",
+    "svgxuse": "npm:svgxuse@1.1.16",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },

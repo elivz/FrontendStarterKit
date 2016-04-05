@@ -11,7 +11,7 @@ import size from 'gulp-size';
 import unretina from 'gulp-unretina';
 
 const paths = {
-    src: path.join(config.tasks.fonts.src, `/**/*.{${config.tasks.images.extensions}}`),
+    src: path.join(config.tasks.images.src, `/**/*.{${config.tasks.images.extensions}}`),
     dist: config.tasks.images.dist,
 };
 
