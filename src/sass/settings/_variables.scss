@@ -80,6 +80,7 @@ $break-3: 900px;
 $break-4: 1200px;
 
 // Breakpoint shortcuts
+$breakpoint-to-ems: true;
 $tiny-only: max-width $break-1;
 $small-only: $break-1+1 $break-2;
 $small-down: max-width $break-2;
