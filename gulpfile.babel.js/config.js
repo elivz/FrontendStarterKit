@@ -19,10 +19,10 @@ const svgoConfig = [
     { cleanupIDs: false },
 ];
 
-const config = {
+export default {
     mode: yargs.argv.production ? 'production' : 'development',
 
-    paths: paths,
+    paths,
 
     output: {
         size: {
@@ -43,7 +43,7 @@ const config = {
     },
 
     plumber: {
-        errorHandler: errorHandler,
+        errorHandler,
     },
 
     tasks: {
@@ -114,7 +114,7 @@ const config = {
             src: path.join(paths.src, 'sprites'),
             dist: path.join(paths.dist, 'images'),
             extensions: ['svg', null],
-            svgoConfig: svgoConfig,
+            svgoConfig,
         },
 
         rootfiles: {
@@ -125,4 +125,3 @@ const config = {
         },
     },
 };
-export default config;

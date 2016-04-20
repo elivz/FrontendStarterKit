@@ -1,3 +1,6 @@
+// Third-party libraries
+@import "../../node_modules/breakpoint-sass/stylesheets/breakpoint";
+
 // Standard components
 @import "includes/reset";
 @import "includes/functions";
@@ -7,9 +10,6 @@
 // Global variables & libraries
 @import "settings/fonts";
 @import "settings/variables";
-
-// Third-party libraries
-@import "../../node_modules/breakpoint-sass/stylesheets/breakpoint";
 
 // HTML elements
 @import "elements/typography";
