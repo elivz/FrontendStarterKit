@@ -80,6 +80,7 @@
       "baseURL": "src/js"
     },
     "dependencies": {
+      "autotrack": "npm:autotrack@^0.6.5",
       "jquery": "npm:jquery@3.0.0-beta1",
       "picturefill": "npm:picturefill@^3.0.2",
       "svgxuse": "npm:svgxuse@^1.1.6"

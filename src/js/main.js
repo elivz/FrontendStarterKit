@@ -1,3 +1,4 @@
+import 'autotrack';
 import 'svgxuse';
 import 'picturefill';
 import 'plugins/modernizr';
