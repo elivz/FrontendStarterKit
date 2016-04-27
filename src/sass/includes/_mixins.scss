@@ -218,7 +218,6 @@
     border-width: $border-widths;
     border-style: solid;
 
-
     // STANDARD TRIANGLES
     @if ($direction == up) or ($direction == down) or ($direction == right) or ($direction == left) {
         border-color: transparent;

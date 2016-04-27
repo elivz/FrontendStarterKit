@@ -24,6 +24,8 @@ const paths = {
 };
 
 gulp.task('scripts:lint', () => {
+    if (config.mode === 'production') return;
+
     return gulp.src([
             path.join(paths.src, '**/*.js'),
             '!' + path.join(paths.src, 'plugins/modernizr.js'),

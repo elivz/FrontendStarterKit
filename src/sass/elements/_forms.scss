@@ -112,7 +112,6 @@ select {
 .field--inline {
     @extend %clearfix;
     @extend .field;
-
     @include breakpoint($small-down) {
         label {
             float: left;

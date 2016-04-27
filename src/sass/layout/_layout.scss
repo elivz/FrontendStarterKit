@@ -36,7 +36,7 @@
     padding: $page-padding;
 }
 
-#content {
+.content {
     clear: both;
     // We have to make it focusable for skip link, but want to hide the outline
     outline: none;
