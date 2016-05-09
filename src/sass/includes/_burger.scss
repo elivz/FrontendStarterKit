@@ -22,7 +22,6 @@
         height: $height;
         background-color: $color;
         transition-property: background-color, transform;
-        transition-duration: $base-duration;
     }
 
     &::before,

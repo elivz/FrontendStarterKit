@@ -5,11 +5,3 @@
 %clearfix {
     @include clearfix(true);
 }
-
-%list-unstyled {
-    @include list-unstyled;
-}
-
-%list-inline {
-    @include list-inline;
-}

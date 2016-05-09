@@ -6,21 +6,20 @@
 @import "includes/functions";
 @import "includes/mixins";
 @import "includes/extends";
+@import "includes/burger";
+@import "includes/sprites";
 
 // Global variables & libraries
 @import "settings/fonts";
 @import "settings/variables";
 
 // HTML elements
-@import "elements/typography";
+@import "elements/base";
 @import "elements/forms";
-@import "elements/tables";
-@import "elements/lists";
 @import "elements/buttons";
+@import "elements/copy";
 
 // Reusable modules
-@import "modules/burger";
-@import "modules/sprites";
 
 // Page layout
 @import "layout/layout";

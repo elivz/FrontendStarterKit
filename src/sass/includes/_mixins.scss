@@ -12,8 +12,8 @@
 }
 
 // Position an element to cover the entirety of it's parent
-@mixin cover {
-    position: absolute;
+@mixin cover($position: absolute) {
+    position: $position;
     top: 0;
     left: 0;
     height: 100%;
@@ -23,7 +23,7 @@
 
 // Force an element to have a particular width/height ratio, no matter the width
 // Any content you put inside the ratio-boxes needs to be absolutely positioned
-@mixin fixed-ratio($ratio: 1/1) {
+@mixin fixed-aspect($ratio: 1) {
     overflow: hidden;
     position: relative;
 
@@ -66,25 +66,13 @@
 
 // Hides html text and replaces it with an image.
 // If you use this on an inline element, you will need to change the display to block or inline-block.
-@mixin replace-text($img, $x: 50%, $y: 50%, $width: false, $height: false) {
+@mixin replace-text($img, $density: 1) {
     @include hide-text;
+    width: width($img, $density);
+    height: height($img, $density);
     background-repeat: no-repeat;
-    background-position: $x $y;
-
-    @if is-url($img) {
-        background-image: $img;
-    }
-    @else {
-        background-image: image-url($img);
-    }
-
-    @if ($width) {
-        width: $width;
-    }
-
-    @if ($height) {
-        width: $height;
-    }
+    background-image: resolve($img);
+    background-size: size($img, $density);
 }
 
 // Hide the element entirely, leaving it accessible to screen-readers
@@ -144,36 +132,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-// Turn off the bullets for an entire list
-@mixin list-unstyled($no-margin: true) {
-    list-style-type: none;
-    margin-left: 0;
-
-    @if $no-margin {
-        margin-top: 0;
-        margin-bottom: 0;
-
-        > li {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-    }
-}
-
-@mixin list-inline($space: false, $no-margin: true) {
-    @include list-unstyled($no-margin);
-
-    & > li {
-        display: inline-block;
-    }
-
-    @if $space {
-        & > li + li {
-            margin-left: $space;
-        }
-    }
 }
 
 // Create a CSS triangle - best applied to empty or generated elements
