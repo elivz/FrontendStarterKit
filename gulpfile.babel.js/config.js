@@ -1,6 +1,6 @@
 import path from 'path';
 import yargs from 'yargs';
-import pngquant from 'imagemin-pngquant';
+import imagemin from 'gulp-imagemin';
 import errorHandler from './lib/errorHandler';
 
 const paths = {
@@ -94,14 +94,12 @@ export default {
             src: path.join(paths.src, 'images'),
             dist: path.join(paths.dist, 'images'),
             extensions: ['svg', 'png', 'jpg', 'jpeg', 'gif'],
-            optimization: {
-                progressive: true,
-                multipass: true,
-                svgoPlugins: svgoConfig,
-                use: [
-                    pngquant({ quality: '65-80' }),
-                ],
-            },
+            optimization: [
+                imagemin.optipng({ optimizationLevel: 5 }),
+                imagemin.jpegtran({ progressive: true }),
+                imagemin.gifsicle({ interlaced: true }),
+                imagemin.svgo({ plugins: svgoConfig }),
+            ],
         },
 
         fonts: {

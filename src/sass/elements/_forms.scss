@@ -12,7 +12,7 @@ $text-inputs:
 
 fieldset {
     background: tint($base-border-color, 10%);
-    border: $base-border;
+    border: 1px solid $base-border-color;
     margin: 0 0 space(0.5) 0;
     padding: space(0.5);
 }
@@ -75,6 +75,17 @@ input[type='radio'] {
 select {
     width: 100%;
     border: 1px solid $form-border-color;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    &::-ms-expand {
+        display: none;
+    }
+    &::-ms-value {
+        color: currentColor;
+    }
+    option {
+        background-color: white;
+    }
 }
 
 // Form layouts

@@ -12,7 +12,6 @@ import postcss from 'gulp-postcss';
 import reporter from 'postcss-reporter';
 import rev from 'gulp-rev';
 import sass from 'gulp-sass';
-import stylelint from 'stylelint';
 import syntax_scss from 'postcss-scss';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
@@ -23,18 +22,6 @@ const paths = {
     dist: config.tasks.styles.dist,
     manifest: path.join(config.paths.src, 'rev-manifest.json'),
 };
-
-gulp.task('styles:lint', () => {
-    if (config.mode === 'production') return;
-
-    return gulp.src(path.join(config.tasks.styles.src, `/**/*.{${config.tasks.styles.extensions}}`))
-        .pipe(postcss([
-            stylelint(),
-            reporter({ clearMessages: true }),
-        ], {
-            syntax: syntax_scss,
-        }));
-});
 
 const tasks = {
     development: (() => {
@@ -64,7 +51,7 @@ const tasks = {
                     basePath: config.paths.webroot,
                 }),
                 autoprefixer(config.tasks.styles.autoprefixer),
-                cssnano(),
+                reporter({ clearMessages: true }),
             ])
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
@@ -74,6 +61,6 @@ const tasks = {
     })(),
 };
 
-gulp.task('styles', ['styles:lint'], () => {
+gulp.task('styles', () => {
     return gulp.src(paths.src).pipe(tasks[config.mode]());
 });

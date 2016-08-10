@@ -1,17 +1,18 @@
 // Third-party libraries
 @import "../../node_modules/breakpoint-sass/stylesheets/breakpoint";
 
-// Standard components
-@import "includes/reset";
-@import "includes/functions";
-@import "includes/mixins";
-@import "includes/extends";
-@import "includes/burger";
-@import "includes/sprites";
-
 // Global variables & libraries
+@import "settings/colors";
 @import "settings/fonts";
-@import "settings/variables";
+@import "settings/dimensions";
+@import "settings/transitions";
+
+// Standard components
+@import "lib/sanitize";
+@import "lib/functions";
+@import "lib/mixins";
+@import "lib/extends";
+@import "lib/sprites";
 
 // HTML elements
 @import "elements/base";
@@ -20,6 +21,7 @@
 @import "elements/copy";
 
 // Reusable modules
+@import "modules/burger";
 
 // Page layout
 @import "layout/layout";

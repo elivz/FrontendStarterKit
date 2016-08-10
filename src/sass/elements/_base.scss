@@ -1,9 +1,9 @@
 body {
-    background-color: $base-background-color;
-    color: $base-font-color;
-    font-family: $base-font-family;
-    font-size: $font-size-normal;
-    line-height: $base-line-height;
+    @include font();
+    font-size: font-size(normal);
+    font-feature-settings: "kern", "liga", "pnum";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -13,8 +13,7 @@ body {
 
 %header {
     margin: 0;
-    font-family: $header-font-family;
-    line-height: $line-height-tight;
+    @include font(header, normal);
     text-rendering: optimizeLegibility;
 }
 
