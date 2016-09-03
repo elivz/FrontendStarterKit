@@ -5,7 +5,6 @@ import sequence from 'gulp-sequence';
 gulp.task('default', sequence(
     'clean',
     [
-        'modernizr',
         'fonts',
         'images',
         'sprites',

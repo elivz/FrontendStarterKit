@@ -52,14 +52,6 @@ export default {
             dist: path.join(paths.dist, 'styles'),
             extensions: ['css', 'scss', 'sass'],
             dependencies: [],
-            autoprefixer: {
-                browsers: [
-                    'last 2 versions',
-                    '> 1%',
-                    'ie >= 8',
-                    'android >= 4',
-                ],
-            },
         },
 
         scripts: {
@@ -67,21 +59,6 @@ export default {
             dist: path.join(paths.dist, 'scripts'),
             files: ['main.js'],
             extensions: ['js', null],
-        },
-
-        modernizr: {
-            dist: path.join(paths.src, 'js/plugins/modernizr.js'),
-            config: {
-                options: [
-                    'setClasses',
-                ],
-                'feature-detects': [
-                    'css/calc',
-                    'css/flexbox',
-                    'css/transforms',
-                    'svg',
-                ],
-            },
         },
 
         templates: {

@@ -1,5 +1,3 @@
-import config from '../config';
-
 import browserSync from 'browser-sync';
 import cached from 'gulp-cached';
 import gulp from 'gulp';
@@ -15,7 +13,8 @@ import sequence from 'gulp-sequence';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
-import fs from 'fs';
+
+import config from '../config';
 
 const paths = {
     src: config.tasks.scripts.src,
@@ -24,11 +23,10 @@ const paths = {
 };
 
 gulp.task('scripts:lint', () => {
-    if (config.mode === 'production') return;
+    if (config.mode === 'production') return true;
 
     return gulp.src([
             path.join(paths.src, '**/*.js'),
-            '!' + path.join(paths.src, 'plugins/modernizr.js'),
             '!' + path.join(paths.src, 'config.js'),
             '!' + path.join(paths.src, 'jspm_packages/**/*.js'),
         ])

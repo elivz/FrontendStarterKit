@@ -1,5 +1,3 @@
-import config from '../config';
-
 import browserSync from 'browser-sync';
 import cached from 'gulp-cached';
 import filter from 'gulp-filter';
@@ -9,6 +7,8 @@ import path from 'path';
 import plumber from 'gulp-plumber';
 import size from 'gulp-size';
 import unretina from 'gulp-unretina';
+
+import config from '../config';
 
 const paths = {
     src: path.join(config.tasks.images.src, `/**/*.{${config.tasks.images.extensions}}`),

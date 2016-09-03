@@ -1,5 +1,3 @@
-import config from '../config';
-
 import browserSync from 'browser-sync';
 import cached from 'gulp-cached';
 import gulpif from 'gulp-if';
@@ -8,6 +6,7 @@ import gulp from 'gulp';
 import modify from 'gulp-modify';
 import path from 'path';
 
+import config from '../config';
 
 const paths = {
     src: path.join(config.tasks.templates.src, `/**/*.{${config.tasks.templates.extensions}}`),
@@ -37,6 +36,4 @@ gulp.task('templates', () => {
         .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('templates-watch', ['templates'], () => {
-    return browserSync.reload();
-});
+gulp.task('templates-watch', ['templates'], browserSync.reload);
