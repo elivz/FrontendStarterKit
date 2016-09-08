@@ -56,5 +56,6 @@ const tasks = {
 };
 
 gulp.task('styles', () => {
-    return gulp.src(paths.src).pipe(tasks[config.mode]());
+    return gulp.src(paths.src)
+        .pipe(tasks[config.mode]);
 });

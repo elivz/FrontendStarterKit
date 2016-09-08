@@ -1,0 +1,18 @@
+html {
+    overflow-y: scroll;
+    min-height: 100%;
+}
+
+body {
+    @include font();
+    font-size: font-size();
+    font-feature-settings: "kern", "liga", "pnum";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: color(text);
+}
+
+* {
+    transition-duration: $base-duration;
+    transition-timing-function: $base-easing;
+}

@@ -1,0 +1,114 @@
+@function strip-unit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+// Convert a pixel value to rems
+@function rem($px: 16, $base: 16) {
+    @return strip-unit($px) / $base * 1rem;
+}
+
+// Return a number of 'line-heights'
+// Useful for maintaining a vertical rhythm
+@function size($multiplier: 1) {
+    @return $multiplier * $base-spacing;
+}
+
+
+/*
+ * Font functions
+ */
+
+@mixin font($key: main, $weight: null) {
+    $font: map-get($fonts, $key);
+
+    font-family: map-get($font, family);
+    line-height: map-get($font, line-height);
+
+    @if ($weight) {
+        $weights: map-get($font, weights);
+        @if map-has-key($weights, $weight) {
+            font-weight: map-get($weights, $weight);
+        }
+    }
+}
+
+@function font-size($size: normal, $key: main) {
+   @if map-has-key($font-sizes, $size) {
+        @return rem(map-get($font-sizes, $size));
+    }
+
+    @warn "Unknown font size: #{$size}";
+    @return null;
+}
+
+@function font-weight($weight: normal, $key: main) {
+    $weights: map-get(map-get($fonts, $key), weights);
+
+    @if map-has-key($weights, $weight) {
+        @return map-get($weights, $weight);
+    }
+
+    @warn "Weight #{$weight} is not set for #{$key} font.";
+    @return null;
+}
+
+@function line-height($key: main) {
+    $font: map-get($fonts, $key);
+
+    @if map-has-key($font, line-height) {
+        @return map-get($font, line-height);
+    }
+
+    @warn "Line height is not set for #{$key} font";
+    @return null;
+}
+
+
+/*
+ * Color functions
+ */
+
+// Get a color and shade
+@function color($hue, $tone: base) {
+    @return map-get(map-get($colors, $hue), $tone);
+}
+
+/// Lighten a color by mixing with white
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+}
+
+/// Darken a color by mixing with black
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
+}
+
+@function contrasting-color($color, $dark: #000, $light: #fff) {
+    @if (type_of($color) == 'color') {
+        @if (lightness($color) > 50) {
+            @return $dark; // Lighter backgorund, return dark color
+        } @else {
+            @return $light; // Darker background, return light color
+        }
+    }
+
+    @warn "#{$color} is not a valid color";
+    @return null;
+}
+
+@function color($hue, $shade: base) {
+    @if map-has-key($colors, $hue) {
+        $color: map-get($colors, $hue);
+        @if type_of($color) == 'color' {
+            @return $color;
+        }
+        @else {
+            @if map-has-key($color, $shade) {
+                @return map-get($color, $shade);
+            }
+        }
+    }
+
+    @warn "Unknown color: #{$shade} #{$hue}";
+    @return null;
+}

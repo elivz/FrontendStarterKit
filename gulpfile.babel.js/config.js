@@ -4,11 +4,10 @@ import imagemin from 'gulp-imagemin';
 import errorHandler from './lib/errorHandler';
 
 const paths = {
-    url: 'http://frontend.dev',
+    url: 'http://docker.dev',
     src: './src',
     dist: './dist/public_html/assets',
     webroot: './dist/public_html',
-    vendor: './node_modules',
 };
 
 const svgoConfig = [

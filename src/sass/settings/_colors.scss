@@ -1,0 +1,35 @@
+// Colors
+$black: #333;
+$white: #fff;
+$neutral: #999;
+$blue: #477dca;
+$red: #a44;
+$green: #4a4;
+
+$colors: (
+    black: $black,
+    white: $white,
+    gray: (
+        dark: shade($neutral, 30%),
+        base: $neutral,
+        light: tint($neutral, 30%)
+    ),
+    primary: (
+        dark: shade($blue, 25%),
+        base: $blue,
+        light: tint($blue, 10%)
+    ),
+    secondary: (
+        base: $red
+    ),
+    teriary: (
+        base: $green
+    ),
+    text: $black,
+    link: (
+        base: $blue,
+        active: shade($blue, 10%)
+    ),
+    warning: $red,
+    border:  $neutral
+);

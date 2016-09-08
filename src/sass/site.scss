@@ -1,27 +1,28 @@
 // Third-party libraries
 @import "../../node_modules/breakpoint-sass/stylesheets/breakpoint";
+@import "../../node_modules/sanitize.css/sanitize";
 
-// Global variables & libraries
-@import "settings/colors";
-@import "settings/fonts";
+// Spacing and sizes (needs to be before functions.scss)
 @import "settings/dimensions";
-@import "settings/transitions";
 
-// Standard components
-@import "lib/sanitize";
+// Functions & Mixins
 @import "lib/functions";
 @import "lib/mixins";
-@import "lib/extends";
-@import "lib/sprites";
+
+// Global variables
+@import "settings/colors";
+@import "settings/fonts";
+@import "settings/transitions";
 
 // HTML elements
-@import "elements/base";
-@import "elements/forms";
-@import "elements/buttons";
-@import "elements/copy";
+@import "base/reset";
 
 // Reusable modules
-@import "modules/burger";
+@import "components/burger";
+@import "components/buttons";
+@import "components/copy";
+@import "components/forms";
+@import "components/sprites";
 
 // Page layout
 @import "layout/layout";

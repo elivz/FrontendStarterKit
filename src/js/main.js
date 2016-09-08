@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import 'svgxuse';
+import 'autotrack';
 import 'picturefill';
 import 'plugins/externalLinks';
 

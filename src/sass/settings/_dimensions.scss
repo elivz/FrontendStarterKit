@@ -1,0 +1,30 @@
+// Sizing
+$base-font-size: 16px;
+$base-spacing: $base-font-size * 1.5; // 24px;
+$base-margin: rem($base-spacing);
+
+// Overal dimensions
+$max-page-width: rem(1350);
+$page-padding-narrow: rem($base-font-size);
+$page-padding-wide: rem($base-font-size * 3);
+
+// Breakpoints
+$break-1: 360px;
+$break-2: 450px;
+$break-3: 1000px;
+$break-4: 1250px;
+
+// Breakpoint shortcuts
+@include breakpoint-set('to ems', true);
+$tiny-only: max-width $break-1;
+$small-only: $break-1+1 $break-2;
+$small-down: max-width $break-2;
+$small-up: $break-1+1;
+$medium-only: $break-2+1 $break-3;
+$medium-down: max-width $break-3;
+$medium-up: $break-2+1;
+$large-only: $break-3+1 $break-4;
+$large-down: max-width $break-4;
+$large-up: $break-3+1;
+$xlarge-only: $break-4+1;
+

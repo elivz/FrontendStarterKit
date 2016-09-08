@@ -1,7 +1,8 @@
 // Font settings
 $fonts: (
-    body: (
+    main: (
         family: Times, serif,
+        base-size: 1,
         line-height: 1.5,
         weights: (
             normal: 500,
@@ -10,6 +11,7 @@ $fonts: (
     ),
     header: (
         family: Helvetica, Arial, sans-serif,
+        base-size: 1,
         line-height: 1.25,
         weights: (
             normal: 500,
@@ -18,41 +20,13 @@ $fonts: (
     )
 );
 
-// Base sizes
-$base-font-size: 16px;
-$base-line-height: 1.5; // 24px
-
 // Specific font sizes
 $font-sizes: (
-    huge: 2rem,
-    bigger: 1.75rem,
-    big: 1.5rem,
-    normal: 1rem,
-    small: 0.875rem,
-    smaller: 0.75rem,
-    tiny: 0.6875rem
+    biggest: 36px,
+    bigger: 24px,
+    big: 18px,
+    normal: 16px,
+    small: 14px,
+    smaller: 12px,
+    smallest: 11px
 );
-
-// Map functions
-@mixin font($key: body, $weight: null) {
-    $font: map-get($fonts, $key);
-
-    font-family: map-get($font, family);
-    line-height: map-get($font, line-height);
-
-    @if ($weight) {
-        $weights: map-get($font, weights);
-        @if map-has-key($weights, $weight) {
-            font-weight: map-get($weights, $weight);
-        }
-    }
-}
-
-@function font-size($key) {
-    @if map-has-key($font-sizes, $key) {
-        @return map-get($font-sizes, $key);
-    }
-
-    @warn "Unknown font size: #{$key}";
-    @return null;
-}

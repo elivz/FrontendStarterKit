@@ -4,9 +4,9 @@
     top: -100em;
     left: 0;
     padding: 1em 1.5em 0.75em;
-    font-size: $font-size-small;
-    background: $white;
-    box-shadow: 2px 2px 8px $gray-light;
+    font-size: font-size(small);
+    background: color(white);
+    box-shadow: 2px 2px 8px c(gray, light);
 
     &:focus {
         top: 0;
@@ -15,12 +15,12 @@
 
 .browserupgrade {
     width: 100%;
-    padding: space(0.25) space();
-    font-size: $font-size-small;
+    padding: size(1/4) size();
+    font-size: font-size(small);
     font-weight: bold;
     text-align: center;
-    color: $base-background-color;
-    background-color: $base-accent-color;
+    color: contrasting-color(color(primary));
+    background-color: color(primary);
 
     a {
         color: inherit;
@@ -30,10 +30,15 @@
 
 .wrapper {
     @include clearfix;
-    max-width: $page-width;
+    max-width: $max-page-width;
     min-width: 320px;
     margin: 0 auto;
-    padding: $page-padding;
+    padding-left: $page-padding-narrow;
+    padding-right: $page-padding-narrow;
+    @include breakpoint($medium-up) {
+        padding-left: $page-padding-wide;
+        padding-right: $page-padding-wide;
+    }
 }
 
 .content {

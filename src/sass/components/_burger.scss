@@ -1,0 +1,88 @@
+/**
+ * Burger parts
+ *
+ * (---) top    -> &:before
+ * [---] middle -> &
+ * (---) bottom -> &:after
+ */
+
+@mixin burger($width: 30px, $height: 5px, $gutter: 3px, $color: #000) {
+    $burger-height: $height !global;
+    $burger-gutter: $gutter !global;
+
+    position: relative;
+    margin-top: $height + $gutter;
+    margin-bottom: $height + $gutter;
+
+    &,
+    &::before,
+    &::after {
+        display: block;
+        width: $width;
+        height: $height;
+        background-color: $color;
+        transition-property: background-color, transform;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: "";
+    }
+
+    &::before {
+        top: -($height + $gutter);
+    }
+
+    &::after {
+        top: $height + $gutter;
+    }
+}
+
+// Select parts of the burger
+@mixin burger-parts {
+    &,
+    &::before,
+    &::after {
+        @content;
+    }
+}
+
+@mixin burger-top {
+    &::before {
+        @content;
+    }
+}
+
+@mixin burger-middle {
+    & {
+        @content;
+    }
+}
+
+@mixin burger-bottom {
+    &::after {
+        @content;
+    }
+}
+
+// Burger animations
+@mixin burger-to-cross($color: #000) {
+    &,
+    &::before,
+    &::after {
+        background-color: $color;
+    }
+
+    & {
+        background-color: transparent;
+    }
+
+    &::before {
+        transform: translateY($burger-gutter + $burger-height) rotate(45deg);
+    }
+
+    &::after {
+        transform: translateY(-($burger-gutter + $burger-height)) rotate(-45deg);
+    }
+}
