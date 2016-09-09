@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import 'svgxuse';
 import 'autotrack';
-import 'picturefill';
 import 'plugins/externalLinks';
 
 // Add "js" class to the html element

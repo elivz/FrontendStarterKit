@@ -56,7 +56,7 @@ export default {
         scripts: {
             src: path.join(paths.src, 'js'),
             dist: path.join(paths.dist, 'scripts'),
-            files: ['main.js'],
+            files: ['main.js', 'compatibility.js'],
             extensions: ['js', null],
         },
 
