@@ -7,6 +7,7 @@ import cssnano from 'cssnano';
 import gulp from 'gulp';
 import lazypipe from 'lazypipe';
 import path from 'path';
+import plumber from 'gulp-plumber';
 import postcss from 'gulp-postcss';
 import rev from 'gulp-rev';
 import sass from 'gulp-sass';
@@ -21,41 +22,45 @@ const paths = {
 };
 
 const tasks = {
-    development: (lazypipe()
-        .pipe(sourcemaps.init)
-        .pipe(sass)
-        .pipe(postcss, [
-            cssAssets({
-                loadPaths: ['assets/images'],
-                basePath: config.paths.webroot,
-            }),
-            autoprefixer(),
-        ])
-        .pipe(sourcemaps.write, '.')
-        .pipe(gulp.dest, paths.dist)
-        .pipe(browserSync.stream, { match: '**/*.css' })
-        .pipe(size, config.output.size)
-    )(),
-    production: (lazypipe()
-        .pipe(sourcemaps.init)
-        .pipe(sass)
-        .pipe(postcss, [
-            cssAssets({
-                loadPaths: ['assets/images'],
-                basePath: config.paths.webroot,
-            }),
-            autoprefixer(),
-            cssnano(),
-        ])
-        .pipe(rev)
-        .pipe(sourcemaps.write, '.')
-        .pipe(gulp.dest, paths.dist)
-        .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
-        .pipe(gulp.dest, config.paths.src)
-    )(),
+    development: (() => {
+        return lazypipe()
+            .pipe(plumber, config.plumber)
+            .pipe(sourcemaps.init)
+            .pipe(sass)
+            .pipe(postcss, [
+                cssAssets({
+                    loadPaths: ['assets/images'],
+                    basePath: config.paths.webroot,
+                }),
+                autoprefixer(),
+            ])
+            .pipe(sourcemaps.write, '.')
+            .pipe(gulp.dest, paths.dist)
+            .pipe(browserSync.stream, { match: '**/*.css' })
+            .pipe(size, config.output.size);
+
+    })(),
+    production: (() => {
+        return lazypipe()
+            .pipe(plumber, config.plumber)
+            .pipe(sourcemaps.init)
+            .pipe(sass)
+            .pipe(postcss, [
+                cssAssets({
+                    loadPaths: ['assets/images'],
+                    basePath: config.paths.webroot,
+                }),
+                autoprefixer(),
+                cssnano(),
+            ])
+            .pipe(rev)
+            .pipe(sourcemaps.write, '.')
+            .pipe(gulp.dest, paths.dist)
+            .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
+            .pipe(gulp.dest, config.paths.src);
+    })(),
 };
 
 gulp.task('styles', () => {
-    return gulp.src(paths.src)
-        .pipe(tasks[config.mode]);
+    return gulp.src(paths.src).pipe(tasks[config.mode]());
 });

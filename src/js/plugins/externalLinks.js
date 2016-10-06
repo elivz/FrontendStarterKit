@@ -10,10 +10,9 @@ export default ((window, document) => {
     const links = document.body.getElementsByTagName('a');
 
     // Add a target attribute to any links that match
-    let length = links.length;
-    while (length--) {
-        if (!localTest.test(links[length].href)) {
-            links[length].target = '_blank';
+    for (const link of links) {
+        if (!localTest.test(link.href)) {
+            link.target = '_blank';
         }
     }
 })(window, window.document);
