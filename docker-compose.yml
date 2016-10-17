@@ -2,18 +2,13 @@ version: '2'
 
 services:
   web:
-    image: nginx:alpine
+    build:
+      context: ./docker
+      args:
+        # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
+        public: /public_html
     ports:
       - "80:80"
-    volumes:
-      - ./docker/vhost.conf:/etc/nginx/conf.d/vhost.conf
-      - ./dist:/var/www
-    links:
-      - php
-      - mysql
-
-  php:
-    build: ./docker
     volumes:
       - ./dist:/var/www
     links:
