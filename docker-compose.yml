@@ -6,7 +6,7 @@ services:
       context: ./docker
       args:
         # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
-        public: /public_html
+        PUBLIC: /public_html
     ports:
       - "80:80"
     volumes:
@@ -18,11 +18,11 @@ services:
   mysql:
     image: mysql:5.6
     ports:
-      - "3306:3306"
+      - "4306:3306"
     volumes:
-      - data:/var/lib/mysql
+      - ./docker/data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: r3mN430YmnDKxePd3lrbciHK1
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: app
       MYSQL_USER: app
       MYSQL_PASSWORD: "123"

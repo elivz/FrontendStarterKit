@@ -1,7 +1,7 @@
 FROM php:7.0-apache
 
-ARG public
-ENV webroot /var/www$public
+ARG PUBLIC
+ENV WEBROOT /var/www$PUBLIC
 
 COPY php-custom.ini /usr/local/etc/php/conf.d/
 
@@ -25,10 +25,10 @@ RUN apt-get update && \
 
 # Set webroot directory in virtual host
 RUN sed -ri \
-        -e 's#DocumentRoot\s/.+$#DocumentRoot '$webroot'#' \
+        -e 's#DocumentRoot\s/.+$#DocumentRoot '$WEBROOT'#' \
         /etc/apache2/sites-enabled/000-default.conf
 
 # Set webroot
-WORKDIR $webroot
+WORKDIR $WEBROOT
 
 CMD ["apache2-foreground"]

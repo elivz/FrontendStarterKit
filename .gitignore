@@ -12,6 +12,9 @@ node_modules
 jspm_packages
 src/rev-manifest.json
 
+# MySQL data
+docker/data
+
 # Distribution files
 dist
 
