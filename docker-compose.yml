@@ -8,7 +8,7 @@ services:
         # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
         PUBLIC: /public_html
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./dist:/var/www
     links:
@@ -31,6 +31,3 @@ services:
     image: schickling/mailcatcher
     ports:
       - "1080:1080"
-
-volumes:
-  data: {}

@@ -36,11 +36,11 @@ The local server uses [Docker Compose](http://docs.docker.com/compose/). Once yo
     docker-compose up -d  # Start the server
     docker-compose kill   # Stop the server
 
-You will probably want to add Docker's IP address to your `/etc/hosts` file as well for easy access. The virtual host domain name is preset to `docker.dev`, but you can easily change it by modifying the second line of `docker/vhost.conf`. Make sure the domain name you set there matches the domain name in your `hosts` file.
+If you are using Docker for Mac, the website will now be accessible at [localhost:8080](http://localhost:8080).
 
 You can connect to the database using an app such as [Sequel Pro](http://sequelpro.com). Use the following settings:
 
-    Host:     [Docker's external IP]
+    Host:     127.0.0.1
     Username: app
     Password: 123
     Database: app
@@ -49,9 +49,13 @@ You can connect to the database using an app such as [Sequel Pro](http://sequelp
 
 ### Initial Setup
 
-The front-end build process requires Node v4.0.0 or higher. Once Node is installed, run the following command from the project root to install all the build-process dependancies:
+The front-end build process requires Node v4.5.0 or higher. Once Node is installed, run the following command from the project root to install all the build-process dependancies:
 
     npm install
+
+or 
+
+    yarn
 
 ### Building Front-End Assets
 

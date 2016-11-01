@@ -1,6 +1,3 @@
-# Customize what Apache returns to the client in case of an error.
-ErrorDocument 404 /404
-
 # Disable the pattern matching based on filenames.
 Options -MultiViews
 
@@ -12,28 +9,6 @@ Options -MultiViews
         Header unset X-UA-Compatible
     </FilesMatch>
 </IfModule>
-
-# Serve all resources with the media type `charset` parameter set to `UTF-8`.
-AddDefaultCharset utf-8
-<IfModule mod_mime.c>
-    AddCharset utf-8 .atom \
-                     .bbaw \
-                     .css \
-                     .geojson \
-                     .js \
-                     .json \
-                     .jsonld \
-                     .manifest \
-                     .rdf \
-                     .rss \
-                     .topojson \
-                     .vtt \
-                     .webapp \
-                     .webmanifest \
-                     .xloc \
-                     .xml
-</IfModule>
-
 
 # ######################################################################
 # # REWRITES                                                           #
@@ -51,6 +26,7 @@ AddDefaultCharset utf-8
 
     # Rewrite to www.domain.com
     RewriteCond %{HTTP_HOST} !^(www|staging|dev)\. [NC]
+    RewriteCond %{HTTP_HOST} !\.dev [NC]
     RewriteCond %{SERVER_ADDR} !=127.0.0.1
     RewriteCond %{SERVER_ADDR} !=::1
     RewriteRule ^ %{ENV:PROTO}://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
@@ -58,54 +34,7 @@ AddDefaultCharset utf-8
     # Send non-file requests to the CMS
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule (.+) index.php?p=$1 [QSA,L]
-</IfModule>
-
-# Block access to directories without a default document.
-<IfModule mod_autoindex.c>
-    Options -Indexes
-</IfModule>
-
-# Compression
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE "application/atom+xml" \
-                                  "application/javascript" \
-                                  "application/json" \
-                                  "application/ld+json" \
-                                  "application/manifest+json" \
-                                  "application/rdf+xml" \
-                                  "application/rss+xml" \
-                                  "application/schema+json" \
-                                  "application/vnd.geo+json" \
-                                  "application/vnd.ms-fontobject" \
-                                  "application/x-font-ttf" \
-                                  "application/x-javascript" \
-                                  "application/x-web-app-manifest+json" \
-                                  "application/xhtml+xml" \
-                                  "application/xml" \
-                                  "font/eot" \
-                                  "font/opentype" \
-                                  "image/bmp" \
-                                  "image/svg+xml" \
-                                  "image/vnd.microsoft.icon" \
-                                  "image/x-icon" \
-                                  "text/cache-manifest" \
-                                  "text/css" \
-                                  "text/html" \
-                                  "text/javascript" \
-                                  "text/plain" \
-                                  "text/vcard" \
-                                  "text/vnd.rim.location.xloc" \
-                                  "text/vtt" \
-                                  "text/x-component" \
-                                  "text/x-cross-domain-policy" \
-                                  "text/xml"
-</IfModule>
-
-<IfModule mod_headers.c>
-    <FilesMatch "\.(js|css|xml|gz)$">
-        Header append Vary: Accept-Encoding
-    </FilesMatch>
+    RewriteRule ^(.*)$ /index.php/$1 [L]
 </IfModule>
 
 # Remove `ETags` as resources are sent with far-future expires headers.

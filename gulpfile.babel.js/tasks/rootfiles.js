@@ -4,7 +4,10 @@ import path from 'path';
 import config from '../config';
 
 const paths = {
-    src: path.join(config.tasks.rootfiles.src, '/**/*'),
+    src: [
+        path.join(config.tasks.rootfiles.src, `/**/*.{${config.tasks.rootfiles.extensions}}`),
+        path.join(config.tasks.rootfiles.src, `/**/.{${config.tasks.rootfiles.extensions}}`),
+    ],
     dist: config.tasks.rootfiles.dist,
 };
 

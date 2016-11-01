@@ -4,7 +4,7 @@ import imagemin from 'gulp-imagemin';
 import errorHandler from './lib/errorHandler';
 
 const paths = {
-    url: 'http://docker.dev',
+    url: 'http://localhost:8080',
     src: './src',
     dist: './dist/public_html/assets',
     webroot: './dist/public_html',
@@ -94,7 +94,7 @@ export default {
         rootfiles: {
             src: path.join(paths.src, 'rootfiles'),
             dist: paths.webroot,
-            extensions: ['*'],
+            extensions: ['*', null],
             noclean: true,
         },
     },
