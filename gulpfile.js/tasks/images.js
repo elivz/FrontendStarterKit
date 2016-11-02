@@ -1,14 +1,16 @@
-import browserSync from 'browser-sync';
-import cached from 'gulp-cached';
-import filter from 'gulp-filter';
-import gulp from 'gulp';
-import imagemin from 'gulp-imagemin';
-import path from 'path';
-import plumber from 'gulp-plumber';
-import size from 'gulp-size';
-import unretina from 'gulp-unretina';
+"use strict";
 
-import config from '../config';
+const browserSync = require('browser-sync');
+const cached = require('gulp-cached');
+const filter = require('gulp-filter');
+const gulp = require('gulp');
+const imagemin = require('gulp-imagemin');
+const path = require('path');
+const plumber = require('gulp-plumber');
+const size = require('gulp-size');
+const unretina = require('gulp-unretina');
+
+const config = require('../config');
 
 const paths = {
     src: path.join(config.tasks.images.src, `/**/*.{${config.tasks.images.extensions}}`),

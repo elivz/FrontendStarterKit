@@ -1,12 +1,14 @@
-import browserSync from 'browser-sync';
-import cached from 'gulp-cached';
-import gulpif from 'gulp-if';
-import fs from 'fs';
-import gulp from 'gulp';
-import modify from 'gulp-modify';
-import path from 'path';
+"use strict";
 
-import config from '../config';
+const browserSync = require('browser-sync');
+const cached = require('gulp-cached');
+const gulpif = require('gulp-if');
+const fs = require('fs');
+const gulp = require('gulp');
+const modify = require('gulp-modify');
+const path = require('path');
+
+const config = require('../config');
 
 const paths = {
     src: path.join(config.tasks.templates.src, `/**/*.{${config.tasks.templates.extensions}}`),

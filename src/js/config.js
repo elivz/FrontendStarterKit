@@ -48,7 +48,7 @@ System.config({
     "npm:autotrack@1.0.3": {
       "child_process": "github:jspm/nodelibs-child_process@0.1.0",
       "debounce": "npm:debounce@1.0.0",
-      "dom-utils": "npm:dom-utils@0.4.0",
+      "dom-utils": "npm:dom-utils@0.4.1",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "object-assign": "npm:object-assign@4.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",

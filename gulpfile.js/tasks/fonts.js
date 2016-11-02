@@ -1,10 +1,12 @@
-import browserSync from 'browser-sync';
-import cached from 'gulp-cached';
-import gulp from 'gulp';
-import path from 'path';
-import size from 'gulp-size';
+"use strict";
 
-import config from '../config';
+const browserSync = require('browser-sync');
+const cached = require('gulp-cached');
+const gulp = require('gulp');
+const path = require('path');
+const size = require('gulp-size');
+
+const config = require('../config');
 
 const paths = {
     src: path.join(config.tasks.fonts.src, `/**/*.{${config.tasks.fonts.extensions}}`),

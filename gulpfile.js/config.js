@@ -1,7 +1,9 @@
-import path from 'path';
-import yargs from 'yargs';
-import imagemin from 'gulp-imagemin';
-import errorHandler from './lib/errorHandler';
+"use strict";
+
+const path = require('path');
+const yargs = require('yargs');
+const imagemin = require('gulp-imagemin');
+const errorHandler = require('./lib/errorHandler');
 
 const paths = {
     url: 'http://localhost:8080',
@@ -18,7 +20,7 @@ const svgoConfig = [
     { cleanupIDs: false },
 ];
 
-export default {
+module.exports = {
     mode: yargs.argv.production ? 'production' : 'development',
 
     paths,

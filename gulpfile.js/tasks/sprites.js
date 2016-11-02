@@ -1,11 +1,13 @@
-import browserSync from 'browser-sync';
-import gulp from 'gulp';
-import path from 'path';
-import plumber from 'gulp-plumber';
-import size from 'gulp-size';
-import svgSprite from 'gulp-svg-sprite';
+"use strict";
 
-import config from '../config';
+const browserSync = require('browser-sync');
+const gulp = require('gulp');
+const path = require('path');
+const plumber = require('gulp-plumber');
+const size = require('gulp-size');
+const svgSprite = require('gulp-svg-sprite');
+
+const config = require('../config');
 
 const paths = {
     src: path.join(config.tasks.sprites.src, `/**/*.{${config.tasks.sprites.extensions}}`),

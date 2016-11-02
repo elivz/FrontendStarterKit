@@ -1,20 +1,22 @@
-import browserSync from 'browser-sync';
-import cached from 'gulp-cached';
-import gulp from 'gulp';
-import gulpJspm from 'gulp-jspm';
-import eslint from 'gulp-eslint';
-import filter from 'gulp-filter';
-import lazypipe from 'lazypipe';
-import path from 'path';
-import plumber from 'gulp-plumber';
-import rename from 'gulp-rename';
-import rev from 'gulp-rev';
-import sequence from 'gulp-sequence';
-import size from 'gulp-size';
-import sourcemaps from 'gulp-sourcemaps';
-import uglify from 'gulp-uglify';
+"use strict";
 
-import config from '../config';
+const browserSync = require('browser-sync');
+const cached = require('gulp-cached');
+const gulp = require('gulp');
+const gulpJspm = require('gulp-jspm');
+const eslint = require('gulp-eslint');
+const filter = require('gulp-filter');
+const lazypipe = require('lazypipe');
+const path = require('path');
+const plumber = require('gulp-plumber');
+const rename = require('gulp-rename');
+const rev = require('gulp-rev');
+const sequence = require('gulp-sequence');
+const size = require('gulp-size');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
+
+const config = require('../config');
 
 const paths = {
     src: config.tasks.scripts.src,

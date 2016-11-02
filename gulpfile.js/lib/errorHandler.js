@@ -1,11 +1,13 @@
-import notify from 'gulp-notify';
+"use strict";
+
+const notify = require('gulp-notify');
 
 // Error handler for Plumber
-export default function errorHandler(error) {
+module.exports = function errorHandler(error) {
     notify.onError({
         title: 'Gulp Error',
         message: '<%= error.message %>',
-        sound: 'beep'
+        sound: 'beep',
     })(error);
 
     this.emit('end');

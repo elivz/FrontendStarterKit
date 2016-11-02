@@ -1,5 +1,7 @@
-import gulp from 'gulp';
-import sequence from 'gulp-sequence';
+"use strict";
+
+const gulp = require('gulp');
+const sequence = require('gulp-sequence');
 
 // Default Task
 gulp.task('default', sequence(

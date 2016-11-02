@@ -1,18 +1,20 @@
-import config from '../config';
+"use strict";
 
-import autoprefixer from 'autoprefixer';
-import browserSync from 'browser-sync';
-import cssAssets from 'postcss-assets';
-import cssnano from 'cssnano';
-import gulp from 'gulp';
-import lazypipe from 'lazypipe';
-import path from 'path';
-import plumber from 'gulp-plumber';
-import postcss from 'gulp-postcss';
-import rev from 'gulp-rev';
-import sass from 'gulp-sass';
-import size from 'gulp-size';
-import sourcemaps from 'gulp-sourcemaps';
+const autoprefixer = require('autoprefixer');
+const browserSync = require('browser-sync');
+const cssAssets = require('postcss-assets');
+const cssnano = require('cssnano');
+const gulp = require('gulp');
+const lazypipe = require('lazypipe');
+const path = require('path');
+const plumber = require('gulp-plumber');
+const postcss = require('gulp-postcss');
+const rev = require('gulp-rev');
+const sass = require('gulp-sass');
+const size = require('gulp-size');
+const sourcemaps = require('gulp-sourcemaps');
+
+const config = require('../config');
 
 const paths = {
     src: config.tasks.styles.dependencies

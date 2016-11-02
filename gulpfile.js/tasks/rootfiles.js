@@ -1,7 +1,9 @@
-import gulp from 'gulp';
-import path from 'path';
+"use strict";
 
-import config from '../config';
+const gulp = require('gulp');
+const path = require('path');
+
+const config = require('../config');
 
 const paths = {
     src: [

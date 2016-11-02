@@ -1,8 +1,10 @@
-import del from 'del';
-import gulp from 'gulp';
-import path from 'path';
+"use strict";
 
-import config from '../config';
+const del = require('del');
+const gulp = require('gulp');
+const path = require('path');
+
+const config = require('../config');
 
 gulp.task('clean', (cb) => {
     const files = [path.join(config.paths.src, 'rev-manifest.json')];
