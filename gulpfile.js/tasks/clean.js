@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const del = require('del');
 const gulp = require('gulp');
@@ -7,7 +7,7 @@ const path = require('path');
 const config = require('../config');
 
 gulp.task('clean', (cb) => {
-    const files = [path.join(config.paths.src, 'rev-manifest.json')];
+    const files = [path.join(config.paths.dist, 'rev-manifest.json')];
 
     for (const key of Object.keys(config.tasks)) {
         const task = config.tasks[key];

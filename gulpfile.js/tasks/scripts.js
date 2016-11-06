@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const browserSync = require('browser-sync');
 const cached = require('gulp-cached');
@@ -9,19 +9,17 @@ const filter = require('gulp-filter');
 const lazypipe = require('lazypipe');
 const path = require('path');
 const plumber = require('gulp-plumber');
-const rename = require('gulp-rename');
 const rev = require('gulp-rev');
 const sequence = require('gulp-sequence');
 const size = require('gulp-size');
 const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
 
 const config = require('../config');
 
 const paths = {
     src: config.tasks.scripts.src,
     dist: config.tasks.scripts.dist,
-    manifest: path.join(config.paths.src, 'rev-manifest.json'),
+    manifest: path.join(config.paths.dist, 'rev-manifest.json'),
 };
 
 gulp.task('scripts:lint', () => {
@@ -42,22 +40,25 @@ const tasks = {
         return lazypipe()
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
-            .pipe(gulpJspm, { selfExecutingBundle: true })
-            .pipe(rename, filename)
+            .pipe(gulpJspm, {
+                selfExecutingBundle: true,
+                fileName: filename.replace('.js', ''),
+            })
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(browserSync.stream, { match: '**/*.js' })
             .pipe(filter, [`**/*.{${config.tasks.scripts.extensions}}`])
-            .pipe(uglify)
+            .pipe(browserSync.stream)
             .pipe(size, config.output.size);
     },
     production: (filename) => {
         return lazypipe()
             .pipe(plumber, config.plumber)
             .pipe(sourcemaps.init)
-            .pipe(gulpJspm, { selfExecutingBundle: true })
-            .pipe(rename, filename)
-            .pipe(uglify)
+            .pipe(gulpJspm, {
+                selfExecutingBundle: true,
+                minify: true,
+                fileName: filename.replace('.js', ''),
+            })
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)

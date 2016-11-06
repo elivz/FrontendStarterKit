@@ -1,10 +1,11 @@
-"use strict";
+'use strict';
 
 const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync');
 const cssAssets = require('postcss-assets');
 const cssnano = require('cssnano');
 const gulp = require('gulp');
+const filter = require('gulp-filter');
 const lazypipe = require('lazypipe');
 const path = require('path');
 const plumber = require('gulp-plumber');
@@ -20,7 +21,7 @@ const paths = {
     src: config.tasks.styles.dependencies
         .concat(path.join(config.tasks.styles.src, `/**/*.{${config.tasks.styles.extensions}}`)),
     dist: config.tasks.styles.dist,
-    manifest: path.join(config.paths.src, 'rev-manifest.json'),
+    manifest: path.join(config.paths.dist, 'rev-manifest.json'),
 };
 
 const tasks = {
@@ -38,7 +39,8 @@ const tasks = {
             ])
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, paths.dist)
-            .pipe(browserSync.stream, { match: '**/*.css' })
+            .pipe(filter, [`**/*.{${config.tasks.styles.extensions}}`])
+            .pipe(browserSync.stream)
             .pipe(size, config.output.size);
 
     })(),

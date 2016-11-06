@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const browserSync = require('browser-sync');
 const cached = require('gulp-cached');
@@ -13,7 +13,7 @@ const config = require('../config');
 const paths = {
     src: path.join(config.tasks.templates.src, `/**/*.{${config.tasks.templates.extensions}}`),
     dist: config.tasks.templates.dist,
-    manifest: path.join(config.paths.src, 'rev-manifest.json'),
+    manifest: path.join(config.paths.dist, 'rev-manifest.json'),
 };
 
 // Copy web html to dist

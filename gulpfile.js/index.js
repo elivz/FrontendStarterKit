@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * Each task is a separate file under /gulpfile.js/tasks.

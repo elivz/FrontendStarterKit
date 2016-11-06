@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const browserSync = require('browser-sync');
 const gulp = require('gulp');
