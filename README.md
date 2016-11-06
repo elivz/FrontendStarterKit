@@ -51,10 +51,6 @@ You can connect to the database using an app such as [Sequel Pro](http://sequelp
 
 The front-end build process requires Node v4.5.0 or higher. Once Node is installed, run the following command from the project root to install all the build-process dependancies:
 
-    npm install
-
-or 
-
     yarn
 
 ### Building Front-End Assets
@@ -74,7 +70,7 @@ To generate minified copies of all the assets without sourcemaps, run the follow
 
 ## Specific Notes
 
-Most project-specific build configuration can be accomplished via the `gulpfile.babel.js/config.js` file.
+Most project-specific build configuration can be accomplished via the `gulpfile.js/config.js` file.
 
 ### CSS
 

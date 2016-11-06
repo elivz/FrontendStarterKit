@@ -51,7 +51,6 @@
     "gulp-svg-sprite": "^1.3.6",
     "gulp-unretina": "^0.1.3",
     "lazypipe": "^1.0.1",
-    "path": "^0.12.7",
     "postcss-assets": "^4.1.0",
     "require-dir": "^0.3.0",
     "yargs": "^6.3.0"
