@@ -43,16 +43,6 @@
     transform: translateY(-50%);
 }
 
-@mixin ghost-vertical-align {
-    &::before {
-        content: "";
-        display: inline-block;
-        vertical-align: middle;
-        height: 100%;
-        width: 0.1px;
-    }
-}
-
 // Hide text visually, leaving it accesible to screen-readers
 @mixin hide-text {
     overflow: hidden;
@@ -119,6 +109,25 @@
     @if $active {
         &:active {
             color: $active;
+        }
+    }
+}
+
+// Make a dimension fluid between two values
+@mixin fluid-type($properties, $min-vw, $max-vw, $min-value, $max-value) {
+    @each $property in $properties {
+        #{$property}: $min-value;
+    }
+
+    @media screen and (min-width: $min-vw) {
+        @each $property in $properties {
+            #{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+        }
+    }
+
+    @media screen and (min-width: $max-vw) {
+        @each $property in $properties {
+            #{$property}: $max-value;
         }
     }
 }
