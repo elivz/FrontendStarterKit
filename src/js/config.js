@@ -14,13 +14,10 @@ System.config({
   },
 
   map: {
-    "autotrack": "npm:autotrack@1.0.3",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
     "jquery": "npm:jquery@3.1.0",
-    "picturefill": "npm:picturefill@3.0.2",
-    "svgxuse": "npm:svgxuse@1.1.22",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
@@ -45,15 +42,6 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "util": "npm:util@0.10.3"
     },
-    "npm:autotrack@1.0.3": {
-      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
-      "debounce": "npm:debounce@1.0.0",
-      "dom-utils": "npm:dom-utils@0.4.1",
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "object-assign": "npm:object-assign@4.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2",
-      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
-    },
     "npm:babel-runtime@5.8.38": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -71,9 +59,6 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
-    "npm:debounce@1.0.0": {
-      "date-now": "npm:date-now@1.0.1"
-    },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
@@ -82,9 +67,6 @@ System.config({
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:picturefill@3.0.2": {
-      "child_process": "github:jspm/nodelibs-child_process@0.1.0"
     },
     "npm:process@0.11.9": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",

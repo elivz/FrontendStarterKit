@@ -1,2 +1,1 @@
-import 'svgxuse';
 import 'picturefill';

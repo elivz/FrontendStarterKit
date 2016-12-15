@@ -24,6 +24,11 @@ Options -MultiViews
     RewriteCond %{HTTPS} !=on
     RewriteRule ^ - [env=proto:http]
 
+    # Force https
+    # RewriteCond %{HTTPS} !=on
+    # RewriteCond %{HTTP_HOST} !\.dev [NC]
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
     # Rewrite to www.domain.com
     RewriteCond %{HTTP_HOST} !^(www|staging|dev)\. [NC]
     RewriteCond %{HTTP_HOST} !\.dev [NC]

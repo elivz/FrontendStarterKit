@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import 'autotrack';
 import 'plugins/externalLinks';
 
 // Export jQuery to global namespace
