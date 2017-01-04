@@ -70,7 +70,7 @@ To generate minified copies of all the assets without sourcemaps, run the follow
 
 ## Specific Notes
 
-Most project-specific build configuration can be accomplished via the `gulpfile.js/config.js` file.
+Most project-specific build configuration can be accomplished in the `package.json` file.
 
 ### CSS
 

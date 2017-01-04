@@ -12,7 +12,7 @@
   },
   "build": {
     "paths": {
-      "url": "http://frontend.dev:8080",
+      "url": "http://localhost:8080",
       "webroot": "./dist/public_html"
     },
     "tasks": {
