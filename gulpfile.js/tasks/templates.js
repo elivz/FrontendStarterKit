@@ -6,24 +6,18 @@ const gulpif = require('gulp-if');
 const fs = require('fs');
 const gulp = require('gulp');
 const modify = require('gulp-modify');
-const path = require('path');
+const config = require('../lib/config');
 
-const config = require('../config');
-
-const paths = {
-    src: path.join(config.tasks.templates.src, `/**/*.{${config.tasks.templates.extensions}}`),
-    dist: config.tasks.templates.dist,
-    manifest: path.join(config.paths.dist, 'rev-manifest.json'),
-};
+const taskConfig = config.pkg.tasks.templates;
 
 // Copy web html to dist
-gulp.task('templates', () => {
+gulp.task('templates-build', () => {
     let manifest = {};
     try {
-        manifest = JSON.parse(fs.readFileSync(paths.manifest, 'utf8'));
+        manifest = JSON.parse(fs.readFileSync(config.pkg.manifest.file, 'utf8'));
     } catch (e) {}
 
-    gulp.src(paths.src)
+    return gulp.src(taskConfig.src)
         .pipe(cached('templates'))
         .pipe(gulpif(config.mode === 'production', modify({
             fileModifier: (file, contents) => {
@@ -35,7 +29,11 @@ gulp.task('templates', () => {
                 return template;
             },
         })))
-        .pipe(gulp.dest(paths.dist));
+        .pipe(gulp.dest(taskConfig.dist));
+
 });
 
-gulp.task('templates-watch', ['templates'], browserSync.reload);
+gulp.task('templates', ['templates-build'], (cb) => {
+    browserSync.reload();
+    cb();
+})

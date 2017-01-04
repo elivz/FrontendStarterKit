@@ -7,64 +7,57 @@ const cssnano = require('cssnano');
 const gulp = require('gulp');
 const filter = require('gulp-filter');
 const lazypipe = require('lazypipe');
-const path = require('path');
 const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
 const rev = require('gulp-rev');
 const sass = require('gulp-sass');
 const size = require('gulp-size');
 const sourcemaps = require('gulp-sourcemaps');
+const config = require('../lib/config');
 
-const config = require('../config');
-
-const paths = {
-    src: config.tasks.styles.dependencies
-        .concat(path.join(config.tasks.styles.src, `/**/*.{${config.tasks.styles.extensions}}`)),
-    dist: config.tasks.styles.dist,
-    manifest: path.join(config.paths.dist, 'rev-manifest.json'),
-};
+const taskConfig = config.pkg.tasks.styles;
 
 const tasks = {
     development: (() => {
         return lazypipe()
-            .pipe(plumber, config.plumber)
+            .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(sass)
             .pipe(postcss, [
                 cssAssets({
                     loadPaths: ['assets/images'],
-                    basePath: config.paths.webroot,
+                    basePath: config.pkg.paths.webroot,
                 }),
                 autoprefixer(),
             ])
             .pipe(sourcemaps.write, '.')
-            .pipe(gulp.dest, paths.dist)
-            .pipe(filter, [`**/*.{${config.tasks.styles.extensions}}`])
+            .pipe(gulp.dest, taskConfig.dist)
+            .pipe(filter, ['**/*.css'])
             .pipe(browserSync.stream)
             .pipe(size, config.output.size);
 
     })(),
     production: (() => {
         return lazypipe()
-            .pipe(plumber, config.plumber)
+            .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(sass)
             .pipe(postcss, [
                 cssAssets({
                     loadPaths: ['assets/images'],
-                    basePath: config.paths.webroot,
+                    basePath: config.pkg.paths.webroot,
                 }),
                 autoprefixer(),
                 cssnano(),
             ])
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
-            .pipe(gulp.dest, paths.dist)
-            .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
-            .pipe(gulp.dest, config.paths.src);
+            .pipe(gulp.dest, taskConfig.dist)
+            .pipe(rev.manifest, config.pkg.manifest.file, { base: config.pkg.manifest.path, merge: true })
+            .pipe(gulp.dest, config.pkg.manifest.path);
     })(),
 };
 
 gulp.task('styles', () => {
-    return gulp.src(paths.src).pipe(tasks[config.mode]());
+    return gulp.src(taskConfig.src).pipe(tasks[config.mode]());
 });

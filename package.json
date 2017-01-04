@@ -1,22 +1,98 @@
 {
   "name": "frontend-starter-kit",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "author": "Eli Van Zoeren <eli@elivz.com>",
   "homepage": "https://elivz.com/",
   "license": "MIT",
   "private": true,
+  "main": "gulpfile.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:elivz/FrontendStarterKit.git"
   },
-  "engines": {
-    "node": ">=4.6.0"
+  "build": {
+    "paths": {
+      "url": "http://frontend.dev:8080",
+      "webroot": "./dist/public_html"
+    },
+    "tasks": {
+      "templates": {
+        "src": "./src/templates/**/*.{html,php,twig}",
+        "dist": "./dist/public_html"
+      },
+      "styles": {
+        "src": "./src/scss/**/*.scss",
+        "dist": "./dist/public_html/assets/styles"
+      },
+      "scripts": {
+        "files": {
+          "main": [
+            "./src/js/main.js"
+          ],
+          "compatibility": [
+            "./src/js/compatibility.js"
+          ]
+        },
+        "dist": "./dist/public_html/assets/scripts",
+        "lint": [
+          "./src/js/**/*.js",
+          "!./src/js/config.js",
+          "!./src/js/jspm_packages/**/*"
+        ]
+      },
+      "images": {
+        "src": "./src/images/**/*.{svg,jpg,jpeg,png,gif,webp}",
+        "dist": "./dist/public_html/assets/images",
+        "svgo": [
+          { "removeDimensions": true },
+          { "convertPathData": { "floatPrecision": 1 } },
+          { "cleanupNumericValues": { "floatPrecision": 1 } },
+          { "sortAttrs": true },
+          { "cleanupIDs": false }
+        ]
+      },
+      "sprites": {
+        "src": "./src/sprites/**/*.svg",
+        "dist": "./dist/public_html/assets/images"
+      },
+      "fonts": {
+        "src": "./src/fonts/**/*",
+        "dist": "./dist/public_html/assets/fonts"
+      },
+      "favicons": {
+        "src": "./src/favicons/**/*",
+        "dist": "./dist/public_html"
+      }
+    },
+    "default": [
+      "clean",
+      [
+        "fonts",
+        "images",
+        "sprites",
+        "favicons"
+      ],
+      "styles",
+      "scripts",
+      "templates"
+    ],
+    "clean": [
+      "./dist/public_html/assets",
+      "./dist/public_html/*.{htaccess,html,php,twig,ico,png}"
+    ],
+    "manifest": {
+      "path": "./dist",
+      "file": "./dist/rev-manifest.json"
+    }
   },
   "scripts": {
     "watch": "gulp watch",
     "build": "gulp",
     "production": "gulp --production",
     "lint": "gulp scripts:lint"
+  },
+  "engines": {
+    "node": ">=4.6.0"
   },
   "dependencies": {
     "breakpoint-sass": "^2.6.1",
@@ -30,7 +106,7 @@
     "cssnano": "^3.7.4",
     "del": "^2.2.2",
     "eslint": "^3.4.0",
-    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.0.1",
     "gulp": "^3.9.0",
     "gulp-cached": "^1.1.0",
@@ -44,7 +120,7 @@
     "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^6.1.1",
     "gulp-rev": "^7.1.2",
-    "gulp-sass": "^2.3.2",
+    "gulp-sass": "^3.0.0",
     "gulp-sequence": "^0.4.6",
     "gulp-size": "^2.0.0",
     "gulp-sourcemaps": "^2.2.0",
@@ -52,7 +128,6 @@
     "gulp-unretina": "^0.1.3",
     "lazypipe": "^1.0.1",
     "postcss-assets": "^4.1.0",
-    "require-dir": "^0.3.0",
     "yargs": "^6.3.0"
   },
   "babel": {
@@ -91,7 +166,8 @@
       "baseURL": "src/js"
     },
     "dependencies": {
-      "jquery": "npm:jquery@3.1.0"
+      "jquery": "npm:jquery@3.1.0",
+      "picturefill": "npm:picturefill@^3.0.2"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

@@ -2,22 +2,17 @@
 
 const browserSync = require('browser-sync');
 const gulp = require('gulp');
-const path = require('path');
 const plumber = require('gulp-plumber');
 const size = require('gulp-size');
 const svgSprite = require('gulp-svg-sprite');
+const config = require('../lib/config');
 
-const config = require('../config');
-
-const paths = {
-    src: path.join(config.tasks.sprites.src, `/**/*.{${config.tasks.sprites.extensions}}`),
-    dist: config.tasks.sprites.dist,
-};
+const taskConfig = config.pkg.tasks.sprites;
 
 // Buld SVG Sprites
 gulp.task('sprites', () => {
-    gulp.src(paths.src)
-        .pipe(plumber(config.plumber))
+    gulp.src(taskConfig.src)
+        .pipe(plumber(config.errorHandler))
         .pipe(svgSprite({
             shape: {
                 id: {
@@ -25,7 +20,7 @@ gulp.task('sprites', () => {
                 },
                 transform: [{
                     svgo: {
-                        plugins: config.tasks.sprites.svgoConfig,
+                        plugins: config.svgoConfig,
                     },
                 }],
             },
@@ -36,7 +31,7 @@ gulp.task('sprites', () => {
                 },
             },
         }))
-        .pipe(gulp.dest(paths.dist))
+        .pipe(gulp.dest(taskConfig.dist))
         .pipe(size(config.output.size))
         .pipe(browserSync.stream());
 });

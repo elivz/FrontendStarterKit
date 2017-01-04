@@ -7,29 +7,19 @@ const gulpJspm = require('gulp-jspm');
 const eslint = require('gulp-eslint');
 const filter = require('gulp-filter');
 const lazypipe = require('lazypipe');
-const path = require('path');
 const plumber = require('gulp-plumber');
 const rev = require('gulp-rev');
 const sequence = require('gulp-sequence');
 const size = require('gulp-size');
 const sourcemaps = require('gulp-sourcemaps');
+const config = require('../lib/config');
 
-const config = require('../config');
-
-const paths = {
-    src: config.tasks.scripts.src,
-    dist: config.tasks.scripts.dist,
-    manifest: path.join(config.paths.dist, 'rev-manifest.json'),
-};
+const taskConfig = config.pkg.tasks.scripts;
 
 gulp.task('scripts:lint', () => {
     if (config.mode === 'production') return true;
 
-    return gulp.src([
-            path.join(paths.src, '**/*.js'),
-            '!' + path.join(paths.src, 'config.js'),
-            '!' + path.join(paths.src, 'jspm_packages/**/*.js'),
-        ])
+    return gulp.src(taskConfig.lint)
         .pipe(cached('esLint'))
         .pipe(eslint())
         .pipe(eslint.format());
@@ -38,42 +28,42 @@ gulp.task('scripts:lint', () => {
 const tasks = {
     development: (filename) => {
         return lazypipe()
-            .pipe(plumber, config.plumber)
+            .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(gulpJspm, {
                 selfExecutingBundle: true,
-                fileName: filename.replace('.js', ''),
+                fileName: filename,
             })
             .pipe(sourcemaps.write, '.')
-            .pipe(gulp.dest, paths.dist)
-            .pipe(filter, [`**/*.{${config.tasks.scripts.extensions}}`])
+            .pipe(gulp.dest, taskConfig.dist)
+            .pipe(filter, ['**/*.js'])
             .pipe(browserSync.stream)
             .pipe(size, config.output.size);
     },
     production: (filename) => {
         return lazypipe()
-            .pipe(plumber, config.plumber)
+            .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(gulpJspm, {
                 selfExecutingBundle: true,
                 minify: true,
-                fileName: filename.replace('.js', ''),
+                fileName: filename,
             })
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
-            .pipe(gulp.dest, paths.dist)
-            .pipe(rev.manifest, paths.manifest, { base: config.paths.src, merge: true })
-            .pipe(gulp.dest, config.paths.src);
+            .pipe(gulp.dest, taskConfig.dist)
+            .pipe(rev.manifest, config.pkg.manifest.file, { base: config.pkg.manifest.path, merge: true })
+            .pipe(gulp.dest, config.pkg.manifest.path);
     },
 };
 
-for (const file of config.tasks.scripts.files) {
+for (const file in taskConfig.files) {
     gulp.task(file, () => {
         const task = tasks[config.mode](file);
-        return gulp.src(path.join(paths.src, file)).pipe(task());
+        return gulp.src(taskConfig.files[file]).pipe(task());
     });
 }
 
 gulp.task('scripts', ['scripts:lint'], (cb) => {
-    sequence.apply(this, config.tasks.scripts.files.concat('browserSync:reload'))(cb);
+    sequence.apply(this, Object.keys(taskConfig.files).concat('browserSync:reload'))(cb);
 });
