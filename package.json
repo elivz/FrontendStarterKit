@@ -29,8 +29,8 @@
           "main": [
             "./src/js/main.js"
           ],
-          "compatibility": [
-            "./src/js/compatibility.js"
+          "initial": [
+            "./src/js/initial.js"
           ]
         },
         "dist": "./dist/public_html/assets/scripts",
@@ -44,11 +44,25 @@
         "src": "./src/images/**/*.{svg,jpg,jpeg,png,gif,webp}",
         "dist": "./dist/public_html/assets/images",
         "svgo": [
-          { "removeDimensions": true },
-          { "convertPathData": { "floatPrecision": 1 } },
-          { "cleanupNumericValues": { "floatPrecision": 1 } },
-          { "sortAttrs": true },
-          { "cleanupIDs": false }
+          {
+            "removeDimensions": true
+          },
+          {
+            "convertPathData": {
+              "floatPrecision": 1
+            }
+          },
+          {
+            "cleanupNumericValues": {
+              "floatPrecision": 1
+            }
+          },
+          {
+            "sortAttrs": true
+          },
+          {
+            "cleanupIDs": false
+          }
         ]
       },
       "sprites": {
@@ -81,8 +95,8 @@
       "./dist/public_html/*.{htaccess,html,php,twig,ico,png}"
     ],
     "manifest": {
-      "path": "./dist",
-      "file": "./dist/rev-manifest.json"
+      "path": "./src",
+      "file": "./src/rev-manifest.json"
     }
   },
   "scripts": {
@@ -96,7 +110,7 @@
   },
   "dependencies": {
     "breakpoint-sass": "^2.6.1",
-    "sanitize.css": "^4.1.0"
+    "sanitize.css": "^5.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
@@ -111,12 +125,12 @@
     "gulp": "^3.9.0",
     "gulp-cached": "^1.1.0",
     "gulp-eslint": "^3.0.1",
-    "gulp-filter": "^4.0.0",
+    "gulp-filter": "^5.0.0",
     "gulp-if": "^2.0.1",
     "gulp-imagemin": "^3.0.3",
     "gulp-jspm": "^0.5.13",
     "gulp-modify": "^0.1.1",
-    "gulp-notify": "^2.2.0",
+    "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^6.1.1",
     "gulp-rev": "^7.1.2",
@@ -128,7 +142,7 @@
     "gulp-unretina": "^0.1.3",
     "lazypipe": "^1.0.1",
     "postcss-assets": "^4.1.0",
-    "yargs": "^6.3.0"
+    "yargs": "^7.0.0"
   },
   "babel": {
     "presets": [
@@ -166,8 +180,9 @@
       "baseURL": "src/js"
     },
     "dependencies": {
+      "a11y-toggle": "npm:a11y-toggle@^2.1.0",
       "jquery": "npm:jquery@3.1.0",
-      "picturefill": "npm:picturefill@^3.0.2"
+      "lazysizes": "npm:lazysizes@^3.0.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

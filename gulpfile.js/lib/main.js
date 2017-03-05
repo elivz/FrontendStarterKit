@@ -34,6 +34,6 @@ gulp.task('watch', ['browserSync'], () => {
 });
 
 // Clean distribution files
-gulp.task('clean', (cb) => {
-    del(config.pkg.clean, cb);
+gulp.task('clean', () => {
+    return del(config.pkg.clean);
 });

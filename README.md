@@ -15,8 +15,7 @@
         - jspm_modules # 3rd-party vendor script libraries
         - modules # Individual components providing site-specific functionality
         - plugins # Self-contained generic plugins (not site-specific)
-      - plugins   # Custom-written plugins to perform specific tasks
-      - main.js   # Entry-point for the site's JS -
+        - main.js # Entry-point for the site's JS -
                   # you should import everything else from here
       - sass      # SCSS source files
                   # Autoprefixer will add browser support as appropriate
@@ -49,7 +48,7 @@ You can connect to the database using an app such as [Sequel Pro](http://sequelp
 
 ### Initial Setup
 
-The front-end build process requires Node v4.5.0 or higher. Once Node is installed, run the following command from the project root to install all the build-process dependancies:
+The front-end build process requires Node v4.6.0 or higher. Once Node is installed, run the following command from the project root to install all the build-process dependancies:
 
     yarn
 

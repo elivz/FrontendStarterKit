@@ -1,4 +1,6 @@
 import $ from 'jquery';
+import 'a11y-toggle';
+
 import 'plugins/externalLinks';
 
 // Export jQuery to global namespace

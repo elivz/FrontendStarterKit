@@ -46,6 +46,7 @@ const tasks = {
                 cssAssets({
                     loadPaths: ['assets/images'],
                     basePath: config.pkg.paths.webroot,
+                    cachebuster: true,
                 }),
                 autoprefixer(),
                 cssnano(),

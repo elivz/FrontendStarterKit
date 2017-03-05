@@ -10,7 +10,7 @@
 npm-debug.log
 node_modules
 jspm_packages
-src/rev-manifest.json
+rev-manifest.json
 
 # MySQL data
 docker/data
