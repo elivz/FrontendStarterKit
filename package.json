@@ -1,6 +1,6 @@
 {
   "name": "frontend-starter-kit",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "Eli Van Zoeren <eli@elivz.com>",
   "homepage": "https://elivz.com/",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "tasks": {
       "templates": {
         "src": "./src/templates/**/*.{html,php,twig}",
-        "dist": "./dist/public_html"
+        "dist": "./dist/cms/templates"
       },
       "styles": {
         "src": "./src/scss/**/*.scss",
@@ -35,14 +35,24 @@
         },
         "dist": "./dist/public_html/assets/scripts",
         "lint": [
-          "./src/js/**/*.js",
+          "!./src/js/plugins/analytics.js",
           "!./src/js/config.js",
-          "!./src/js/jspm_packages/**/*"
+          "!./src/js/jspm_packages/**/*",
+          "./src/js/**/*.js"
         ]
       },
       "images": {
-        "src": "./src/images/**/*.{svg,jpg,jpeg,png,gif,webp}",
-        "dist": "./dist/public_html/assets/images",
+        "main": {
+          "src": [
+            "./src/images/**/*.{svg,jpg,jpeg,png,gif,webp}",
+            "!./src/images/inline/**/*"
+          ],
+          "dist": "./dist/public_html/assets/images"
+        },
+        "inline": {
+          "src": "./src/images/inline/**/*.{svg,jpg,jpeg,png,gif,webp}",
+          "dist": "./dist/cms/templates/assets"
+        },
         "svgo": [
           {
             "removeDimensions": true
@@ -67,14 +77,14 @@
       },
       "sprites": {
         "src": "./src/sprites/**/*.svg",
-        "dist": "./dist/public_html/assets/images"
+        "dist": "./dist/cms/templates/assets"
       },
       "fonts": {
         "src": "./src/fonts/**/*",
         "dist": "./dist/public_html/assets/fonts"
       },
-      "favicons": {
-        "src": "./src/favicons/**/*",
+      "static": {
+        "src": "./src/static/**/*",
         "dist": "./dist/public_html"
       }
     },
@@ -84,13 +94,14 @@
         "fonts",
         "images",
         "sprites",
-        "favicons"
+        "static"
       ],
       "styles",
       "scripts",
       "templates"
     ],
     "clean": [
+      "./dist/cms/templates",
       "./dist/public_html/assets",
       "./dist/public_html/*.{htaccess,html,php,twig,ico,png}"
     ],

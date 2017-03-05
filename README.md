@@ -11,6 +11,7 @@
     src
       - fonts     # Any webfont files here will be copied verbatim to the dist folder
       - images    # Unoptimized image files, as exported from Photoshop, etc.
+        - inline  # Store images that will eventually be inlined into the HTML here
       - js        # All custom scripts for the theme
         - jspm_modules # 3rd-party vendor script libraries
         - modules # Individual components providing site-specific functionality
