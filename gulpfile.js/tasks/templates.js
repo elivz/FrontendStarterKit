@@ -5,14 +5,17 @@ const cached = require('gulp-cached');
 const gulpif = require('gulp-if');
 const fs = require('fs');
 const gulp = require('gulp');
-const imagemin = require('gulp-imagemin');
 const modify = require('gulp-modify');
 const config = require('../lib/config');
 
 const taskConfig = config.pkg.tasks.templates;
 
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 // Copy web html to dist
-gulp.task('templates:build', () => {
+gulp.task('templates-build', () => {
     let manifest = {};
     try {
         manifest = JSON.parse(fs.readFileSync(config.pkg.manifest.file, 'utf8'));
@@ -24,8 +27,9 @@ gulp.task('templates:build', () => {
             fileModifier: (file, contents) => {
                 let template = contents;
                 Object.keys(manifest).forEach((originalFile) => {
+                    const regexp = new RegExp(escapeRegExp(originalFile), 'g');
                     const newFile = manifest[originalFile];
-                    template = template.replace(originalFile, newFile);
+                    template = template.replace(regexp, newFile);
                 });
                 return template;
             },
@@ -34,7 +38,7 @@ gulp.task('templates:build', () => {
 
 });
 
-gulp.task('templates', ['templates:build'], (cb) => {
+gulp.task('templates', ['templates-build'], (cb) => {
     browserSync.reload();
     cb();
 })

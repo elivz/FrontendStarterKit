@@ -22,7 +22,16 @@
       },
       "styles": {
         "src": "./src/scss/**/*.scss",
-        "dist": "./dist/public_html/assets/styles"
+        "dist": "./dist/public_html/assets/styles",
+        "critical": {
+          "dist": "../cms/templates/assets/critical",
+          "files": [
+            {
+              "url": "",
+              "template": "index"
+            }
+          ]
+        }
       },
       "scripts": {
         "files": {
@@ -96,11 +105,15 @@
         "sprites",
         "static"
       ],
-      "styles",
-      "scripts",
-      "templates"
+      [
+        "styles",
+        "scripts"
+      ],
+      "templates",
+      "styles:critical"
     ],
     "clean": [
+      "./src/rev-manifest.json",
       "./dist/cms/templates",
       "./dist/public_html/assets",
       "./dist/public_html/*.{htaccess,html,php,twig,ico,png}"
@@ -121,6 +134,7 @@
   },
   "dependencies": {
     "breakpoint-sass": "^2.6.1",
+    "critical": "^0.8.4",
     "sanitize.css": "^5.0.0"
   },
   "devDependencies": {
