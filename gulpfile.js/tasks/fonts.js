@@ -10,7 +10,8 @@ const taskConfig = config.pkg.tasks.fonts;
 
 // Copy web fonts to dist
 gulp.task('fonts', () => {
-    gulp.src(taskConfig.src)
+    gulp
+        .src(taskConfig.src)
         .pipe(cached('fonts'))
         .pipe(gulp.dest(taskConfig.dist))
         .pipe(browserSync.stream())

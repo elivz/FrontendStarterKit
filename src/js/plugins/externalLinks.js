@@ -10,9 +10,10 @@ export default (() => {
     const links = document.body.getElementsByTagName('a');
 
     // Add a target attribute to any links that match
-    Array.from(links).forEach((link) => {
+    Array.from(links).forEach(link => {
         if (!localTest.test(link.href)) {
             link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener');
         }
     });
 })();

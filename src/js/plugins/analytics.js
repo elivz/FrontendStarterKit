@@ -50,8 +50,9 @@ const metrics = {
  * @return {string}
  */
 const uuid = function b(a) {
-    return a ? (a ^ Math.random() * 16 >> a / 4).toString(16) :
-            ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, b);
+    return a
+        ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
+        : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, b);
 };
 
 /**
@@ -76,12 +77,19 @@ const createTracker = () => {
  * @param {Object=} fieldsObj
  */
 export const trackError = (error, fieldsObj = {}) => {
-    ga('send', 'event', Object.assign({
-        eventCategory: 'Script',
-        eventAction: 'error',
-        eventLabel: (error && error.stack) || NULL_VALUE,
-        nonInteraction: true,
-    }, fieldsObj));
+    ga(
+        'send',
+        'event',
+        Object.assign(
+            {
+                eventCategory: 'Script',
+                eventAction: 'error',
+                eventLabel: (error && error.stack) || NULL_VALUE,
+                nonInteraction: true,
+            },
+            fieldsObj
+        )
+    );
 };
 
 /**
@@ -97,12 +105,12 @@ const trackErrors = () => {
     const fieldsObj = { eventAction: 'uncaught error' };
 
     // Replay any stored load error events.
-    loadErrorEvents.forEach((event) => {
+    loadErrorEvents.forEach(event => {
         trackError(event.error, fieldsObj);
     });
 
     // Add a new listener to track event immediately.
-    window.addEventListener('error', (event) => {
+    window.addEventListener('error', event => {
         trackError(event.error, fieldsObj);
     });
 };
@@ -115,12 +123,12 @@ const trackCustomDimensions = () => {
     // that every dimension in every hit has *some* value. This is necessary
     // because Google Analytics will drop rows with empty dimension values
     // in your reports.
-    Object.keys(dimensions).forEach((key) => {
+    Object.keys(dimensions).forEach(key => {
         ga('set', dimensions[key], NULL_VALUE);
     });
 
     // Adds tracking of dimensions known at page load time.
-    ga((tracker) => {
+    ga(tracker => {
         tracker.set({
             [dimensions.TRACKING_VERSION]: TRACKING_VERSION,
             [dimensions.CLIENT_ID]: tracker.get('clientId'),
@@ -130,13 +138,17 @@ const trackCustomDimensions = () => {
 
     // Adds tracking to record each the type, time, uuid, and visibility state
     // of each hit immediately before it's sent.
-    ga((tracker) => {
+    ga(tracker => {
         const originalBuildHitTask = tracker.get('buildHitTask');
-        tracker.set('buildHitTask', (model) => {
+        tracker.set('buildHitTask', model => {
             model.set(dimensions.HIT_ID, uuid(), true);
             model.set(dimensions.HIT_TIME, String(+new Date()), true);
             model.set(dimensions.HIT_TYPE, model.get('hitType'), true);
-            model.set(dimensions.VISIBILITY_STATE, document.visibilityState, true);
+            model.set(
+                dimensions.VISIBILITY_STATE,
+                document.visibilityState,
+                true
+            );
 
             originalBuildHitTask(model);
         });
@@ -173,7 +185,8 @@ const sendNavigationTimingMetrics = () => {
 
     // In some edge cases browsers return very obviously incorrect NT values,
     // e.g. 0, negative, or future times. This validates values before sending.
-    const allValuesAreValid = (...values) => values.every(value => value > 0 && value < 6e6);
+    const allValuesAreValid = (...values) =>
+        values.every(value => value > 0 && value < 6e6);
 
     if (allValuesAreValid(responseEnd, domLoaded, windowLoaded)) {
         ga('send', 'event', {

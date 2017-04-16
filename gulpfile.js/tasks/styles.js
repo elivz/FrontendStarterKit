@@ -36,7 +36,6 @@ const tasks = {
             .pipe(filter, ['**/*.css'])
             .pipe(browserSync.stream)
             .pipe(size, config.output.size);
-
     })(),
     production: (() => {
         return lazypipe()
@@ -55,7 +54,10 @@ const tasks = {
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, taskConfig.dist)
-            .pipe(rev.manifest, config.pkg.manifest.file, { base: config.pkg.manifest.path, merge: true })
+            .pipe(rev.manifest, config.pkg.manifest.file, {
+                base: config.pkg.manifest.path,
+                merge: true,
+            })
             .pipe(gulp.dest, config.pkg.manifest.path);
     })(),
 };
@@ -81,18 +83,22 @@ function doSynchronousLoop(data, processData, done) {
 // Process the critical path CSS one at a time
 function processCriticalCSS(element, i, callback) {
     const criticalSrc = config.pkg.paths.url + '/' + element.url;
-    const criticalDest = taskConfig.critical.dist + '/' + element.template + '.css';
+    const criticalDest =
+        taskConfig.critical.dist + '/' + element.template + '.css';
 
-    criticalCss.generate({
-        src: criticalSrc,
-        dest: criticalDest,
-        base: config.pkg.paths.webroot,
-        minify: true,
-        width: 1200,
-        height: 1000
-    }).then((output) => {
-        callback();
-    }).error(config.errorHandler);
+    criticalCss
+        .generate({
+            src: criticalSrc,
+            dest: criticalDest,
+            base: config.pkg.paths.webroot,
+            minify: true,
+            width: 1200,
+            height: 1000,
+        })
+        .then(output => {
+            callback();
+        })
+        .error(config.errorHandler);
 }
 
 // Compile CSS files
@@ -100,7 +106,7 @@ gulp.task('styles', () => {
     return gulp.src(taskConfig.src).pipe(tasks[config.mode]());
 });
 
-gulp.task('styles:critical', ['styles', 'templates'], (cb) => {
+gulp.task('styles:critical', ['styles', 'templates'], cb => {
     if (config.mode == 'production') {
         doSynchronousLoop(taskConfig.critical.files, processCriticalCSS, () => {
             cb();
@@ -108,4 +114,4 @@ gulp.task('styles:critical', ['styles', 'templates'], (cb) => {
     } else {
         cb();
     }
-})
+});

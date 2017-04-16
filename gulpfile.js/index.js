@@ -7,6 +7,6 @@ require('./lib/main');
  * This script includes them all.
  */
 const tasks = require('../package.json').build.tasks;
-Object.keys(tasks).forEach((taskName) => {
+Object.keys(tasks).forEach(taskName => {
     require(`./tasks/${taskName}`);
 });

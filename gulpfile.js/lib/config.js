@@ -33,7 +33,7 @@ module.exports = {
         imagemin.svgo({ plugins: pkg.tasks.images.svgo }),
     ],
 
-    errorHandler: (error) => {
+    errorHandler: error => {
         notify.onError({
             title: 'Gulp Error',
             message: '<%= error.message %>',

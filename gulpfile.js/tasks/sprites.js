@@ -11,26 +11,31 @@ const taskConfig = config.pkg.tasks.sprites;
 
 // Buld SVG Sprites
 gulp.task('sprites', () => {
-    gulp.src(taskConfig.src)
+    gulp
+        .src(taskConfig.src)
         .pipe(plumber(config.errorHandler))
-        .pipe(svgSprite({
-            shape: {
-                id: {
-                    generator: 's-%s',
-                },
-                transform: [{
-                    svgo: {
-                        plugins: config.svgoConfig,
+        .pipe(
+            svgSprite({
+                shape: {
+                    id: {
+                        generator: 's-%s',
                     },
-                }],
-            },
-            mode: {
-                symbol: {
-                    dest: './',
-                    sprite: 'sprites.svg',
+                    transform: [
+                        {
+                            svgo: {
+                                plugins: config.svgoConfig,
+                            },
+                        },
+                    ],
                 },
-            },
-        }))
+                mode: {
+                    symbol: {
+                        dest: './',
+                        sprite: 'sprites.svg',
+                    },
+                },
+            })
+        )
         .pipe(gulp.dest(taskConfig.dist))
         .pipe(size(config.output.size))
         .pipe(browserSync.stream());

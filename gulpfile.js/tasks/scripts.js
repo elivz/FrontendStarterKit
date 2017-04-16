@@ -19,14 +19,15 @@ const taskConfig = config.pkg.tasks.scripts;
 gulp.task('scripts:lint', () => {
     if (config.mode === 'production') return true;
 
-    return gulp.src(taskConfig.lint)
+    return gulp
+        .src(taskConfig.lint)
         .pipe(cached('esLint'))
         .pipe(eslint())
         .pipe(eslint.format());
 });
 
 const tasks = {
-    development: (filename) => {
+    development: filename => {
         return lazypipe()
             .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
@@ -40,7 +41,7 @@ const tasks = {
             .pipe(browserSync.stream)
             .pipe(size, config.output.size);
     },
-    production: (filename) => {
+    production: filename => {
         return lazypipe()
             .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
@@ -52,7 +53,10 @@ const tasks = {
             .pipe(rev)
             .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, taskConfig.dist)
-            .pipe(rev.manifest, config.pkg.manifest.file, { base: config.pkg.manifest.path, merge: true })
+            .pipe(rev.manifest, config.pkg.manifest.file, {
+                base: config.pkg.manifest.path,
+                merge: true,
+            })
             .pipe(gulp.dest, config.pkg.manifest.path);
     },
 };
@@ -64,6 +68,9 @@ for (const file in taskConfig.files) {
     });
 }
 
-gulp.task('scripts', ['scripts:lint'], (cb) => {
-    sequence.apply(this, Object.keys(taskConfig.files).concat('browserSync:reload'))(cb);
+gulp.task('scripts', ['scripts:lint'], cb => {
+    sequence.apply(
+        this,
+        Object.keys(taskConfig.files).concat('browserSync:reload')
+    )(cb);
 });

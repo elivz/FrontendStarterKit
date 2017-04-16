@@ -7,4 +7,7 @@ import 'plugins/externalLinks';
 window.$ = $;
 
 // Add "js" class to the html element
-document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+document.documentElement.className = document.documentElement.className.replace(
+    'no-js',
+    'js'
+);

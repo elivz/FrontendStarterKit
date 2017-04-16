@@ -42,6 +42,7 @@
             "./src/js/initial.js"
           ]
         },
+        "src": "./src/js",
         "dist": "./dist/public_html/assets/scripts",
         "lint": [
           "!./src/js/plugins/analytics.js",
@@ -186,10 +187,12 @@
     ]
   },
   "eslintConfig": {
-    "extends": "airbnb-base",
     "env": {
       "browser": true
     },
+    "extends": [
+      "airbnb-base"
+    ],
     "rules": {
       "import/extensions": 0,
       "import/no-extraneous-dependencies": 0,
@@ -197,6 +200,20 @@
       "indent": [
         2,
         4
+      ],
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "never"
+        }
+      ],
+      "arrow-parens": [
+        "error",
+        "as-needed"
       ]
     }
   },

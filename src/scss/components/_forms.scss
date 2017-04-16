@@ -1,14 +1,4 @@
-$text-inputs:
-    'textarea,
-    input[type="email"],
-    input[type="number"],
-    input[type="password"],
-    input[type="search"],
-    input[type="tel"],
-    input[type="text"],
-    input[type="url"],
-    input[type="file"],
-    select[multiple]';
+$text-inputs: 'textarea, input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="file"], select[multiple]';
 
 fieldset {
     background: tint(color(border), 75%);
@@ -74,12 +64,15 @@ select {
     border: 1px solid color(gray);
     -moz-appearance: none;
     -webkit-appearance: none;
+
     &::-ms-expand {
         display: none;
     }
+
     &::-ms-value {
         color: currentColor;
     }
+
     option {
         background-color: white;
     }
