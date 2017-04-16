@@ -19,8 +19,8 @@ const config = require('../lib/config');
 const taskConfig = config.pkg.tasks.styles;
 
 const tasks = {
-    development: (() => {
-        return lazypipe()
+    development: (() =>
+        lazypipe()
             .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(sass)
@@ -35,10 +35,9 @@ const tasks = {
             .pipe(gulp.dest, taskConfig.dist)
             .pipe(filter, ['**/*.css'])
             .pipe(browserSync.stream)
-            .pipe(size, config.output.size);
-    })(),
-    production: (() => {
-        return lazypipe()
+            .pipe(size, config.output.size))(),
+    production: (() =>
+        lazypipe()
             .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(sass)
@@ -58,8 +57,7 @@ const tasks = {
                 base: config.pkg.manifest.path,
                 merge: true,
             })
-            .pipe(gulp.dest, config.pkg.manifest.path);
-    })(),
+            .pipe(gulp.dest, config.pkg.manifest.path))(),
 };
 
 // Process data in an array synchronously, moving onto the n+1 item only after the nth item callback
@@ -82,9 +80,8 @@ function doSynchronousLoop(data, processData, done) {
 
 // Process the critical path CSS one at a time
 function processCriticalCSS(element, i, callback) {
-    const criticalSrc = config.pkg.paths.url + '/' + element.url;
-    const criticalDest =
-        taskConfig.critical.dist + '/' + element.template + '.css';
+    const criticalSrc = `${config.pkg.paths.url}/${element.url}`;
+    const criticalDest = `${taskConfig.critical.dist}/${element.template}.css`;
 
     criticalCss
         .generate({
@@ -95,7 +92,7 @@ function processCriticalCSS(element, i, callback) {
             width: 1200,
             height: 1000,
         })
-        .then(output => {
+        .then(() => {
             callback();
         })
         .error(config.errorHandler);
@@ -107,7 +104,7 @@ gulp.task('styles', () => {
 });
 
 gulp.task('styles:critical', ['styles', 'templates'], cb => {
-    if (config.mode == 'production') {
+    if (config.mode === 'production') {
         doSynchronousLoop(taskConfig.critical.files, processCriticalCSS, () => {
             cb();
         });

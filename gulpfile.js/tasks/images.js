@@ -34,12 +34,12 @@ gulp.task('images:main', () => {
 });
 
 // Copy and optimize any images in the templates folder (to be inlined)
-gulp.task('images:inline', () => {
-    return gulp
+gulp.task('images:inline', () =>
+    gulp
         .src(taskConfig.inline.src)
         .pipe(cached('templates-images'))
         .pipe(imagemin(config.imageminConfig))
-        .pipe(gulp.dest(taskConfig.inline.dist));
-});
+        .pipe(gulp.dest(taskConfig.inline.dist))
+);
 
 gulp.task('images', ['images:main', 'images:inline']);

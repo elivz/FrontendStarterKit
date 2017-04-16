@@ -27,8 +27,8 @@ gulp.task('scripts:lint', () => {
 });
 
 const tasks = {
-    development: filename => {
-        return lazypipe()
+    development: filename =>
+        lazypipe()
             .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(gulpJspm, {
@@ -39,10 +39,9 @@ const tasks = {
             .pipe(gulp.dest, taskConfig.dist)
             .pipe(filter, ['**/*.js'])
             .pipe(browserSync.stream)
-            .pipe(size, config.output.size);
-    },
-    production: filename => {
-        return lazypipe()
+            .pipe(size, config.output.size),
+    production: filename =>
+        lazypipe()
             .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(gulpJspm, {
@@ -57,16 +56,15 @@ const tasks = {
                 base: config.pkg.manifest.path,
                 merge: true,
             })
-            .pipe(gulp.dest, config.pkg.manifest.path);
-    },
+            .pipe(gulp.dest, config.pkg.manifest.path),
 };
 
-for (const file in taskConfig.files) {
+taskConfig.files.forEach(file => {
     gulp.task(file, () => {
         const task = tasks[config.mode](file);
         return gulp.src(taskConfig.files[file]).pipe(task());
     });
-}
+});
 
 gulp.task('scripts', ['scripts:lint'], cb => {
     sequence.apply(
