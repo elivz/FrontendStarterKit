@@ -126,8 +126,8 @@
   },
   "scripts": {
     "watch": "gulp watch",
-    "build": "gulp",
-    "production": "gulp --production",
+    "dev": "gulp",
+    "build": "gulp --production",
     "lint": "gulp scripts:lint"
   },
   "engines": {
