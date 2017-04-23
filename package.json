@@ -1,6 +1,6 @@
 {
   "name": "frontend-starter-kit",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "author": "Eli Van Zoeren <eli@elivz.com>",
   "homepage": "https://elivz.com/",
   "license": "MIT",
@@ -124,9 +124,9 @@
   "scripts": {
     "watch": "gulp watch",
     "dev": "gulp",
-    "lint": "gulp scripts:lint"
+    "lint": "gulp scripts:lint",
     "prod": "NODE_ENV=production gulp",
-    "build": "NODE_ENV=production gulp",
+    "build": "NODE_ENV=production gulp"
   },
   "engines": {
     "node": ">=4.6.0"
