@@ -20,16 +20,8 @@ gulp.task('default', sequence.apply(this, config.pkg.default));
 gulp.task('watch', ['browserSync'], () => {
     Object.keys(config.pkg.tasks).forEach(taskName => {
         const taskOptions = config.pkg.tasks[taskName];
-        let src = taskOptions.src || [];
-        if (typeof taskOptions.files == 'object') {
-            for (const file in taskOptions.files) {
-                src = src.concat(taskOptions.files[file]);
-            }
-        }
-
-        gulp.watch(src, () => {
-            gulp.start(taskName);
-        });
+        const src = taskOptions.watch || taskOptions.src || [];
+        gulp.watch(src, [taskName]);
     });
 });
 

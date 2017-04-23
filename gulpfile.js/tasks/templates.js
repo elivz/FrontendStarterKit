@@ -28,7 +28,7 @@ gulp.task('templates-build', () => {
         .pipe(cached('templates'))
         .pipe(
             gulpif(
-                config.mode === 'production',
+                config.productionMode,
                 modify({
                     fileModifier: (file, contents) => {
                         let template = contents;

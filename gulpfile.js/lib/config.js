@@ -1,15 +1,12 @@
 'use strict';
 
-const yargs = require('yargs');
 const imagemin = require('gulp-imagemin');
-const notify = require('gulp-notify');
-
 const pkg = require('../../package.json').build;
 
 module.exports = {
     pkg,
 
-    mode: yargs.argv.production ? 'production' : 'development',
+    productionMode: process.env.NODE_ENV || false,
 
     output: {
         size: {
@@ -32,13 +29,4 @@ module.exports = {
         imagemin.gifsicle({ interlaced: true }),
         imagemin.svgo({ plugins: pkg.tasks.images.svgo }),
     ],
-
-    errorHandler: error => {
-        notify.onError({
-            title: 'Gulp Error',
-            message: '<%= error.message %>',
-            sound: 'beep',
-        })(error);
-        this.emit('end');
-    },
 };

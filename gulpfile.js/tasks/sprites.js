@@ -2,7 +2,6 @@
 
 const browserSync = require('browser-sync');
 const gulp = require('gulp');
-const plumber = require('gulp-plumber');
 const size = require('gulp-size');
 const svgSprite = require('gulp-svg-sprite');
 const config = require('../lib/config');
@@ -13,7 +12,6 @@ const taskConfig = config.pkg.tasks.sprites;
 gulp.task('sprites', () => {
     gulp
         .src(taskConfig.src)
-        .pipe(plumber(config.errorHandler))
         .pipe(
             svgSprite({
                 shape: {

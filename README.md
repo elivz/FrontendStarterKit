@@ -13,7 +13,6 @@
       - images    # Unoptimized image files, as exported from Photoshop, etc.
         - inline  # Store images that will eventually be inlined into the HTML here
       - js        # All custom scripts for the theme
-        - jspm_modules # 3rd-party vendor script libraries
         - modules # Individual components providing site-specific functionality
         - plugins # Self-contained generic plugins (not site-specific)
         - main.js # Entry-point for the site's JS -
@@ -26,7 +25,7 @@
 
 ## Installing Front-End Dependancies
 
-We use [JSPM](http://jspm.io) to manage all front-end JavaScript dependencies. Run `jspm install [package-name]` to install a new component. Please [read the docs](https://github.com/jspm/jspm-cli/blob/master/docs/installing-packages.md) for details on getting a particular version or installing from various sources.
+We use [Yarn](https://yarnpkg.com/) to manage all front-end JavaScript dependencies. Run `yarn add [package-name]` to install a new component.
 
 
 ## Starting a Docker server
@@ -78,7 +77,7 @@ We run Autoprefixer on the compiled CSS files to add additional browser support 
 
 ### Scripts
 
-Javascript files will be compiled from the `src/js` folder. Any ES6 features will be transcoded to their ES5 equivalent. Use ES2015-style module imports.
+Javascript files will be compiled from the `src/js` folder. Any ES2015 features will be transcoded to their ES5 equivalent. Use ES2015-style module imports.
 
 ### SVGs
 

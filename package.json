@@ -21,8 +21,9 @@
         "dist": "./dist/cms/templates"
       },
       "styles": {
-        "src": "./src/scss/**/*.scss",
+        "src": "./src/scss/*.scss",
         "dist": "./dist/public_html/assets/styles",
+        "watch": "./src/scss/**/*.scss",
         "critical": {
           "dist": "../cms/templates/assets/critical",
           "files": [
@@ -34,16 +35,12 @@
         }
       },
       "scripts": {
-        "files": {
-          "main": [
-            "./src/js/main.js"
-          ],
-          "initial": [
-            "./src/js/initial.js"
-          ]
-        },
-        "src": "./src/js",
+        "src": [
+          "./src/js/main.js",
+          "./src/js/initial.js"
+        ],
         "dist": "./dist/public_html/assets/scripts",
+        "watch": "./src/js/**/*.js",
         "lint": [
           "!./src/js/plugins/analytics.js",
           "!./src/js/config.js",
@@ -127,37 +124,40 @@
   "scripts": {
     "watch": "gulp watch",
     "dev": "gulp",
-    "build": "gulp --production",
     "lint": "gulp scripts:lint"
+    "prod": "NODE_ENV=production gulp",
+    "build": "NODE_ENV=production gulp",
   },
   "engines": {
     "node": ">=4.6.0"
   },
   "dependencies": {
+    "a11y-toggle": "^2.1.0",
     "breakpoint-sass": "^2.6.1",
+    "jquery": "^3.2.1",
+    "lazysizes": "^3.0.0",
     "sanitize.css": "^5.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
+    "babel-core": "^6.24.1",
     "babel-eslint": "^7.1.0",
+    "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.1.1",
     "browser-sync": "^2.14.3",
     "critical": "^0.8.4",
     "cssnano": "^3.7.4",
     "del": "^2.2.2",
-    "eslint": "^3.4.0",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.0.1",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-cached": "^1.1.0",
     "gulp-eslint": "^3.0.1",
     "gulp-filter": "^5.0.0",
     "gulp-if": "^2.0.1",
     "gulp-imagemin": "^3.0.3",
-    "gulp-jspm": "^0.5.13",
     "gulp-modify": "^0.1.1",
-    "gulp-notify": "^3.0.0",
-    "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^6.1.1",
     "gulp-rev": "^7.1.2",
     "gulp-sass": "^3.0.0",
@@ -165,10 +165,12 @@
     "gulp-size": "^2.0.0",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-svg-sprite": "^1.3.6",
-    "gulp-unretina": "^0.1.3",
+    "gulp-util": "^3.0.8",
     "lazypipe": "^1.0.1",
     "postcss-assets": "^4.1.0",
-    "yargs": "^7.0.0"
+    "vinyl-named": "^1.1.0",
+    "webpack": "^2.4.1",
+    "webpack-stream": "^3.2.0"
   },
   "babel": {
     "presets": [
@@ -215,21 +217,6 @@
         "error",
         "as-needed"
       ]
-    }
-  },
-  "jspm": {
-    "directories": {
-      "baseURL": "src/js"
-    },
-    "dependencies": {
-      "a11y-toggle": "npm:a11y-toggle@^2.1.0",
-      "jquery": "npm:jquery@3.1.0",
-      "lazysizes": "npm:lazysizes@^3.0.0"
-    },
-    "devDependencies": {
-      "babel": "npm:babel-core@^5.8.24",
-      "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "core-js": "npm:core-js@^1.1.4"
     }
   }
 }

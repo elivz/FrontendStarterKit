@@ -5,10 +5,9 @@ const browserSync = require('browser-sync');
 const criticalCss = require('critical');
 const cssAssets = require('postcss-assets');
 const cssnano = require('cssnano');
-const gulp = require('gulp');
 const filter = require('gulp-filter');
+const gulp = require('gulp');
 const lazypipe = require('lazypipe');
-const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
 const rev = require('gulp-rev');
 const sass = require('gulp-sass');
@@ -21,7 +20,6 @@ const taskConfig = config.pkg.tasks.styles;
 const tasks = {
     development: (() =>
         lazypipe()
-            .pipe(plumber, config.errorHandler)
             .pipe(sourcemaps.init)
             .pipe(sass)
             .pipe(postcss, [
@@ -35,11 +33,10 @@ const tasks = {
             .pipe(gulp.dest, taskConfig.dist)
             .pipe(filter, ['**/*.css'])
             .pipe(browserSync.stream)
+            .pipe(postcss, [cssnano()])
             .pipe(size, config.output.size))(),
     production: (() =>
         lazypipe()
-            .pipe(plumber, config.errorHandler)
-            .pipe(sourcemaps.init)
             .pipe(sass)
             .pipe(postcss, [
                 cssAssets({
@@ -51,7 +48,6 @@ const tasks = {
                 cssnano(),
             ])
             .pipe(rev)
-            .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, taskConfig.dist)
             .pipe(rev.manifest, config.pkg.manifest.file, {
                 base: config.pkg.manifest.path,
@@ -94,17 +90,18 @@ function processCriticalCSS(element, i, callback) {
         })
         .then(() => {
             callback();
-        })
-        .error(config.errorHandler);
+        });
 }
 
 // Compile CSS files
 gulp.task('styles', () => {
-    return gulp.src(taskConfig.src).pipe(tasks[config.mode]());
+    return gulp
+        .src(taskConfig.src)
+        .pipe(tasks[config.productionMode ? 'production' : 'development']());
 });
 
-gulp.task('styles:critical', ['styles', 'templates'], cb => {
-    if (config.mode === 'production') {
+gulp.task('styles:critical', cb => {
+    if (config.productionMode) {
         doSynchronousLoop(taskConfig.critical.files, processCriticalCSS, () => {
             cb();
         });

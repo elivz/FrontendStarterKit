@@ -3,21 +3,19 @@
 const browserSync = require('browser-sync');
 const cached = require('gulp-cached');
 const gulp = require('gulp');
-const gulpJspm = require('gulp-jspm');
 const eslint = require('gulp-eslint');
-const filter = require('gulp-filter');
 const lazypipe = require('lazypipe');
-const plumber = require('gulp-plumber');
 const rev = require('gulp-rev');
-const sequence = require('gulp-sequence');
-const size = require('gulp-size');
-const sourcemaps = require('gulp-sourcemaps');
+const named = require('vinyl-named');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
+
 const config = require('../lib/config');
 
 const taskConfig = config.pkg.tasks.scripts;
 
 gulp.task('scripts:lint', () => {
-    if (config.mode === 'production') return true;
+    if (config.productionMode) return true;
 
     return gulp
         .src(taskConfig.lint)
@@ -27,48 +25,73 @@ gulp.task('scripts:lint', () => {
 });
 
 const tasks = {
-    development: filename =>
+    development: (() =>
         lazypipe()
-            .pipe(plumber, config.errorHandler)
-            .pipe(sourcemaps.init)
-            .pipe(gulpJspm, {
-                selfExecutingBundle: true,
-                fileName: filename,
-            })
-            .pipe(sourcemaps.write, '.')
+            .pipe(named)
+            .pipe(
+                webpackStream,
+                {
+                    devtool: 'cheap-module-source-map',
+                    module: {
+                        rules: [
+                            {
+                                test: /\.js$/,
+                                exclude: /node_modules/,
+                                loader: 'babel-loader',
+                            },
+                        ],
+                    },
+                },
+                webpack
+            )
             .pipe(gulp.dest, taskConfig.dist)
-            .pipe(filter, ['**/*.js'])
-            .pipe(browserSync.stream)
-            .pipe(size, config.output.size),
-    production: filename =>
+            .pipe(browserSync.stream, { match: '**/*.js' }))(),
+    production: (() =>
         lazypipe()
-            .pipe(plumber, config.errorHandler)
-            .pipe(sourcemaps.init)
-            .pipe(gulpJspm, {
-                selfExecutingBundle: true,
-                minify: true,
-                fileName: filename,
-            })
+            .pipe(named)
+            .pipe(
+                webpackStream,
+                {
+                    module: {
+                        rules: [
+                            {
+                                test: /\.js$/,
+                                exclude: /node_modules/,
+                                loader: 'babel-loader',
+                            },
+                        ],
+                    },
+                    plugins: [
+                        new webpack.LoaderOptionsPlugin({
+                            minimize: true,
+                            debug: false,
+                        }),
+                        new webpack.optimize.UglifyJsPlugin({
+                            beautify: false,
+                            mangle: {
+                                screw_ie8: true,
+                                keep_fnames: true,
+                            },
+                            compress: {
+                                screw_ie8: true,
+                            },
+                            comments: false,
+                        }),
+                    ],
+                },
+                webpack
+            )
             .pipe(rev)
-            .pipe(sourcemaps.write, '.')
             .pipe(gulp.dest, taskConfig.dist)
             .pipe(rev.manifest, config.pkg.manifest.file, {
                 base: config.pkg.manifest.path,
                 merge: true,
             })
-            .pipe(gulp.dest, config.pkg.manifest.path),
+            .pipe(gulp.dest, config.pkg.manifest.path))(),
 };
 
-taskConfig.files.forEach(file => {
-    gulp.task(file, () => {
-        const task = tasks[config.mode](file);
-        return gulp.src(taskConfig.files[file]).pipe(task());
-    });
-});
-
-gulp.task('scripts', ['scripts:lint'], cb => {
-    sequence.apply(
-        this,
-        Object.keys(taskConfig.files).concat('browserSync:reload')
-    )(cb);
-});
+gulp.task('scripts', ['scripts:lint'], () =>
+    gulp
+        .src(taskConfig.src)
+        .pipe(tasks[config.productionMode ? 'production' : 'development']())
+);
