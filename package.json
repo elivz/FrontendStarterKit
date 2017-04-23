@@ -82,10 +82,6 @@
           }
         ]
       },
-      "sprites": {
-        "src": "./src/sprites/**/*.svg",
-        "dist": "./dist/cms/templates/assets"
-      },
       "fonts": {
         "src": "./src/fonts/**/*",
         "dist": "./dist/public_html/assets/fonts"
@@ -100,7 +96,6 @@
       [
         "fonts",
         "images",
-        "sprites",
         "static"
       ],
       [
@@ -164,8 +159,6 @@
     "gulp-sequence": "^0.4.6",
     "gulp-size": "^2.0.0",
     "gulp-sourcemaps": "^2.2.0",
-    "gulp-svg-sprite": "^1.3.6",
-    "gulp-util": "^3.0.8",
     "lazypipe": "^1.0.1",
     "postcss-assets": "^4.1.0",
     "vinyl-named": "^1.1.0",

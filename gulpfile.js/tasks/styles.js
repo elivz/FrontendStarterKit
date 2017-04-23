@@ -1,5 +1,3 @@
-'use strict';
-
 const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync');
 const criticalCss = require('critical');

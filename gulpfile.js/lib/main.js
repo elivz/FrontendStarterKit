@@ -1,5 +1,3 @@
-'use strict';
-
 const browserSync = require('browser-sync');
 const del = require('del');
 const gulp = require('gulp');

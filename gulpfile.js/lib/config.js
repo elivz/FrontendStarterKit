@@ -1,5 +1,3 @@
-'use strict';
-
 const imagemin = require('gulp-imagemin');
 const pkg = require('../../package.json').build;
 

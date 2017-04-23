@@ -1,5 +1,3 @@
-'use strict';
-
 require('./lib/main');
 
 const tasks = require('../package.json').build.tasks;
