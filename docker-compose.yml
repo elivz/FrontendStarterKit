@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   web:
@@ -11,12 +11,12 @@ services:
       - "8080:80"
     volumes:
       - ./dist:/var/www
-    links:
-      - mysql
+    depends_on:
+      - db
       - mail
 
-  mysql:
-    image: mysql:5.6
+  db:
+    image: mariadb:latest
     ports:
       - "4306:3306"
     volumes:
