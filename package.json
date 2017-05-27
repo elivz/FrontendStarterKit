@@ -1,6 +1,6 @@
 {
   "name": "frontend-starter-kit",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "author": "Eli Van Zoeren <eli@elivz.com>",
   "homepage": "https://elivz.com/",
   "license": "MIT",
@@ -10,118 +10,9 @@
     "type": "git",
     "url": "git@github.com:elivz/FrontendStarterKit.git"
   },
-  "build": {
-    "paths": {
-      "url": "http://localhost:8080",
-      "webroot": "./dist/public_html"
-    },
-    "tasks": {
-      "templates": {
-        "src": "./src/templates/**/*.{html,php,twig}",
-        "dist": "./dist/cms/templates"
-      },
-      "styles": {
-        "src": "./src/scss/*.scss",
-        "dist": "./dist/public_html/assets/styles",
-        "watch": "./src/scss/**/*.scss",
-        "critical": {
-          "dist": "../cms/templates/assets/critical",
-          "files": [
-            {
-              "url": "",
-              "template": "index"
-            }
-          ]
-        }
-      },
-      "scripts": {
-        "src": [
-          "./src/js/main.js",
-          "./src/js/initial.js"
-        ],
-        "dist": "./dist/public_html/assets/scripts",
-        "watch": "./src/js/**/*.js",
-        "lint": [
-          "!./src/js/plugins/analytics.js",
-          "!./src/js/config.js",
-          "!./src/js/jspm_packages/**/*",
-          "./src/js/**/*.js"
-        ]
-      },
-      "images": {
-        "main": {
-          "src": [
-            "./src/images/**/*.{svg,jpg,jpeg,png,gif,webp}",
-            "!./src/images/inline/**/*"
-          ],
-          "dist": "./dist/public_html/assets/images"
-        },
-        "inline": {
-          "src": "./src/images/inline/**/*.{svg,jpg,jpeg,png,gif,webp}",
-          "dist": "./dist/cms/templates/assets"
-        },
-        "svgo": [
-          {
-            "removeDimensions": true
-          },
-          {
-            "convertPathData": {
-              "floatPrecision": 1
-            }
-          },
-          {
-            "cleanupNumericValues": {
-              "floatPrecision": 1
-            }
-          },
-          {
-            "sortAttrs": true
-          },
-          {
-            "cleanupIDs": false
-          }
-        ]
-      },
-      "fonts": {
-        "src": "./src/fonts/**/*",
-        "dist": "./dist/public_html/assets/fonts"
-      },
-      "static": {
-        "src": "./src/static/**/*",
-        "dist": "./dist/public_html"
-      }
-    },
-    "default": [
-      "clean",
-      [
-        "fonts",
-        "images",
-        "static"
-      ],
-      [
-        "styles",
-        "scripts"
-      ],
-      "templates",
-      "styles:critical"
-    ],
-    "clean": [
-      "./src/rev-manifest.json",
-      "./dist/cms/templates",
-      "./dist/public_html/assets",
-      "./dist/public_html/*.{htaccess,html,php,twig,ico,png}"
-    ],
-    "manifest": {
-      "path": "./src",
-      "file": "./src/rev-manifest.json"
-    }
-  },
   "scripts": {
-    "watch": "gulp watch",
-    "dev": "gulp",
-    "lint": "gulp scripts:lint",
-    "prod": "NODE_ENV=production gulp",
-    "build": "NODE_ENV=production gulp"
+    "dev": "yarn run blendid",
+    "build": "yarn run blendid -- build"
   },
   "engines": {
     "node": ">=4.6.0"
@@ -129,53 +20,27 @@
   "dependencies": {
     "a11y-toggle": "^2.1.0",
     "breakpoint-sass": "^2.6.1",
-    "jquery": "^3.2.1",
     "lazysizes": "^3.0.0",
     "sanitize.css": "^5.0.0"
   },
   "devDependencies": {
-    "autoprefixer": "^6.4.1",
-    "babel-core": "^6.24.1",
-    "babel-eslint": "^7.1.0",
-    "babel-loader": "^7.0.0",
-    "babel-preset-env": "^1.1.1",
-    "browser-sync": "^2.14.3",
-    "critical": "^0.8.4",
-    "cssnano": "^3.7.4",
-    "del": "^2.2.2",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-import": "^2.0.1",
-    "gulp": "^3.9.1",
-    "gulp-cached": "^1.1.0",
-    "gulp-eslint": "^3.0.1",
-    "gulp-filter": "^5.0.0",
-    "gulp-if": "^2.0.1",
-    "gulp-imagemin": "^3.0.3",
-    "gulp-modify": "^0.1.1",
-    "gulp-postcss": "^6.1.1",
-    "gulp-rev": "^7.1.2",
-    "gulp-sass": "^3.0.0",
-    "gulp-sequence": "^0.4.6",
-    "gulp-size": "^2.0.0",
-    "gulp-sourcemaps": "^2.2.0",
-    "lazypipe": "^1.0.1",
-    "postcss-assets": "^4.1.0",
-    "vinyl-named": "^1.1.0",
-    "webpack": "^2.4.1",
-    "webpack-stream": "^3.2.0"
+    "autoprefixer": "^7.1.1",
+    "babel-preset-env": "^1.5.1",
+    "blendid": "^4.1.1",
+    "gulp-postcss": "^7.0.0",
+    "postcss-assets": "^4.1.0"
+  },
+  "target": {
+    "browsers": [
+      "last 2 versions",
+      "> 1%"
+    ]
   },
   "babel": {
     "presets": [
       [
         "env",
         {
-          "targets": {
-            "browsers": [
-              "last 2 versions",
-              "> 1%"
-            ]
-          },
           "modules": false
         }
       ]

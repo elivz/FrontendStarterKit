@@ -1,0 +1,40 @@
+{
+  "src": "./src",
+  "dest": "./dist/public_html",
+  "webroot": "./dist/public_html",
+
+  "html": {
+    "src": "templates",
+    "dest": "assets/templates"
+  },
+
+  "static": {
+    "src": "static",
+    "dest": "."
+  },
+
+  "javascripts": {
+    "src": "scripts",
+    "dest": "assets/scripts"
+  },
+
+  "stylesheets": {
+    "src": "styles",
+    "dest": "assets/styles"
+  },
+
+  "images": {
+    "src": "images",
+    "dest": "assets/images"
+  },
+
+  "fonts": {
+    "src": "fonts",
+    "dest": "assets/fonts"
+  },
+
+  "icons": {
+    "src": "icons",
+    "dest": "assets/images"
+  }
+}
