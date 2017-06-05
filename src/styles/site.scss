@@ -1,6 +1,5 @@
 // Third-party libraries
-@import "../../node_modules/breakpoint-sass/stylesheets/breakpoint";
-@import "../../node_modules/sanitize.css/sanitize";
+@import "breakpoint-sass/stylesheets/breakpoint";
 
 // Spacing and sizes (needs to be before functions.scss)
 @import "settings/dimensions";

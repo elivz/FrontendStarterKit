@@ -1,9 +1,24 @@
+*,
+::before,
+::after {
+    background-repeat: no-repeat;
+    box-sizing: inherit;
+}
+
+::before,
+::after {
+    text-decoration: inherit;
+    vertical-align: inherit;
+}
+
 html {
+    box-sizing: border-box;
     overflow-y: scroll;
     min-height: 100%;
 }
 
 body {
+    margin: 0;
     @include font();
     font-size: font-size();
     -webkit-font-smoothing: antialiased;
@@ -11,7 +26,43 @@ body {
     color: color(text);
 }
 
-* {
-    transition-duration: $base-duration;
-    transition-timing-function: $base-easing;
+a:active,
+a:hover {
+    outline-width: 0;
+}
+
+nav ol,
+nav ul {
+    list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+    background-color: transparent;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+// Remove the text shadow on text selections
+::selection {
+    background-color: #b3d4fc;
+    color: #000000;
+    text-shadow: none;
+}
+
+// Remove the tapping delay on clickable elements
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea,
+[tabindex] {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
 }
