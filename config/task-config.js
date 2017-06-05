@@ -50,4 +50,15 @@ module.exports = {
     production: {
         rev: true,
     },
+
+    additionalTasks: {
+        initialize(gulp, PATH_CONFIG, TASK_CONFIG) {
+            gulp.task('lint-js', require('./tasks/lint.js'));
+        },
+        development: {
+            prebuild: [
+                'lint-js',
+            ],
+        },
+    },
 };

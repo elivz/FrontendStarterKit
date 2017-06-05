@@ -21,6 +21,9 @@
     "a11y-toggle": "^2.1.0",
     "blendid": "https://github.com/elivz/blendid.git",
     "breakpoint-sass": "^2.6.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.3.0",
+    "gulp-eslint": "^3.0.1",
     "lazysizes": "^3.0.0"
   },
   "devDependencies": {
