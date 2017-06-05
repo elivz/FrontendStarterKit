@@ -1,40 +1,40 @@
 {
   "src": "./src",
-  "dest": "./dist/public_html",
-  "webroot": "./dist/public_html",
+  "dest": "./dist",
+  "rootPath": "public_html",
 
   "html": {
     "src": "templates",
-    "dest": "assets/templates"
+    "dest": "cms/templates"
   },
 
   "static": {
     "src": "static",
-    "dest": "."
+    "dest": "public_html"
   },
 
   "javascripts": {
     "src": "scripts",
-    "dest": "assets/scripts"
+    "dest": "public_html/assets/scripts"
   },
 
   "stylesheets": {
     "src": "styles",
-    "dest": "assets/styles"
+    "dest": "public_html/assets/styles"
   },
 
   "images": {
     "src": "images",
-    "dest": "assets/images"
+    "dest": "public_html/assets/images"
   },
 
   "fonts": {
     "src": "fonts",
-    "dest": "assets/fonts"
+    "dest": "public_html/assets/fonts"
   },
 
   "icons": {
     "src": "icons",
-    "dest": "assets/images"
+    "dest": "public_html/assets/images"
   }
 }

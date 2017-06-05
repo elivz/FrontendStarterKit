@@ -3,11 +3,11 @@ const browserSync = require('browser-sync');
 const cssAssets = require('postcss-assets');
 const cssnano = require('gulp-cssnano');
 const gulpif = require('gulp-if');
+const normalize = require('postcss-normalize');
 const notify = require('gulp-notify');
 const path = require('path');
 const postcss = require('gulp-postcss');
 const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
 
 module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
     const paths = {
@@ -40,7 +40,6 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
 
     return gulp
         .src(paths.src)
-        .pipe(sourcemaps.init())
         .pipe(sass(TASK_CONFIG.stylesheets.sass))
         .on('error', function handleError(errorObject, callback) {
             notify
@@ -51,15 +50,15 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
         })
         .pipe(
             postcss([
+                normalize(),
                 cssAssets({
-                    loadPaths: ['assets/images'],
-                    basePath: PATH_CONFIG.webroot,
+                    loadPaths: [path.resolve(process.env.PWD, PATH_CONFIG.dest, PATH_CONFIG.images.dest)],
+                    basePath: path.resolve(process.env.PWD, PATH_CONFIG.dest, PATH_CONFIG.assetsRoot || ''),
                 }),
                 autoprefixer(TASK_CONFIG.stylesheets.autoprefixer),
             ])
         )
         .pipe(gulpif(global.production, cssnano(cssnanoConfig)))
-        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.dest))
         .pipe(browserSync.stream());
 };

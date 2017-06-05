@@ -19,16 +19,16 @@
   },
   "dependencies": {
     "a11y-toggle": "^2.1.0",
+    "blendid": "https://github.com/elivz/blendid.git",
     "breakpoint-sass": "^2.6.1",
-    "lazysizes": "^3.0.0",
-    "sanitize.css": "^5.0.0"
+    "lazysizes": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
     "babel-preset-env": "^1.5.1",
-    "blendid": "^4.1.1",
     "gulp-postcss": "^7.0.0",
-    "postcss-assets": "^4.1.0"
+    "postcss-assets": "^4.1.0",
+    "postcss-normalize": "^3.0.0"
   },
   "target": {
     "browsers": [

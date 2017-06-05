@@ -1,8 +1,17 @@
+const path = require('path');
+
 module.exports = {
     static: true,
     images: true,
     svgSprite: false,
     fonts: true,
+
+    clean: {
+        patterns: [
+            path.resolve(process.env.PWD, 'dist/public_html'),
+            path.resolve(process.env.PWD, 'dist/cms/templates'),
+        ],
+    },
 
     html: {
         extensions: ['html', 'php', 'twig', 'json', 'svg'],
@@ -32,9 +41,9 @@ module.exports = {
 
     browserSync: {
         server: {
-            // Update this to match your development URL
-            proxy: 'localhost:8080',
-            files: ['craft/templates/**/*'],
+            proxy: 'http://localhost:8080',
+            open: 'external',
+            xip: true,
         },
     },
 
