@@ -18,17 +18,16 @@
     "node": ">=4.6.0"
   },
   "dependencies": {
-    "a11y-toggle": "^2.1.0",
-    "blendid": "https://github.com/elivz/blendid.git",
     "breakpoint-sass": "^2.6.1",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.3.0",
-    "gulp-eslint": "^3.0.1",
     "lazysizes": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
     "babel-preset-env": "^1.5.1",
+    "blendid": "https://github.com/elivz/blendid.git",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.3.0",
+    "gulp-eslint": "^3.0.1",
     "gulp-postcss": "^7.0.0",
     "postcss-assets": "^4.1.0",
     "postcss-normalize": "^3.0.0"

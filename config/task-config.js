@@ -34,17 +34,13 @@ module.exports = {
             initial: ['./initial.js'],
             main: ['./main.js'],
         },
-        production: {
-            devtool: 'cheap-source-map',
-        },
+        publicPath: '/assets/scripts',
     },
 
     browserSync: {
-        server: {
-            proxy: 'http://localhost:8080',
-            open: 'external',
-            xip: true,
-        },
+        proxy: 'http://localhost:8080',
+        open: 'external',
+        xip: true,
     },
 
     production: {
