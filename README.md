@@ -1,5 +1,7 @@
 # Front-End Code Overview
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/elivz/FrontendStarterKit.svg)](https://greenkeeper.io/)
+
 ## Project Tree
 
     dist/public_html # This will be your webroot
