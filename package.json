@@ -1,6 +1,6 @@
 {
   "name": "frontend-starter-kit",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "Eli Van Zoeren <eli@elivz.com>",
   "homepage": "https://elivz.com/",
   "license": "MIT",
@@ -12,14 +12,15 @@
   },
   "scripts": {
     "dev": "yarn run blendid",
+    "watch": "yarn run blendid",
     "build": "yarn run blendid -- build",
+    "production": "yarn run blendid -- build",
     "lint": "yarn run blendid -- lint-js"
   },
   "engines": {
     "node": ">=4.6.0"
   },
   "dependencies": {
-    "breakpoint-sass": "^2.6.1",
     "lazysizes": "^4.0.0-rc3"
   },
   "devDependencies": {

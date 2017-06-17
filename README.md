@@ -52,19 +52,19 @@ The front-end build process requires Node v4.6.0 or higher. Once Node is install
 
     yarn
 
+### Configuration
+
+You can configure the asset source and destination paths in `config/path-config.json`. Generally they can just be left alone. You can also change lots of settings regarding which build steps are run and their options in `config/task-config.js`. Our build process is based on [Blendid](https://github.com/vigetlabs/blendid#configuration), so you can refer to the configuration reference there.
+
 ### Building Front-End Assets
-
-Use Gulp to compile SASS source files to CSS, minify JS and CSS, and optimize images. This command will also build a custom jQuery script, with only the modules you specify.
-
-    gulp
 
 While actively developing, watch source files and rebuild as needed. This command will open a new browser tab using BrowserSync, which will automatically update to reflect changes you make to the source files. Additionally, it will provide you with an "external url" that you can use to view the site from other computers or devices on the same network, again with instant updates as you make changes.
 
-    gulp watch
+    yarn dev
 
 To generate minified copies of all the assets without sourcemaps, run the following command:
 
-    gulp --production
+    yarn build
 
 
 ## Specific Notes
@@ -82,7 +82,3 @@ Javascript files will be compiled from the `src/js` folder. Any ES2015 features 
 ### SVGs
 
 SVG files saved to `assets/src/images` will be compressed and output to `assets/dist/images`.
-
-### Sprites
-
-SVG files saved in `src/sprites` will be compiled into a single SVG sprite sheet. You can use a sprite image in your HTML like so: `<svg class="sprite" width="18" height="18"><use xlink:href="/assets/images/sprites.svg#s-[filename]"/></svg>` (where `[filename]` is replaced by the original name of the sprite you want to include).
