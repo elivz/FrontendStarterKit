@@ -4,9 +4,9 @@
     top: -100em;
     left: 0;
     padding: 1em 1.5em 0.75em;
-    font-size: font-size(small);
-    background: color(white);
-    box-shadow: 2px 2px 8px c(gray, light);
+    font-size: $fs-small;
+    background: $c-white;
+    box-shadow: 2px 2px 8px $c-gray-light;
 
     &:focus {
         top: 0;
@@ -16,11 +16,11 @@
 .browserupgrade {
     width: 100%;
     padding: size(1/4) size();
-    font-size: font-size(small);
+    font-size: $fs-small;
     font-weight: bold;
     text-align: center;
-    color: contrasting-color(color(primary));
-    background-color: color(primary);
+    color: contrasting-color($c-primary);
+    background-color: $c-primary;
 
     a {
         color: inherit;
@@ -35,7 +35,8 @@
     margin: 0 auto;
     padding-left: $page-padding-narrow;
     padding-right: $page-padding-narrow;
-    @include breakpoint($medium-up) {
+
+    @media ($medium-up) {
         padding-left: $page-padding-wide;
         padding-right: $page-padding-wide;
     }

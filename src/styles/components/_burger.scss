@@ -6,7 +6,7 @@
  * (---) bottom -> &:after
  */
 
-@mixin burger($width: 30px, $height: 5px, $gutter: 3px, $color: #000) {
+@mixin burger($width: 30px, $height: 5px, $gutter: 3px, $color: $c-text) {
     $burger-height: $height !global;
     $burger-gutter: $gutter !global;
     position: relative;
@@ -20,6 +20,8 @@
         width: $width;
         height: $height;
         background-color: $color;
+        transition-duration: $duration-normal;
+        transition-timing-function: $easing-normal;
         transition-property: background-color, transform;
     }
 

@@ -1,46 +1,39 @@
 .copy {
-    p {
-        margin: 0 0 size(1/2);
-    }
-
     h1 {
-        margin-bottom: size(1/2);
-        @include font(header);
-        font-size: font-size(biggest);
+        font-family: $ff-header;
+        font-size: $fs-biggest;
     }
 
     h2 {
-        margin-bottom: size(1/4);
-        @include font(header);
-        font-size: font-size(bigger);
+        font-family: $ff-header;
+        font-size: $fs-bigger;
     }
 
     h3 {
-        margin-bottom: size(1/4);
-        @include font(header);
-        font-size: font-size(big);
+        font-family: $ff-header;
+        font-size: $fs-big;
     }
 
     h4 {
-        @include font(header);
-        font-size: font-size(normal);
+        font-family: $ff-header;
+        font-size: $fs-normal;
     }
 
     h5 {
-        @include font(header);
-        font-size: font-size(small);
+        font-family: $ff-header;
+        font-size: $fs-small;
     }
 
     h6 {
-        @include font(header);
-        font-size: font-size(smallest);
+        font-family: $ff-header;
+        font-size: $fs-smallest;
     }
 
     // Lists
 
     ul,
     ol {
-        margin: 0 0 size(1/4) size();
+        margin-left: 1.3em;
     }
 
     ul {
@@ -51,31 +44,14 @@
         list-style: decimal;
     }
 
-    li {
-        margin-bottom: size(1/4);
-    }
-
     li > ul,
     li > ol {
-        margin-bottom: 0;
-        margin-left: size();
+        margin-left: 0.75em;
         font-size: 0.95em;
-
-        > li {
-            margin-bottom: 0;
-        }
-    }
-
-    dl {
-        margin-bottom: size(1/4);
     }
 
     dt {
         font-weight: bold;
-    }
-
-    dd {
-        margin: 0 0 size(1/4);
     }
 
     // Tables
@@ -86,14 +62,14 @@
     }
 
     th {
-        border-bottom: 1px solid color(border);
+        border-bottom: 1px solid $c-border;
         font-weight: bold;
         padding: size(1/4) 0;
         text-align: left;
     }
 
     td {
-        border-bottom: 1px solid color(border);
+        border-bottom: 1px solid $c-border;
         padding: size(1/4) size(1/2);
     }
 
@@ -106,11 +82,11 @@
     // Miscellaneous Elements
 
     small {
-        color: color(gray, dark);
+        color: $c-gray-dark;
     }
 
     hr {
-        border-bottom: 1px solid color(border);
+        border-bottom: 1px solid $c-border;
         border-left: none;
         border-right: none;
         border-top: none;
@@ -118,14 +94,14 @@
     }
 
     blockquote {
-        border-left: 2px solid color(border);
-        color: tint(color(text), 15%);
+        border-left: 2px solid $c-border;
+        color: tint($c-text, 15%);
         margin: size() 0;
         padding-left: size(1/2);
     }
 
     cite {
-        color: tint(color(text), 25%);
+        color: tint($c-text, 25%);
         font-style: italic;
 
         &::before {

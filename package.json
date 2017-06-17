@@ -12,14 +12,15 @@
   },
   "scripts": {
     "dev": "yarn run blendid",
-    "build": "yarn run blendid -- build"
+    "build": "yarn run blendid -- build",
+    "lint": "yarn run blendid -- lint-js"
   },
   "engines": {
     "node": ">=4.6.0"
   },
   "dependencies": {
     "breakpoint-sass": "^2.6.1",
-    "lazysizes": "^3.0.0"
+    "lazysizes": "^4.0.0-rc3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
@@ -27,7 +28,7 @@
     "blendid": "https://github.com/elivz/blendid.git",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.3.0",
-    "gulp-eslint": "^3.0.1",
+    "gulp-eslint": "^4.0.0",
     "gulp-postcss": "^7.0.0",
     "postcss-assets": "^4.1.0",
     "postcss-normalize": "^3.0.0"

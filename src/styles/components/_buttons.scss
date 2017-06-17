@@ -1,22 +1,21 @@
 %button {
     display: inline-block;
     padding: 0.75em 1em;
-    @include font();
     font-weight: bold;
     line-height: 1;
     text-decoration: none;
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
-    color: contrasting-color(color(link));
-    background-color: color(link);
+    color: contrasting-color($c-link);
+    background-color: $c-link;
     border: none;
     border-radius: 0;
 
     &:focus,
     &:hover {
-        background-color: color(link, active);
-        color: contrasting-color(color(link, active));
+        background-color: $c-link-active;
+        color: contrasting-color($c-link-active);
         outline: none;
     }
 

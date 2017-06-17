@@ -34,37 +34,6 @@
     }
 }
 
-// Vertically align an element
-// http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
-@mixin vertical-align {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-// Hide text visually, leaving it accesible to screen-readers
-@mixin hide-text {
-    overflow: hidden;
-    white-space: nowrap;
-    text-indent: 100%;
-}
-
-// Hides html text and replaces it with an image.
-// If you use this on an inline element, you will need to change the display to block or inline-block.
-@mixin replace-text($img, $density: 1, $inline: false) {
-    @include hide-text;
-
-    @if ($inline) {
-        background-image: inline($img);
-    } @else {
-        background-image: resolve($img);
-    }
-    background-repeat: no-repeat;
-    background-size: size($img, $density);
-    width: width($img, $density);
-    height: height($img, $density);
-}
-
 // Hide the element entirely, leaving it accessible to screen-readers
 @mixin hide-visually {
     overflow: hidden !important;
@@ -76,6 +45,7 @@
     white-space: nowrap !important;
     border: 0 !important;
 }
+
 
 // Set all the link colors at once
 @mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
@@ -114,7 +84,7 @@
 }
 
 // Make a dimension fluid between two values
-@mixin fluid-type($properties, $min-vw, $max-vw, $min-value, $max-value) {
+@mixin fluid-value($properties, $min-vw, $max-vw, $min-value, $max-value) {
     @each $property in $properties {
         #{$property}: $min-value;
     }
@@ -130,20 +100,6 @@
             #{$property}: $max-value;
         }
     }
-}
-
-// Uppercase with letterspacing
-@mixin uppercase($spacing: 0.1em) {
-    text-transform: uppercase;
-    letter-spacing: $spacing;
-}
-
-// Show an ellipsis on text overflow
-// Requires inline-block or block for proper styling
-@mixin text-overflow {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 // Create a CSS triangle - best applied to empty or generated elements

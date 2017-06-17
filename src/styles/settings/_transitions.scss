@@ -1,5 +1,7 @@
 // Transitions
-$base-duration: 0.25s;
-$duration-slow: 0.5s;
-$base-easing: cubic-bezier(0.35, -0.05, 0.2, 1.1);
-$base-transition: $base-duration $base-easing;
+$duration-normal: 0.33s;
+$duration-fast: 0.2s;
+$duration-slow: 0.67s;
+$easing-normal: cubic-bezier(0.35, -0.05, 0.2, 1.1);
+$t-normal: $duration-normal $easing-normal;
+$t-slow: $duration-slow $easing-normal;

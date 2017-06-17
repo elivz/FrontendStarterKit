@@ -1,8 +1,8 @@
 $text-inputs: 'textarea, input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="file"], select[multiple]';
 
 fieldset {
-    background: tint(color(border), 75%);
-    border: 1px solid color(border);
+    background: tint($c-border, 75%);
+    border: 1px solid $c-border;
     margin: 0 0 size(1/2) 0;
     padding: size(1/2);
 }
@@ -12,17 +12,15 @@ label,
 select,
 textarea {
     display: block;
-    @include font();
-    font-size: font-size();
-    color: color(gray);
+    color: $c-gray;
 }
 
 label {
-    font-weight: font-weight(bold);
+    font-weight: $fw-bold;
 
     &.required::after {
         content: '*';
-        color: color(gray);
+        color: $c-gray;
     }
 }
 
@@ -30,22 +28,18 @@ label {
     width: 100%;
     margin: 0;
     padding: size(1/4) size(1/2);
-    background-color: color(white);
-    border: 1px solid color(gray, light);
+    background-color: $c-white;
+    border: 1px solid $c-border;
     border-radius: 0;
     transition: border-color;
 
-    &:hover {
-        border-color: color(gray);
-    }
-
     &:focus {
-        border-color: color(gray, dark);
+        border-color: shade($c-border, 15%);
         outline: none;
     }
 
     &::placeholder {
-        color: color(gray);
+        color: $c-gray-dark;
     }
 }
 
@@ -53,15 +47,15 @@ textarea {
     height: auto;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
+input[type="checkbox"],
+input[type="radio"] {
     display: inline;
     margin-right: size(1/4);
 }
 
 select {
     width: 100%;
-    border: 1px solid color(gray);
+    border: 1px solid $c-border;
     -moz-appearance: none;
     -webkit-appearance: none;
 
@@ -108,7 +102,8 @@ select {
 .field--inline {
     @extend .field;
     @include clearfix;
-    @include breakpoint($small-down) {
+
+    @media ($small-down) {
         label {
             float: left;
             width: 25%;
@@ -131,10 +126,10 @@ select {
         left: 1px;
         top: 1px;
         padding: size(1/4) size(1/2);
-        font-size: font-size(small);
+        font-size: $fs-small;
         line-height: size();
         font-weight: normal;
-        color: color(gray);
+        color: $c-gray;
         cursor: text;
     }
 }
@@ -157,7 +152,7 @@ select {
 // Error display
 .form__errors {
     margin-bottom: size(1/2);
-    color: color(warning);
+    color: $c-warning;
 
     li {
         &::before,

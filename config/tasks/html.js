@@ -1,6 +1,5 @@
 const browserSync = require('browser-sync');
 const gulpif = require('gulp-if');
-const htmlmin = require('gulp-htmlmin');
 const path = require('path');
 
 module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
@@ -22,7 +21,6 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
 
     return gulp
         .src(paths.src)
-        .pipe(gulpif(global.production, htmlmin(TASK_CONFIG.html.htmlmin)))
         .pipe(gulp.dest(paths.dest))
         .pipe(browserSync.stream());
 };

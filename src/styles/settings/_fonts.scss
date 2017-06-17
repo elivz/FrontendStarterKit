@@ -1,32 +1,22 @@
-// Font settings
-$fonts: (
-    main: (
-        family: "Times, serif",
-        base-size: 1,
-        line-height: 1.5,
-        weights: (
-            normal: 500,
-            bold: 700
-        )
-    ),
-    header: (
-        family: "Helvetica, Arial, sans-serif",
-        base-size: 1,
-        line-height: 1.25,
-        weights: (
-            normal: 500,
-            bold: 700
-        )
-    )
-);
+// Font families
+$ff-normal: Georgia, Times, serif;
+$ff-header: Helvetica, Arial, sans-serif;
 
 // Specific font sizes
-$font-sizes: (
-    biggest: 36px,
-    bigger: 24px,
-    big: 18px,
-    normal: 16px,
-    small: 14px,
-    smaller: 12px,
-    smallest: 11px
-);
+$fs-biggest: 36px;
+$fs-bigger: 24px;
+$fs-big: 18px;
+$fs-normal: 16px;
+$fs-small: 14px;
+$fs-smaller: 12px;
+$fs-smallest: 11px;
+
+// Line heights
+$lh-normal: 1.5;
+$lh-tight: 1.25;
+$lh-loose: 1.667;
+
+// Weights
+$fw-normal: normal;
+$fw-light: 300;
+$fw-bold: 600;

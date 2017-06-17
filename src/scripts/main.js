@@ -1,8 +1,8 @@
-import Toggle from 'toggle';
+import Toggle from './plugins/toggle';
 import './plugins/analytics';
 import './plugins/externalLinks';
 
-import './modules';
+import './modules/example';
 
 // Add "js" class to the html element
 document.documentElement.className = document.documentElement.className.replace(

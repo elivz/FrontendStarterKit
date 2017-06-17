@@ -1,35 +1,18 @@
-// Colors
-$black: #333;
-$white: #fff;
-$neutral: #999;
-$blue: #477dca;
-$red: #a44;
-$green: #4a4;
+// Base Colors
+$c-black: #333;
+$c-white: #fff;
+$c-gray: #999;
+$c-gray-light: tint($c-gray, 20%);
+$c-gray-dark: shade($c-gray, 20%);
+$c-primary: #477dca;
+$c-primary-light: tint($c-primary, 15%);
+$c-primary-dark: shade($c-primary, 15%);
+$c-secondary: #a44;
+$c-tertiary: #4a4;
 
-$colors: (
-    black: $black,
-    white: $white,
-    gray: (
-        dark: shade($neutral, 30%),
-        base: $neutral,
-        light: tint($neutral, 30%)
-    ),
-    primary: (
-        dark: shade($blue, 25%),
-        base: $blue,
-        light: tint($blue, 10%)
-    ),
-    secondary: (
-        base: $red
-    ),
-    teriary: (
-        base: $green
-    ),
-    text: $black,
-    link: (
-        base: $blue,
-        active: shade($blue, 10%)
-    ),
-    warning: $red,
-    border:  $neutral
-);
+// Common contexts
+$c-text: $c-black;
+$c-link: $c-primary;
+$c-link-active: $c-primary-dark;
+$c-border: $c-gray-light;
+$c-warning: #a44;

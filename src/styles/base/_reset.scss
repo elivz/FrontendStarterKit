@@ -13,22 +13,20 @@
 
 html {
     box-sizing: border-box;
+    cursor: default;
     overflow-y: scroll;
     min-height: 100%;
 }
 
 body {
     margin: 0;
-    @include font();
-    font-size: font-size();
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: color(text);
 }
 
-a:active,
-a:hover {
-    outline-width: 0;
+a {
+    &:active,
+    &:hover {
+        outline-width: 0;
+    }
 }
 
 nav ol,
@@ -42,6 +40,7 @@ select,
 textarea {
     background-color: transparent;
     color: inherit;
+    font-family: inherit;
     font-size: inherit;
     line-height: inherit;
 }

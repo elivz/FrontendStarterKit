@@ -1,0 +1,42 @@
+// Hide text visually, leaving it accesible to screen-readers
+@mixin hide-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: 100%;
+}
+
+// Hides html text and replaces it with an image.
+// If you use this on an inline element, you will need to change the display to block or inline-block.
+@mixin replace-text($img, $density: 1, $inline: false) {
+    @include hide-text;
+
+    @if ($inline) {
+        background-image: inline($img);
+    } @else {
+        background-image: resolve($img);
+    }
+    background-repeat: no-repeat;
+    background-size: size($img, $density);
+    width: width($img, $density);
+    height: height($img, $density);
+}
+
+// Antialias text
+@mixin antialias {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Uppercase with letterspacing
+@mixin uppercase($spacing: 0.1em) {
+    text-transform: uppercase;
+    letter-spacing: $spacing;
+}
+
+// Show an ellipsis on text overflow
+// Requires inline-block or block for proper styling
+@mixin text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
