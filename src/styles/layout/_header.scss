@@ -1,0 +1,15 @@
+.header {
+    &__nav-toggle {
+        @media ($medium-up) {
+            display: none;
+        }
+    }
+
+    &__navigation {
+        @media ($small-down) {
+            &[aria-hidden="true"] {
+                display: none;
+            }
+        }
+    }
+}
