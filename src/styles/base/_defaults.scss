@@ -5,11 +5,17 @@ body {
     color: $c-text;
 }
 
+* + * {
+    margin-top: size();
+}
+
+p,
+li,
+blockquote {
+    hanging-punctuation: first;
+}
+
 a {
     @include link-colors($c-link, $c-link-active);
     transition: all $t-normal;
-}
-
-* + * {
-    margin-top: size();
 }

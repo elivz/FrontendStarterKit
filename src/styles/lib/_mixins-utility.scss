@@ -21,14 +21,20 @@
 @mixin fixed-ratio($ratio: 1) {
     overflow: hidden;
     position: relative;
+    height: 0;
+    padding-top: (1 / $ratio) * 100%;
+}
 
-    // The container's height, as a percentage of the
-    // container's width, is set by assigning
-    // padding-top to a pseudo-element.
+// Force an element to have at least a particular width/height ratio, no matter the width
+// If the contents are too tall to fit, the box will expand in height
+@mixin expandable-fixed-ratio($ratio: 1) {
+    @include clearfix;
+
     &::before {
         content: "";
-        display: block;
-        width: 100%;
+        width: 1px;
+        margin-left: -1px;
+        float: left;
         height: 0;
         padding-top: (1 / $ratio) * 100%;
     }
