@@ -9,7 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="/assets/styles/site.css">
 
-    <script>addEventListener('error', window._e=function f(e){f.q=f.q||[];f.q.push(e)});</script>
+    <script>
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+        addEventListener('error', window._e=function f(e){f.q=f.q||[];f.q.push(e)});
+    </script>
     <script src="/assets/scripts/initial.js" async></script>
 </head>
 <body>
@@ -43,6 +46,7 @@
     </div>
 
     <script>window.ga_id='UA-XXXXX-Y'</script>
+    <script src="https://ft-polyfill-service.herokuapp.com/v2/polyfill.min.js"></script>
     <script src="/assets/scripts/main.js" async></script>
     <script src="https://www.google-analytics.com/analytics.js" async></script>
 

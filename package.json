@@ -18,25 +18,29 @@
     "lint": "yarn run blendid -- lint-js"
   },
   "engines": {
-    "node": ">=4.6.0"
+    "node": ">=6.0.0"
   },
   "dependencies": {
+    "accessible-toggle": "^1.0.0",
     "lazysizes": "^4.0.0-rc3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
     "babel-preset-env": "^1.5.1",
     "blendid": "https://github.com/elivz/blendid.git",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.3.0",
+    "eslint": "^3.9.0",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-prettier": "^2.1.2",
     "gulp-eslint": "^4.0.0",
     "gulp-postcss": "^7.0.0",
     "postcss-assets": "^4.1.0",
-    "postcss-normalize": "^3.0.0"
+    "postcss-normalize": "^4.0.0",
+    "prettier": "^1.5.2"
   },
   "target": {
     "browsers": [
       "last 2 versions",
+      "last 3 ie versions",
       "> 1%"
     ]
   },
@@ -49,36 +53,5 @@
         }
       ]
     ]
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true
-    },
-    "extends": [
-      "airbnb-base"
-    ],
-    "rules": {
-      "import/extensions": 0,
-      "import/no-extraneous-dependencies": 0,
-      "import/no-unresolved": 0,
-      "indent": [
-        2,
-        4
-      ],
-      "comma-dangle": [
-        "error",
-        {
-          "arrays": "always-multiline",
-          "objects": "always-multiline",
-          "imports": "always-multiline",
-          "exports": "always-multiline",
-          "functions": "never"
-        }
-      ],
-      "arrow-parens": [
-        "error",
-        "as-needed"
-      ]
-    }
   }
 }
