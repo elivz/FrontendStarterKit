@@ -1,12 +1,15 @@
-FROM elivz/php-dev
+FROM elivz/php-dev:1.1
 
 ARG PUBLIC
 ENV WEBROOT /var/www$PUBLIC
 
 # Set webroot directory in virtual host
-RUN sed -ri \
-        -e 's#DocumentRoot\s/.+$#DocumentRoot '$WEBROOT'#' \
-        /etc/apache2/sites-enabled/000-default.conf
+RUN sed -ri -e \
+        's!/var/www/html!${WEBROOT}!g' \
+        /etc/apache2/sites-available/*.conf
+RUN sed -ri -e \
+        's!/var/www/html!${WEBROOT}!g' \
+        /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Set webroot
 WORKDIR $WEBROOT
