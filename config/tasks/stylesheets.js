@@ -43,7 +43,12 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
         .pipe(sass(TASK_CONFIG.stylesheets.sass))
         .on('error', function handleError(errorObject, callback) {
             notify
-                .onError(errorObject.toString().split(': ').join(':\n'))
+                .onError(
+                    errorObject
+                        .toString()
+                        .split(': ')
+                        .join(':\n')
+                )
                 .apply(this, arguments);
             // Keep gulp from hanging on this task
             if (typeof this.emit === 'function') this.emit('end');
@@ -52,8 +57,18 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
             postcss([
                 normalize(),
                 cssAssets({
-                    loadPaths: [path.resolve(process.env.PWD, PATH_CONFIG.dest, PATH_CONFIG.images.dest)],
-                    basePath: path.resolve(process.env.PWD, PATH_CONFIG.dest, PATH_CONFIG.assetsRoot || ''),
+                    loadPaths: [
+                        path.resolve(
+                            process.env.PWD,
+                            PATH_CONFIG.dest,
+                            PATH_CONFIG.images.dest
+                        ),
+                    ],
+                    basePath: path.resolve(
+                        process.env.PWD,
+                        PATH_CONFIG.dest,
+                        PATH_CONFIG.assetsRoot || ''
+                    ),
                 }),
                 autoprefixer(TASK_CONFIG.stylesheets.autoprefixer),
             ])

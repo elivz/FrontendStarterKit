@@ -52,9 +52,7 @@ module.exports = {
             gulp.task('lint-js', require('./tasks/lint.js'));
         },
         development: {
-            prebuild: [
-                'lint-js',
-            ],
+            prebuild: ['lint-js'],
         },
     },
 };
