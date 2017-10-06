@@ -1,0 +1,47 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    environment:
+      SSH_USER: changeme
+      DOMAIN: changeme.com
+      LIVE_ROOT: /var/www/public_html
+      STAGING_ROOT: /var/www/staging_html
+      CACHE_CLEAR_KEY: xxyyzz
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Installing rsync
+          command: sudo apt install rsync
+      - restore_cache:
+          keys:
+            - node_modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - node_modules-{{ .Branch }}-
+            - node_modules-
+      - run:
+          name: Installing Node Modules
+          command: yarn
+      - save_cache:
+          key: node_modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - .node_modules
+      - run:
+          name: Building Assets
+          command: yarn build
+      - deploy:
+          name: Deploying to Server
+          command: |
+            if [ -z `ssh-keygen -F ${DOMAIN}` ]; then
+              ssh-keyscan -H ${DOMAIN} >> ~/.ssh/known_hosts
+            fi
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' ~/project/dist/ ${SSH_USER}@${DOMAIN}:${STAGING_ROOT}
+              wget -qO- http://staging.${DOMAIN}/actions/cacheClear/clear?key=${CACHE_CLEAR_KEY}
+            fi
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' ~/project/dist/ ${SSH_USER}@${DOMAIN}:${LIVE_ROOT}
+              wget -qO- https://${DOMAIN}/actions/cacheClear/clear?key=${CACHE_CLEAR_KEY}
+            fi
+
