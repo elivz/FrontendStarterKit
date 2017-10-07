@@ -8,6 +8,7 @@ const notify = require('gulp-notify');
 const path = require('path');
 const postcss = require('gulp-postcss');
 const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
 
 module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
     const paths = {
@@ -40,6 +41,7 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
 
     return gulp
         .src(paths.src)
+        .pipe(sourcemaps.init())
         .pipe(sass(TASK_CONFIG.stylesheets.sass))
         .on('error', function handleError(errorObject, callback) {
             notify
@@ -74,6 +76,7 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
             ])
         )
         .pipe(gulpif(global.production, cssnano(cssnanoConfig)))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.dest))
         .pipe(browserSync.stream());
 };

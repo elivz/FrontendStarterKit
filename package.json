@@ -5,7 +5,6 @@
   "homepage": "https://elivz.com/",
   "license": "MIT",
   "private": true,
-  "main": "gulpfile.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:elivz/FrontendStarterKit.git"
@@ -13,12 +12,12 @@
   "scripts": {
     "dev": "yarn run blendid",
     "watch": "yarn run blendid",
-    "build": "yarn run blendid -- build",
-    "production": "yarn run blendid -- build",
-    "lint": "yarn run blendid -- lint-js"
+    "build": "yarn run blendid build",
+    "production": "yarn run blendid build",
+    "lint": "yarn run blendid lint-js"
   },
   "engines": {
-    "node": "^6.0.0"
+    "node": ">=6.0.0"
   },
   "dependencies": {
     "accessible-toggle": "^1.1.1",
@@ -26,6 +25,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.5.1",
     "blendid": "https://github.com/elivz/blendid.git",
     "eslint": "^4.5.0",
@@ -33,15 +33,14 @@
     "eslint-plugin-prettier": "^2.1.2",
     "gulp-eslint": "^4.0.0",
     "gulp-postcss": "^7.0.0",
-    "postcss-assets": "^4.1.0",
+    "postcss-assets": "^5.0.0",
     "postcss-normalize": "^4.0.0",
     "prettier": "^1.5.2"
   },
   "target": {
     "browsers": [
       "last 2 versions",
-      "last 3 ie versions",
-      "> 1%"
+      "> 0.5%"
     ]
   },
   "babel": {
