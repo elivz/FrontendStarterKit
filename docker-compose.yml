@@ -1,12 +1,11 @@
 version: '3'
 
 services:
-  web:
-    build:
-      context: ./docker
-      args:
-        # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
-        PUBLIC: /public_html
+  php:
+    image: elivz/php
+    environment:
+      # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
+      PUBLIC: /public_html
     ports:
       - "8080:80"
     volumes:
@@ -16,11 +15,11 @@ services:
       - mail
 
   db:
-    image: mariadb:latest
+    image: mariadb
     ports:
       - "4306:3306"
     volumes:
-      - ./docker/data:/var/lib/mysql
+      - ./config/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: app

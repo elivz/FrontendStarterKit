@@ -7,23 +7,22 @@
 .env
 
 # COMPOSER
-/vendor
-/dist/vendor
+dist/vendor
 
 # MYSQL DATA
-/docker/data
+config/data
 
 # CRAFT STORAGE
-/dist/cms/storage/*
-!/dist/cms/storage/rebrand
+dist/cms/storage/*
+!dist/cms/storage/rebrand
 
 # ASSETS
-/dist/cms/templates
-/dist/public_html
-/dist/rev-manifest.json
+dist/cms/templates
+dist/public_html
+dist/rev-manifest.json
 
 # BUILD FILES
-/node_modules/*
+node_modules
 .sass-cache
 yarn-error.log
 
