@@ -9,7 +9,7 @@ variables:
 
 cache:
   paths:
-  - node_modules
+    - node_modules
 
 before_script:
   - yarn
@@ -24,7 +24,7 @@ build:
 stage_deploy:
   artifacts:
     paths:
-    - build/
+      - build/
   only:
     - develop
   script:
@@ -35,7 +35,7 @@ stage_deploy:
 live_deploy:
   artifacts:
     paths:
-    - build/
+      - build/
   only:
     - develop
   script:

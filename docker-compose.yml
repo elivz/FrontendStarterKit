@@ -2,10 +2,11 @@ version: '3'
 
 services:
   php:
-    image: elivz/php
-    environment:
-      # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
-      PUBLIC: /public_html
+    build:
+      context: ./config
+      args:
+        # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
+        PUBLIC: /public
     ports:
       - "8080:80"
     volumes:
