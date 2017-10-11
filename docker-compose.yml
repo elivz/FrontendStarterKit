@@ -6,7 +6,7 @@ services:
       context: ./config
       args:
         # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
-        PUBLIC: /public
+        PUBLIC: /public_html
     ports:
       - "8080:80"
     volumes:
