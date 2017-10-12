@@ -1,4 +1,47 @@
-# Front-End Code Overview
+# Front-End Starter Kit
+
+This is [my](https://github.com/elivz) starting point for most projects. It was created primarily for my own personal use and may or may not be useful to anyone else, but you are welcome to use it, fork it, or ignore it.
+
+## Getting Started
+
+First you need to install [Docker for Mac](https://www.docker.com/docker-mac) or [for Windows](https://www.docker.com/docker-windows). The default settings should be fine, but feel free to poke around and tweak things.
+
+The development server and all build commands are run inside Docker, so you don't have to have Node, PHP, or MySQL running on your development computer (and, conversely, it won't hurt anything if you have the wrong version of any of them). 
+
+To start, run the following command in the project folder to finish setting things up:
+
+    ./run init
+
+## Installing Dependencies
+
+Next you should install all the requisite dependencies from NPM and (optionally) Composer:
+
+    ./run install
+
+We use [Yarn](https://yarnpkg.com/en/docs) for front-end dependency management, which you can access like this:
+
+    ./run add flickity
+    ./run remove flickity
+
+## Start Developing!
+
+To start the local server and begin watching for file changes, run:
+
+    ./run start
+    ./run watch
+
+The web address to see your website will be displayed in the terminal. Since it uses [Browsersync](https://www.browsersync.io) & [xip.io](http://xip.io), you will be able to open that link on any device connected to your local network, making mobile testing easy.
+
+You can connect to the database using an app such as [Sequel Pro](http://sequelpro.com). Use the following settings:
+
+    Host:     127.0.0.1
+    Username: app
+    Password: 123
+    Database: app
+
+When you are finished working for the day, shut down the server with:
+
+    ./run stop
 
 ## Project Tree
 
@@ -10,62 +53,20 @@
         - js      # Concatenated Javascript files
     src
       - fonts     # Any webfont files here will be copied verbatim to the dist folder
+      - icons     # SVG icons that will be combined into a single sprite file
       - images    # Unoptimized image files, as exported from Photoshop, etc.
-        - inline  # Store images that will eventually be inlined into the HTML here
-      - js        # All custom scripts for the theme
+      - scripts   # All custom scripts for the theme
         - modules # Individual components providing site-specific functionality
         - plugins # Self-contained generic plugins (not site-specific)
-        - main.js # Entry-point for the site's JS -
-                  # you should import everything else from here
-      - sass      # SCSS source files
-                  # Autoprefixer will add browser support as appropriate
-      - sprites   # SVG image files that will be collected into a single sprite file
+      - static    # Favicons, htaccess file, and anything else that should go in the site root
+      - styles    # SCSS source files
       - templates # HTML/PHP/Twig templates
 
-
-## Installing Front-End Dependancies
-
-We use [Yarn](https://yarnpkg.com/) to manage all front-end JavaScript dependencies. Run `yarn add [package-name]` to install a new component.
-
-
-## Starting a Docker server
-
-The local server uses [Docker Compose](http://docs.docker.com/compose/). Once you have that set up, run the following commands to control the server:
-
-    docker-compose up -d  # Start the server
-    docker-compose kill   # Stop the server
-
-If you are using Docker for Mac, the website will now be accessible at [localhost:8080](http://localhost:8080).
-
-You can connect to the database using an app such as [Sequel Pro](http://sequelpro.com). Use the following settings:
-
-    Host:     127.0.0.1
-    Username: app
-    Password: 123
-    Database: app
-
 ## Front-End Build Process
-
-### Initial Setup
-
-The front-end build process requires Node v4.6.0 or higher. Once Node is installed, run the following command from the project root to install all the build-process dependancies:
-
-    yarn
 
 ### Configuration
 
 You can configure the asset source and destination paths in `config/path-config.json`. Generally they can just be left alone. You can also change lots of settings regarding which build steps are run and their options in `config/task-config.js`. Our build process is based on [Blendid](https://github.com/vigetlabs/blendid#configuration), so you can refer to the configuration reference there.
-
-### Building Front-End Assets
-
-While actively developing, watch source files and rebuild as needed. This command will open a new browser tab using BrowserSync, which will automatically update to reflect changes you make to the source files. Additionally, it will provide you with an "external url" that you can use to view the site from other computers or devices on the same network, again with instant updates as you make changes.
-
-    yarn dev
-
-To generate minified copies of all the assets without sourcemaps, run the following command:
-
-    yarn build
-
 
 ## Specific Notes
 
@@ -77,8 +78,4 @@ We run Autoprefixer on the compiled CSS files to add additional browser support 
 
 ### Scripts
 
-Javascript files will be compiled from the `src/js` folder. Any ES2015 features will be transcoded to their ES5 equivalent. Use ES2015-style module imports.
-
-### SVGs
-
-SVG files saved to `assets/src/images` will be compressed and output to `assets/dist/images`.
+Any ES2015 features will be transcoded to their ES5 equivalent. Use ES2015-style module imports.

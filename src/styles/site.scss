@@ -1,27 +1,27 @@
 // Functions & Mixins
-@import "lib/functions";
-@import "lib/mixins-utility";
-@import "lib/mixins-text";
+@import 'lib/functions';
+@import 'lib/mixins-utility';
+@import 'lib/mixins-text';
 
 // Global variables
-@import "settings/dimensions";
-@import "settings/colors";
-@import "settings/fonts";
-@import "settings/transitions";
+@import 'settings/dimensions';
+@import 'settings/colors';
+@import 'settings/fonts';
+@import 'settings/transitions';
 
 // HTML elements
-@import "base/reset";
-@import "base/defaults";
+@import 'base/reset';
+@import 'base/defaults';
 
 // Reusable modules
-@import "components/burger";
-@import "components/buttons";
-@import "components/copy";
-@import "components/forms";
+@import 'components/burger';
+@import 'components/buttons';
+@import 'components/copy';
+@import 'components/forms';
 
 // Page layout
-@import "layout/layout";
-@import "layout/header";
-@import "layout/footer";
+@import 'layout/layout';
+@import 'layout/header';
+@import 'layout/footer';
 
 // Individual page styles

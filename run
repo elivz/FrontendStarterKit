@@ -4,7 +4,7 @@ red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
 
-if ! [ -x "$(command -v fa)" ]; then
+if ! [ -x "$(command -v docker)" ]; then
   echo "⚠️  ${red}Error: Docker is required and not installed. Please install it before running this script.${reset}"
   open 'https://www.docker.com/docker-mac'
   exit 1
@@ -17,7 +17,7 @@ case "$1" in
         docker-compose build
         ;;
 
-    "update")
+    "install")
         if [ -f package.json ]; then
             echo "📦  ${green}Updating Node dependencies from package.json${reset}"
             docker run --rm -v "${PWD}":/build elivz/dev-utils yarn

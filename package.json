@@ -1,6 +1,6 @@
 {
   "name": "frontend-starter-kit",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "author": "Eli Van Zoeren <eli@elivz.com>",
   "homepage": "https://elivz.com/",
   "license": "MIT",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "accessible-toggle": "^1.1.1",
+    "install": "^0.10.1",
     "lazysizes": "^4.0.0-rc3"
   },
   "devDependencies": {

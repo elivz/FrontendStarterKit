@@ -3574,6 +3574,10 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
+install@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/install/-/install-0.10.1.tgz#1c7b53c8dd7335ef534c2648de28f599df1bdd97"
+
 interpret@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
