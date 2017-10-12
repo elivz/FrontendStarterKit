@@ -3,7 +3,6 @@ const browserSync = require('browser-sync');
 const cssAssets = require('postcss-assets');
 const cssnano = require('gulp-cssnano');
 const gulpif = require('gulp-if');
-const normalize = require('postcss-normalize');
 const notify = require('gulp-notify');
 const path = require('path');
 const postcss = require('gulp-postcss');
@@ -43,7 +42,7 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
         .src(paths.src)
         .pipe(sourcemaps.init())
         .pipe(sass(TASK_CONFIG.stylesheets.sass))
-        .on('error', function handleError(errorObject, callback) {
+        .on('error', function handleError(errorObject) {
             notify
                 .onError(
                     errorObject
@@ -53,11 +52,12 @@ module.exports = (gulp, PATH_CONFIG, TASK_CONFIG) => () => {
                 )
                 .apply(this, arguments);
             // Keep gulp from hanging on this task
-            if (typeof this.emit === 'function') this.emit('end');
+            if (typeof this.emit === 'function') {
+                this.emit('end');
+            }
         })
         .pipe(
             postcss([
-                normalize(),
                 cssAssets({
                     loadPaths: [
                         path.resolve(

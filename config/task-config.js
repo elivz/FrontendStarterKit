@@ -35,9 +35,6 @@ module.exports = {
             main: ['./main.js'],
         },
         publicPath: '/assets/scripts',
-        babel: {
-            presets: [['env', { modules: false }]],
-        },
         production: {
             devtool: 'nosources-source-map',
         },
