@@ -14,6 +14,12 @@ services:
     depends_on:
       - db
       - mail
+    environment:
+      DB_HOST: mysql
+      DB_NAME: app
+      DB_USER: app
+      DB_PASS: 123
+      BASE_URL: http://localhost:8080
 
   db:
     image: mariadb
@@ -22,10 +28,10 @@ services:
     volumes:
       - ./config/data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: app
       MYSQL_USER: app
       MYSQL_PASSWORD: "123"
+      MYSQL_ROOT_PASSWORD: password
 
   mail:
     image: schickling/mailcatcher

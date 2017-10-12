@@ -1,4 +1,4 @@
 FROM elivz/php
 
-ARG PUBLIC=public_html
+ARG PUBLIC
 ENV WEBROOT /var/www$PUBLIC
