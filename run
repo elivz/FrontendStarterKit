@@ -15,9 +15,10 @@ case "$1" in
         echo "🏁  ${green}Initializing Docker images${reset}"
         docker pull elivz/dev-utils
         docker-compose build
+        ./run update
         ;;
 
-    "install")
+    "update")
         if [ -f package.json ]; then
             echo "📦  ${green}Updating Node dependencies from package.json${reset}"
             docker run --rm -v "${PWD}":/build elivz/dev-utils yarn

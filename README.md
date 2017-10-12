@@ -2,7 +2,9 @@
 
 This is [my](https://github.com/elivz) starting point for most projects. It was created primarily for my own personal use and may or may not be useful to anyone else, but you are welcome to use it, fork it, or ignore it.
 
-## Getting Started
+## Usage
+
+### Getting Set Up
 
 First you need to install [Docker for Mac](https://www.docker.com/docker-mac) or [for Windows](https://www.docker.com/docker-windows). The default settings should be fine, but feel free to poke around and tweak things.
 
@@ -12,18 +14,16 @@ To start, run the following command in the project folder to finish setting thin
 
     ./run init
 
-## Installing Dependencies
-
-Next you should install all the requisite dependencies from NPM and (optionally) Composer:
-
-    ./run install
+### Installing & Managing Dependencies
 
 We use [Yarn](https://yarnpkg.com/en/docs) for front-end dependency management, which you can access like this:
 
     ./run add flickity
     ./run remove flickity
 
-## Start Developing!
+If you make manual changes to `package.json` (or, optionally, `composer.json`), you will need to run `./run update`.
+
+### Start Developing!
 
 To start the local server and begin watching for file changes, run:
 
