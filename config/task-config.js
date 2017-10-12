@@ -45,7 +45,7 @@ module.exports = {
 
     browserSync: {
         proxy: 'http://localhost:8080',
-        open: 'external',
+        open: false,
         xip: true,
     },
 

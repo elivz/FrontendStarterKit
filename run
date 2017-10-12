@@ -1,3 +1,50 @@
 #!/bin/sh
 
-docker run --rm -v "${PWD}":/build elivz/docker-dev-utils "$@"
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
+if ! [ -x "$(command -v fa)" ]; then
+  echo "⚠️  ${red}Error: Docker is required and not installed. Please install it before running this script.${reset}"
+  open 'https://www.docker.com/docker-mac'
+  exit 1
+fi
+
+case "$1" in
+    "init")
+        echo "🏁  ${green}Initializing Docker images${reset}"
+        docker pull elivz/dev-utils
+        docker-compose build
+        ;;
+
+    "update")
+        if [ -f package.json ]; then
+            echo "📦  ${green}Updating Node dependencies from package.json${reset}"
+            docker run --rm -v "${PWD}":/build elivz/dev-utils yarn
+        fi
+        if [ -f composer.json ]; then
+            echo "📦  ${green}Updating PHP dependencies from composer.json${reset}"
+            docker run --rm -v "${PWD}":/build elivz/dev-utils composer update
+        fi
+        ;;
+
+    "start")
+        echo "${green}Starting your Docker images${reset}"
+        docker-compose up -d
+        echo "✅  ${green}Open http://localhost:8080 to begin work${reset}"
+        ;;
+
+    "stop")
+        echo "🛑  ${red}Killing your Docker images${reset}"
+        docker-compose kill
+        ;;
+
+    "sync")
+        echo "☁️  ${green}Pulling assets and database from the remote server${reset}"
+        echo "[TODO]"
+        ;;
+
+    *)
+        docker run --rm -it -v "${PWD}":/build elivz/dev-utils yarn "$@"
+        ;;
+esac
