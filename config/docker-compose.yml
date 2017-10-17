@@ -3,17 +3,18 @@ version: '3'
 services:
   php:
     build:
-      context: ./config
+      context: .
       args:
         # Set the public folder name here (e.g. /public_html, or '' to use /dist as the root)
         PUBLIC: /public_html
     ports:
       - "8080:80"
     volumes:
-      - ./dist:/var/www
+      - ../dist:/var/www
     depends_on:
       - db
       - mail
+    restart: always
     environment:
       DB_HOST: mysql
       DB_NAME: app
@@ -26,7 +27,8 @@ services:
     ports:
       - "4306:3306"
     volumes:
-      - ./config/data:/var/lib/mysql
+      - ./data:/var/lib/mysql
+    restart: always
     environment:
       MYSQL_DATABASE: app
       MYSQL_USER: app

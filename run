@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 red=`tput setaf 1`
 green=`tput setaf 2`
@@ -10,34 +10,42 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
+COMPOSE="docker-compose -f ./config/docker-compose.yml"
+EXEC="docker run --rm -it -v "${PWD}":/build elivz/dev-utils"
+
 case "$1" in
     "init")
+        ./run build
+        ./run update
+        ;;
+
+    "build")
         echo "🏁  ${green}Initializing Docker images${reset}"
         docker pull elivz/dev-utils
-        docker-compose build
-        ./run update
+        ${COMPOSE} pull --parallel
+        ${COMPOSE} build
         ;;
 
     "update")
         if [ -f package.json ]; then
             echo "📦  ${green}Updating Node dependencies from package.json${reset}"
-            docker run --rm -v "${PWD}":/build elivz/dev-utils yarn
+            ${EXEC} yarn
         fi
         if [ -f composer.json ]; then
             echo "📦  ${green}Updating PHP dependencies from composer.json${reset}"
-            docker run --rm -v "${PWD}":/build elivz/dev-utils composer update
+            ${EXEC} composer update
         fi
         ;;
 
     "start")
         echo "${green}Starting your Docker images${reset}"
-        docker-compose up -d
+        ${COMPOSE} up -d
         echo "✅  ${green}Open http://localhost:8080 to begin work${reset}"
         ;;
 
     "stop")
         echo "🛑  ${red}Killing your Docker images${reset}"
-        docker-compose kill
+        ${COMPOSE} down
         ;;
 
     "sync")
@@ -45,7 +53,17 @@ case "$1" in
         echo "[TODO]"
         ;;
 
+    "yarn")
+        shift 1
+        ${EXEC} yarn "$@"
+        ;;
+
+    "composer")
+        shift 1
+        ${EXEC} composer "$@"
+        ;;
+
     *)
-        docker run --rm -it -v "${PWD}":/build elivz/dev-utils yarn "$@"
+        ${EXEC} "$@"
         ;;
 esac

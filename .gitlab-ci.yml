@@ -2,10 +2,11 @@ image: elivz/dev-utils
 
 variables:
   SSH_USER: changeme
-  DOMAIN: changeme.com
+  LIVE_DOMAIN: changeme.com
   LIVE_ROOT: /var/www/public_html
+  STAGING_DOMAIN: changeme.com
   STAGING_ROOT: /var/www/staging_html
-  CACHE_CLEAR_KEY: xxyyzz
+  CACHE_CLEAR_URI: /actions/cacheClear/clear?key=xxyyzz
 
 cache:
   paths:
@@ -17,28 +18,25 @@ before_script:
   - mkdir -p ~/.ssh
   - eval $(ssh-agent -s)
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-
-build:
   - yarn build
 
 stage_deploy:
+  stage: deploy
+  only:
+    - develop
   artifacts:
     paths:
       - build/
-  only:
-    - develop
   script:
     - ssh-add <(echo "$STAGING_PRIVATE_KEY")
-    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${DOMAIN}:${STAGING_ROOT}
-    - wget -qO- http://staging.${DOMAIN}/actions/cacheClear/clear?key=${CACHE_CLEAR_KEY}
+    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${STAGING_DOMAIN}:${STAGING_ROOT}
+    - wget -qO- http://${STAGING_DOMAIN}${CACHE_CLEAR_URI}
 
 live_deploy:
-  artifacts:
-    paths:
-      - build/
+  stage: deploy
   only:
-    - develop
+    - master
   script:
-    - ssh-add <(echo "$STAGING_PRIVATE_KEY")
-    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${DOMAIN}:${LIVE_ROOT}
-    - wget -qO- http://${DOMAIN}/actions/cacheClear/clear?key=${CACHE_CLEAR_KEY}
+    - ssh-add <(echo "$LIVE_PRIVATE_KEY")
+    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${LIVE_DOMAIN}:${LIVE_ROOT}
+    - wget -qO- http://${LIVE_DOMAIN}${CACHE_CLEAR_URI}
