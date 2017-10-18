@@ -1,4 +1,0 @@
-FROM elivz/php
-
-ARG PUBLIC
-ENV WEBROOT /var/www$PUBLIC
