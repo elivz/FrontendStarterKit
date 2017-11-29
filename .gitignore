@@ -31,6 +31,8 @@ yarn-error.log
 .idea
 .project
 .settings
+.yarn
+.yarnrc
 .v8flags*
 *.cache
 *.esproj
