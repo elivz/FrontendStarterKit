@@ -13,7 +13,6 @@ services:
     links:
       - db
       - mail
-      - redis
     environment:
       DB_HOST: db
       DB_NAME: app
@@ -39,9 +38,6 @@ services:
       MYSQL_PASSWORD: 123
       MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: password
-
-  redis:
-      image: redis:4.0-alpine
 
   mail:
     image: schickling/mailcatcher

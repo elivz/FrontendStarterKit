@@ -5,7 +5,7 @@
 
   "html": {
     "src": "templates",
-    "dest": "cms/templates"
+    "dest": "public_html"
   },
 
   "static": {
