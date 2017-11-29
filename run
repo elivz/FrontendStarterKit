@@ -10,37 +10,41 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
-COMPOSE="docker-compose -f ./config/docker-compose.yml"
-EXEC="docker run --rm -it -v "${PWD}":/build elivz/dev-utils"
+COMPOSE="docker-compose"
+RUN="${COMPOSE} run -u www-data --no-deps web"
+EXEC="${COMPOSE} exec -u www-data web"
+
+export IP="$(ifconfig | grep 'inet ' | grep -Fv 127.0.0.1 | awk '{print $2}')"
+
+cd config
 
 case "$1" in
     "init")
-        ./run build
-        ./run update
+        ../run build
+        ../run update
         ;;
 
     "build")
         echo "🏁  ${green}Initializing Docker images${reset}"
-        docker pull elivz/dev-utils
         ${COMPOSE} pull --parallel
         ${COMPOSE} build
         ;;
 
     "update")
-        if [ -f package.json ]; then
+        if [ -f ../package.json ]; then
             echo "📦  ${green}Updating Node dependencies from package.json${reset}"
-            ${EXEC} yarn
+            ${RUN} yarn
         fi
-        if [ -f composer.json ]; then
+        if [ -f ../composer.json ]; then
             echo "📦  ${green}Updating PHP dependencies from composer.json${reset}"
-            ${EXEC} composer update
+            ${RUN} composer update
         fi
         ;;
 
     "start")
         echo "${green}Starting your Docker images${reset}"
         ${COMPOSE} up -d
-        echo "✅  ${green}Open http://localhost:8080 to begin work${reset}"
+        echo "✅  Run ${green}./run watch${reset} to begin work!"
         ;;
 
     "stop")
@@ -48,19 +52,22 @@ case "$1" in
         ${COMPOSE} down
         ;;
 
+    "logs")
+        ${COMPOSE} logs
+        ;;
+
     "sync")
         echo "☁️  ${green}Pulling assets and database from the remote server${reset}"
         echo "[TODO]"
         ;;
 
-    "yarn")
-        shift 1
-        ${EXEC} yarn "$@"
+    "watch")
+        open "http://${IP}.xip.io:3000"
+        ${EXEC} yarn watch
         ;;
 
-    "composer")
-        shift 1
-        ${EXEC} composer "$@"
+    "production")
+        ${EXEC} yarn build
         ;;
 
     *)

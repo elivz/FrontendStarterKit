@@ -13,12 +13,13 @@ cache:
     - node_modules
 
 before_script:
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - mkdir -p ~/.ssh
   - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   - yarn
   - yarn build
+  - composer update
 
 stage_deploy:
   stage: deploy
@@ -28,7 +29,6 @@ stage_deploy:
     paths:
       - build/
   script:
-    - ssh-add <(echo "$STAGING_PRIVATE_KEY")
     - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${STAGING_DOMAIN}:${STAGING_ROOT}
     - wget -qO- http://${STAGING_DOMAIN}${CACHE_CLEAR_URI}
 
@@ -37,6 +37,5 @@ live_deploy:
   only:
     - master
   script:
-    - ssh-add <(echo "$LIVE_PRIVATE_KEY")
     - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${LIVE_DOMAIN}:${LIVE_ROOT}
     - wget -qO- http://${LIVE_DOMAIN}${CACHE_CLEAR_URI}

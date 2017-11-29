@@ -1,23 +1,31 @@
 version: '3'
 
 services:
-  php:
+  web:
     image: elivz/php
     ports:
+      - "80:80"
       - "8080:80"
+      - "3000:3000"
+      - "3001:3001"
     volumes:
-      - ../dist:/var/www
-    depends_on:
+      - ..:/var/www
+    links:
       - db
       - mail
-    restart: always
+      - redis
     environment:
-      PUBLIC_FOLDER:
-      DB_HOST: mysql
+      DB_HOST: db
       DB_NAME: app
       DB_USER: app
       DB_PASS: 123
-      BASE_URL: http://localhost:8080
+      BASE_URL: http://localhost
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      # Don't change these
+      IP:
+      PUBLIC_FOLDER:
+    tty: true
 
   db:
     image: mariadb
@@ -25,13 +33,15 @@ services:
       - "4306:3306"
     volumes:
       - ./data:/var/lib/mysql
-    restart: always
     environment:
       MYSQL_DATABASE: app
       MYSQL_USER: app
-      MYSQL_PASSWORD: "123"
+      MYSQL_PASSWORD: 123
       MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: password
+
+  redis:
+      image: redis:4.0-alpine
 
   mail:
     image: schickling/mailcatcher

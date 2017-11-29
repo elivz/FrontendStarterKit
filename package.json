@@ -36,7 +36,11 @@
         "prettier": "^1.5.2"
     },
     "target": {
-        "browsers": ["last 2 versions", "> 0.5%"]
+        "browsers": [
+            "last 2 versions",
+            "> 0.5% in US",
+            "> 2%"
+        ]
     },
     "babel": {
         "presets": [
@@ -53,15 +57,24 @@
             "es6": true,
             "browser": true
         },
-        "extends": ["eslint:recommended", "prettier"],
-        "plugins": ["prettier", "import"],
+        "extends": [
+            "eslint:recommended",
+            "prettier"
+        ],
+        "plugins": [
+            "prettier",
+            "import"
+        ],
         "parserOptions": {
             "ecmaVersion": 2017,
             "sourceType": "module"
         },
         "rules": {
             "curly": "error",
-            "indent": ["error", 4],
+            "indent": [
+                "error",
+                4
+            ],
             "no-console": "off",
             "no-else-return": "error",
             "no-inner-declarations": "off",
@@ -70,7 +83,13 @@
             "prefer-const": "error",
             "prettier/prettier": "error",
             "strict": "error",
-            "quotes": ["error", "single", { "allowTemplateLiterals": true }]
+            "quotes": [
+                "error",
+                "single",
+                {
+                    "allowTemplateLiterals": true
+                }
+            ]
         }
     },
     "prettier": {

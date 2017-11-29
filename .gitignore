@@ -1,6 +1,3 @@
-# KEEP EMPTY FOLDERS
-!.gitkeep
-
 # ENVIRONMENT CONFIG
 .env.php
 .env.sh
@@ -24,6 +21,8 @@ dist/rev-manifest.json
 # BUILD FILES
 node_modules
 .sass-cache
+.composer
+.wp-cli
 yarn-error.log
 
 # MISC FILES
@@ -32,10 +31,14 @@ yarn-error.log
 .idea
 .project
 .settings
-.sublime-gulp.cache
+.v8flags*
+*.cache
 *.esproj
 *.sublime-workspace
 *.sublime-project
 *.tmp
 *.tmproj
 *.tmproject
+
+# KEEP EMPTY FOLDERS
+!.gitkeep
