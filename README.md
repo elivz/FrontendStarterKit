@@ -18,8 +18,8 @@ To start, run the following command in the project folder to finish setting thin
 
 We use [Yarn](https://yarnpkg.com/en/docs) for front-end dependency management, which you can access like this:
 
-    ./run add flickity
-    ./run remove flickity
+    ./run yarn add flickity
+    ./run yarn remove flickity
 
 If you make manual changes to `package.json` (or, optionally, `composer.json`), you will need to run `./run update`.
 

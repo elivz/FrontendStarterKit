@@ -21,7 +21,7 @@
     },
     "dependencies": {
         "accessible-toggle": "^1.1.1",
-        "lazysizes": "^4.0.0-rc4"
+        "lazysizes": "^4.0.0"
     },
     "devDependencies": {
         "babel-loader": "^7.1.2",
