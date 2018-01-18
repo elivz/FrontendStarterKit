@@ -4,7 +4,6 @@ services:
   web:
     image: elivz/php
     ports:
-      - "80:80"
       - "8080:80"
       - "3000:3000"
       - "3001:3001"
@@ -14,16 +13,14 @@ services:
       - db
       - mail
     environment:
-      DB_HOST: db
-      DB_NAME: app
-      DB_USER: app
-      DB_PASS: 123
-      BASE_URL: http://localhost
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
       # Don't change these
+      DB_HOST:
+      DB_NAME:
+      DB_USER:
+      DB_PASS:
+      BASE_URL:
+      PUBLIC_FOLDER: /dist${PUBLIC_FOLDER}
       IP:
-      PUBLIC_FOLDER:
     tty: true
 
   db:

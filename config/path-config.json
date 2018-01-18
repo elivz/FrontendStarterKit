@@ -1,7 +1,7 @@
 {
   "src": "./src",
   "dest": "./dist",
-  "rootPath": "public_html",
+  "webroot": "public_html",
 
   "html": {
     "src": "templates",

@@ -1,12 +1,13 @@
 image: elivz/dev-utils
 
 variables:
-  SSH_USER: changeme
-  LIVE_DOMAIN: changeme.com
+  LIVE_SSH_USER: REPLACE_ME
+  LIVE_DOMAIN: REPLACE_ME
   LIVE_ROOT: /var/www/public_html
-  STAGING_DOMAIN: changeme.com
+  STAGING_SSH_USER: REPLACE_ME
+  STAGING_DOMAIN: REPLACE_ME
   STAGING_ROOT: /var/www/staging_html
-  CACHE_CLEAR_URI: /actions/cacheClear/clear?key=xxyyzz
+  CACHE_CLEAR_URI: /actions/cacheClear/clear?key=REPLACE_ME
 
 cache:
   paths:
@@ -29,7 +30,7 @@ stage_deploy:
     paths:
       - build/
   script:
-    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${STAGING_DOMAIN}:${STAGING_ROOT}
+    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${STAGING_SSH_USER}@${STAGING_DOMAIN}:${STAGING_ROOT}
     - wget -qO- http://${STAGING_DOMAIN}${CACHE_CLEAR_URI}
 
 live_deploy:
@@ -37,5 +38,5 @@ live_deploy:
   only:
     - master
   script:
-    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${SSH_USER}@${LIVE_DOMAIN}:${LIVE_ROOT}
+    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${LIVE_SSH_USER}@${LIVE_DOMAIN}:${LIVE_ROOT}
     - wget -qO- http://${LIVE_DOMAIN}${CACHE_CLEAR_URI}

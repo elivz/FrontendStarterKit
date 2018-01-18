@@ -58,7 +58,8 @@ case "$1" in
 
     "sync")
         echo "☁️  ${green}Pulling assets and database from the remote server${reset}"
-        echo "[TODO]"
+        ./scripts/pull_db.sh
+        ./scripts/pull_assets.sh
         ;;
 
     "watch")

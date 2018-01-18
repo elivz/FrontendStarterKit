@@ -11,7 +11,6 @@ config/data
 
 # CRAFT STORAGE
 dist/cms/storage/*
-!dist/cms/storage/rebrand
 
 # ASSETS
 dist/cms/templates
@@ -34,10 +33,13 @@ yarn-error.log
 .yarn
 .yarnrc
 .v8flags*
+.node-gyp
+.vscode
 *.cache
 *.esproj
 *.sublime-workspace
 *.sublime-project
+*.code-workspace
 *.tmp
 *.tmproj
 *.tmproject

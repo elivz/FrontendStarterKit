@@ -8,7 +8,8 @@ module.exports = {
 
     clean: {
         patterns: [
-            path.resolve(process.env.PWD, 'dist/public_html'),
+            path.resolve(process.env.PWD, 'dist/public_html/*'),
+            '!' + path.resolve(process.env.PWD, 'dist/public_html/media'),
             path.resolve(process.env.PWD, 'dist/cms/templates'),
         ],
     },
