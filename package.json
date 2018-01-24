@@ -1,6 +1,6 @@
 {
     "name": "frontend-starter-kit",
-    "version": "3.3.0",
+    "version": "3.4.0",
     "author": "Eli Van Zoeren <eli@elivz.com>",
     "homepage": "https://elivz.com/",
     "license": "MIT",
@@ -9,17 +9,23 @@
         "type": "git",
         "url": "git@github.com:elivz/FrontendStarterKit.git"
     },
+    "engines": {
+        "node": ">=6.0.0"
+    },
     "scripts": {
         "dev": "yarn run blendid",
         "watch": "yarn run blendid",
         "build": "yarn run blendid build",
         "production": "yarn run blendid build",
+        "precommit": "lint-staged",
         "lint-scripts": "eslint --fix 'src/scripts/**/*.js'",
-        "lint-styles": "stylelint 'src/styles/**/*.{css,scss}' --fix && prettier --write 'src/styles/**/*.{css,scss,js}'",
+        "lint-styles":
+            "stylelint 'src/styles/**/*.{css,scss}' --fix && prettier --write 'src/styles/**/*.{css,scss,js}'",
         "lint": "yarn run lint-styles && yarn run lint-scripts"
     },
-    "engines": {
-        "node": ">=6.0.0"
+    "lint-staged": {
+        "src/**/*.js": ["eslint --fix"],
+        "src/**/*.{css,scss}": ["stylelint --fix", "prettier --write"]
     },
     "dependencies": {
         "accessible-toggle": "^1.2.0",
@@ -35,17 +41,15 @@
         "eslint-plugin-import": "^2.6.0",
         "eslint-plugin-prettier": "^2.1.2",
         "gulp-postcss": "^7.0.0",
+        "husky": "^0.14.3",
+        "lint-staged": "^6.0.1",
         "postcss-assets": "^5.0.0",
         "prettier": "^1.5.2",
         "stylelint": "^8.4.0",
         "stylelint-config-standard": "^18.0.0"
     },
     "target": {
-        "browsers": [
-            "last 2 versions",
-            "> 0.5% in US",
-            "> 2%"
-        ]
+        "browsers": ["last 2 versions", "> 0.5% in US", "> 2%"]
     },
     "babel": {
         "presets": [
@@ -62,23 +66,14 @@
             "es6": true,
             "browser": true
         },
-        "extends": [
-            "airbnb-base",
-            "prettier"
-        ],
-        "plugins": [
-            "prettier",
-            "import"
-        ],
+        "extends": ["airbnb-base", "prettier"],
+        "plugins": ["prettier", "import"],
         "parserOptions": {
             "ecmaVersion": 2017,
             "sourceType": "module"
         },
         "rules": {
-            "indent": [
-                "error",
-                4
-            ],
+            "indent": ["error", 4],
             "prettier/prettier": "error",
             "no-new": 1
         }
@@ -107,10 +102,7 @@
             "block-closing-brace-newline-after": [
                 "always",
                 {
-                    "ignoreAtRules": [
-                        "if",
-                        "else"
-                    ]
+                    "ignoreAtRules": ["if", "else"]
                 }
             ],
             "at-rule-empty-line-before": [
@@ -120,12 +112,8 @@
                         "blockless-after-same-name-blockless",
                         "first-nested"
                     ],
-                    "ignore": [
-                        "after-comment"
-                    ],
-                    "ignoreAtRules": [
-                        "else"
-                    ]
+                    "ignore": ["after-comment"],
+                    "ignoreAtRules": ["else"]
                 }
             ],
             "at-rule-no-unknown": [
