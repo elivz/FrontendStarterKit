@@ -19,21 +19,24 @@
         "production": "yarn run blendid build",
         "precommit": "lint-staged",
         "lint-scripts": "eslint --fix 'src/scripts/**/*.js'",
-        "lint-styles":
-            "stylelint 'src/styles/**/*.{css,scss}' --fix && prettier --write 'src/styles/**/*.{css,scss,js}'",
+        "lint-styles": "stylelint 'src/styles/**/*.{css,scss}' --fix && prettier --write 'src/styles/**/*.{css,scss,js}'",
         "lint": "yarn run lint-styles && yarn run lint-scripts"
     },
     "lint-staged": {
-        "src/**/*.js": ["eslint --fix"],
-        "src/**/*.{css,scss}": ["stylelint --fix", "prettier --write"]
+        "src/**/*.js": [
+            "eslint --fix"
+        ],
+        "src/**/*.{css,scss}": [
+            "stylelint --fix",
+            "prettier --write"
+        ]
     },
     "dependencies": {
         "accessible-toggle": "^1.2.0",
         "lazysizes": "^4.0.0"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.0.0-beta.38",
-        "babel-loader": "^7.1.2",
+        "babel-preset-env": "^1.6.1",
         "blendid": "https://github.com/elivz/blendid.git",
         "eslint": "^4.16.0",
         "eslint-config-airbnb-base": "^12.1.0",
@@ -49,7 +52,11 @@
         "stylelint-config-standard": "^18.0.0"
     },
     "target": {
-        "browsers": ["last 2 versions", "> 0.5% in US", "> 2%"]
+        "browsers": [
+            "last 2 versions",
+            "> 0.5% in US",
+            "> 2%"
+        ]
     },
     "babel": {
         "presets": [
@@ -66,14 +73,23 @@
             "es6": true,
             "browser": true
         },
-        "extends": ["airbnb-base", "prettier"],
-        "plugins": ["prettier", "import"],
+        "extends": [
+            "airbnb-base",
+            "prettier"
+        ],
+        "plugins": [
+            "prettier",
+            "import"
+        ],
         "parserOptions": {
             "ecmaVersion": 2017,
             "sourceType": "module"
         },
         "rules": {
-            "indent": ["error", 4],
+            "indent": [
+                "error",
+                4
+            ],
             "prettier/prettier": "error",
             "no-new": 1
         }
@@ -102,7 +118,10 @@
             "block-closing-brace-newline-after": [
                 "always",
                 {
-                    "ignoreAtRules": ["if", "else"]
+                    "ignoreAtRules": [
+                        "if",
+                        "else"
+                    ]
                 }
             ],
             "at-rule-empty-line-before": [
@@ -112,8 +131,12 @@
                         "blockless-after-same-name-blockless",
                         "first-nested"
                     ],
-                    "ignore": ["after-comment"],
-                    "ignoreAtRules": ["else"]
+                    "ignore": [
+                        "after-comment"
+                    ],
+                    "ignoreAtRules": [
+                        "else"
+                    ]
                 }
             ],
             "at-rule-no-unknown": [
