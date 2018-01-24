@@ -1,4 +1,4 @@
 import lazysizes from 'lazysizes';
-import 'lazysizes/plugins/respimg/ls.respimg.js';
+import 'lazysizes/plugins/respimg/ls.respimg';
 
 window.lazysizes = lazysizes;

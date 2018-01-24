@@ -7,7 +7,7 @@
 
     &__navigation {
         @media ($small-down) {
-            &[aria-hidden="true"] {
+            &[aria-hidden='true'] {
                 display: none;
             }
         }

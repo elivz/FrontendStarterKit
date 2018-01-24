@@ -14,26 +14,31 @@
         "watch": "yarn run blendid",
         "build": "yarn run blendid build",
         "production": "yarn run blendid build",
-        "lint": "yarn run blendid lint-js"
+        "lint-scripts": "eslint --fix 'src/scripts/**/*.js'",
+        "lint-styles": "stylelint 'src/styles/**/*.{css,scss}' --fix && prettier --write 'src/styles/**/*.{css,scss,js}'",
+        "lint": "yarn run lint-styles && yarn run lint-scripts"
     },
     "engines": {
         "node": ">=6.0.0"
     },
     "dependencies": {
-        "accessible-toggle": "^1.1.1",
+        "accessible-toggle": "^1.2.0",
         "lazysizes": "^4.0.0"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.0.0-beta.38",
         "babel-loader": "^7.1.2",
-        "babel-preset-env": "^1.5.1",
         "blendid": "https://github.com/elivz/blendid.git",
+        "eslint": "^4.16.0",
+        "eslint-config-airbnb-base": "^12.1.0",
         "eslint-config-prettier": "^2.6.0",
         "eslint-plugin-import": "^2.6.0",
         "eslint-plugin-prettier": "^2.1.2",
-        "gulp-eslint": "^4.0.0",
         "gulp-postcss": "^7.0.0",
         "postcss-assets": "^5.0.0",
-        "prettier": "^1.5.2"
+        "prettier": "^1.5.2",
+        "stylelint": "^8.4.0",
+        "stylelint-config-standard": "^18.0.0"
     },
     "target": {
         "browsers": [
@@ -58,7 +63,7 @@
             "browser": true
         },
         "extends": [
-            "eslint:recommended",
+            "airbnb-base",
             "prettier"
         ],
         "plugins": [
@@ -70,31 +75,85 @@
             "sourceType": "module"
         },
         "rules": {
-            "curly": "error",
             "indent": [
                 "error",
                 4
             ],
-            "no-console": "off",
-            "no-else-return": "error",
-            "no-inner-declarations": "off",
-            "no-var": "error",
-            "prefer-arrow-callback": "error",
-            "prefer-const": "error",
             "prettier/prettier": "error",
-            "strict": "error",
-            "quotes": [
-                "error",
-                "single",
-                {
-                    "allowTemplateLiterals": true
-                }
-            ]
+            "no-new": 1
         }
     },
     "prettier": {
         "tabWidth": 4,
         "singleQuote": true,
         "trailingComma": "es5"
+    },
+    "stylelint": {
+        "extends": "stylelint-config-standard",
+        "rules": {
+            "indentation": 4,
+            "string-quotes": "single",
+            "selector-max-id": 0,
+            "selector-attribute-quotes": "always",
+            "declaration-empty-line-before": "never",
+            "declaration-colon-newline-after": null,
+            "property-no-vendor-prefix": true,
+            "value-no-vendor-prefix": true,
+            "function-url-quotes": "always",
+            "font-family-name-quotes": "always-where-recommended",
+            "at-rule-no-vendor-prefix": true,
+            "selector-no-vendor-prefix": true,
+            "media-feature-name-no-vendor-prefix": true,
+            "block-closing-brace-newline-after": [
+                "always",
+                {
+                    "ignoreAtRules": [
+                        "if",
+                        "else"
+                    ]
+                }
+            ],
+            "at-rule-empty-line-before": [
+                "always",
+                {
+                    "except": [
+                        "blockless-after-same-name-blockless",
+                        "first-nested"
+                    ],
+                    "ignore": [
+                        "after-comment"
+                    ],
+                    "ignoreAtRules": [
+                        "else"
+                    ]
+                }
+            ],
+            "at-rule-no-unknown": [
+                true,
+                {
+                    "ignoreAtRules": [
+                        "tailwind",
+                        "at-root",
+                        "content",
+                        "debug",
+                        "each",
+                        "else",
+                        "else if",
+                        "error",
+                        "extend",
+                        "for",
+                        "function",
+                        "if",
+                        "import",
+                        "include",
+                        "media",
+                        "mixin",
+                        "return",
+                        "warn",
+                        "while"
+                    ]
+                }
+            ]
+        }
     }
 }

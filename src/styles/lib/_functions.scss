@@ -23,7 +23,6 @@
     @return $multiplier * $base-spacing;
 }
 
-
 /*
  * Color functions
  */
@@ -48,7 +47,8 @@
             @return $light; // Darker background, return light color
         }
     }
-    @warn "#{$color} is not a valid color";
+
+    @warn '#{$color} is not a valid color';
 
     @return null;
 }

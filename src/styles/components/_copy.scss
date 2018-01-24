@@ -58,7 +58,7 @@
 
     table {
         margin: 0 0 size();
-        font-feature-settings: "kern", "liga", "tnum";
+        font-feature-settings: 'kern', 'liga', 'tnum';
     }
 
     th {
@@ -105,7 +105,7 @@
         font-style: italic;
 
         &::before {
-            content: "\2014 \00A0";
+            content: '\2014 \00A0';
         }
     }
 }

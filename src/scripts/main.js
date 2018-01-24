@@ -1,5 +1,4 @@
 import Toggle from 'accessible-toggle';
-import './plugins/analytics';
 import './plugins/externalLinks';
 
 // Toggle navigation using hamburger menu

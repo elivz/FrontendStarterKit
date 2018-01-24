@@ -1,6 +1,6 @@
 @mixin clearfix() {
-    &:after {
-        content: "" !important;
+    &::after {
+        content: '' !important;
         display: block !important;
         clear: both !important;
     }
@@ -31,7 +31,7 @@
     @include clearfix;
 
     &::before {
-        content: "";
+        content: '';
         width: 1px;
         margin-left: -1px;
         float: left;
@@ -51,7 +51,6 @@
     white-space: nowrap !important;
     border: 0 !important;
 }
-
 
 // Set all the link colors at once
 @mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
@@ -97,7 +96,12 @@
 
     @media screen and (min-width: $min-vw) {
         @each $property in $properties {
-            #{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+            #{$property}: calc(
+                #{$min-value} + #{strip-unit($max-value - $min-value)} *
+                    (
+                        100vw - #{$min-vw}
+                    ) / #{strip-unit($max-vw - $min-vw)}
+            );
         }
     }
 
@@ -115,7 +119,7 @@
     height: 0;
     width: 0;
     // For improved appearance in some Webkit browsers
-    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
 
     // Set up some variables
     $width: null;
