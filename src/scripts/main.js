@@ -1,7 +1,5 @@
-import Toggle from 'accessible-toggle';
+import reframe from 'reframe.js';
 import './plugins/externalLinks';
+import './components/nav';
 
-// Toggle navigation using hamburger menu
-new Toggle(document.getElementById('navigation'), {
-    mediaQuery: `(max-width: 600px)`,
-});
+reframe('iframe');

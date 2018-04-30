@@ -14,48 +14,52 @@
     },
     "scripts": {
         "clean": "rm -rf dist/templates dist/public_html/assets",
-        "watch":
-          "yarn run clean && NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "build":
-          "yarn run clean && NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "yarn run clean && NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "build": "yarn run clean && NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "precommit": "lint-staged",
         "lint-scripts": "eslint --fix 'src/scripts/**/*.js'",
-        "lint-styles":
-          "prettier --write 'src/styles/**/*.{css,scss,js}' && stylelint 'src/styles/**/*.{css,scss}' --fix verbose --color",
+        "lint-styles": "prettier --write 'src/styles/**/*.{css,scss,js}' && stylelint 'src/styles/**/*.{css,scss}' --fix verbose --color",
         "lint": "yarn run lint-styles && yarn run lint-scripts"
     },
     "lint-staged": {
-        "src/scripts/**/*.js": ["eslint --fix", "git add"],
+        "src/scripts/**/*.js": [
+            "eslint --fix",
+            "git add"
+        ],
         "src/styles/**/*.{css,scss}": [
-          "stylelint --fix verbose --color",
-          "prettier --write",
-          "git add"
+            "stylelint --fix verbose --color",
+            "prettier --write",
+            "git add"
         ]
     },
     "dependencies": {
-        "accessible-toggle": "^1.2.0",
-        "lazysizes": "^4.0.0"
+        "accessible-toggle": "^1.1",
+        "axios": "^0.18",
+        "iotacss": "^1.5",
+        "lazysizes": "^4.0",
+        "picturefill": "^3.0",
+        "reframe.js": "^2.1"
     },
     "devDependencies": {
-        "babel-preset-env": "^1.6.1",
-        "blendid": "https://github.com/elivz/blendid.git",
-        "eslint": "^4.16.0",
-        "eslint-config-airbnb-base": "^12.1.0",
-        "eslint-config-prettier": "^2.6.0",
-        "eslint-plugin-import": "^2.6.0",
-        "eslint-plugin-prettier": "^2.1.2",
-        "gulp-postcss": "^7.0.0",
-        "husky": "^0.14.3",
-        "lint-staged": "^6.0.1",
-        "postcss-assets": "^5.0.0",
-        "prettier": "^1.5.2",
-        "stylelint": "^8.4.0",
-        "stylelint-config-standard": "^18.0.0"
+        "browser-sync": "^2.23",
+        "browser-sync-webpack-plugin": "^2.0",
+        "copy-webpack-plugin": "^4.3",
+        "eslint": "^4.12",
+        "eslint-config-airbnb-base": "^12.1",
+        "eslint-config-prettier": "^2.9",
+        "eslint-plugin-import": "^2.8",
+        "eslint-plugin-prettier": "^2.3",
+        "husky": "^0.14",
+        "laravel-mix": "^2.1",
+        "lint-staged": "^7.0",
+        "prettier": "^1.5.0",
+        "stylelint": "^9.2",
+        "stylelint-config-standard": "^18.0",
+        "svg-url-loader": "^2.3"
     },
     "target": {
         "browsers": [
-            "last 2 versions",
-            "> 0.5% in US",
+            "> 0.25% in US",
             "> 2%"
         ]
     },
@@ -76,10 +80,9 @@
         },
         "extends": [
             "airbnb-base",
-            "prettier"
+            "plugin:prettier/recommended"
         ],
         "plugins": [
-            "prettier",
             "import"
         ],
         "parserOptions": {
@@ -87,34 +90,23 @@
             "sourceType": "module"
         },
         "rules": {
-            "indent": [
-                "error",
-                4
-            ],
-            "no-param-reassign": [
-                2,
-                {
-                    "props": false
-                }
-            ],
             "prettier/prettier": "error",
             "no-new": 1
         }
     },
     "prettier": {
-        "tabWidth": 4,
         "singleQuote": true,
         "trailingComma": "es5"
     },
     "stylelint": {
         "extends": "stylelint-config-standard",
         "rules": {
-            "indentation": 4,
             "string-quotes": "single",
             "selector-max-id": 0,
             "selector-attribute-quotes": "always",
             "declaration-empty-line-before": "never",
             "declaration-colon-newline-after": null,
+            "value-list-comma-newline-after": null,
             "property-no-vendor-prefix": true,
             "value-no-vendor-prefix": true,
             "function-url-quotes": "always",
@@ -122,6 +114,7 @@
             "at-rule-no-vendor-prefix": true,
             "selector-no-vendor-prefix": true,
             "media-feature-name-no-vendor-prefix": true,
+            "no-descending-specificity": null,
             "block-closing-brace-newline-after": [
                 "always",
                 {
@@ -150,7 +143,6 @@
                 true,
                 {
                     "ignoreAtRules": [
-                        "tailwind",
                         "at-root",
                         "content",
                         "debug",

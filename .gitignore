@@ -13,9 +13,8 @@ config/data
 dist/cms/storage/*
 
 # ASSETS
-dist/cms/templates
+dist/templates
 dist/public_html
-dist/rev-manifest.json
 
 # BUILD FILES
 node_modules
