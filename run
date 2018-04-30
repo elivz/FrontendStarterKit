@@ -71,6 +71,10 @@ case "$1" in
         ${EXEC} yarn build
         ;;
 
+    "lint")
+        ${EXEC} yarn lint
+        ;;
+
     *)
         ${EXEC} "$@"
         ;;

@@ -1,196 +1,207 @@
 @mixin clearfix() {
-    &::after {
-        content: '' !important;
-        display: block !important;
-        clear: both !important;
-    }
+  &::after {
+    content: '' !important;
+    display: block !important;
+    clear: both !important;
+  }
 }
 
 // Position an element to cover the entirety of it's parent
 @mixin cover($position: absolute) {
-    position: $position;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 5;
+  position: $position;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
 }
 
 // Force an element to have a particular width/height ratio, no matter the width
 // Any content you put inside the ratio-boxes needs to be absolutely positioned
 @mixin fixed-ratio($ratio: 1) {
-    overflow: hidden;
-    position: relative;
-    height: 0;
-    padding-top: (1 / $ratio) * 100%;
+  overflow: hidden;
+  position: relative;
+  height: 0;
+  padding-top: (1 / $ratio) * 100%;
 }
 
 // Force an element to have at least a particular width/height ratio, no matter the width
 // If the contents are too tall to fit, the box will expand in height
 @mixin expandable-fixed-ratio($ratio: 1) {
-    @include clearfix;
+  @include clearfix;
 
-    &::before {
-        content: '';
-        width: 1px;
-        margin-left: -1px;
-        float: left;
-        height: 0;
-        padding-top: (1 / $ratio) * 100%;
-    }
+  &::before {
+    content: '';
+    width: 1px;
+    margin-left: -1px;
+    float: left;
+    height: 0;
+    padding-top: (1 / $ratio) * 100%;
+  }
 }
 
 // Hide the element entirely, leaving it accessible to screen-readers
 @mixin hide-visually {
-    overflow: hidden !important;
-    position: absolute !important;
-    height: 1px !important;
-    width: 1px !important;
-    clip: rect(1px, 1px, 1px, 1px) !important;
-    clip-path: inset(50%) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  height: 1px !important;
+  width: 1px !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 // Set all the link colors at once
-@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
-    color: $normal;
+@mixin link-colors(
+  $normal,
+  $hover: false,
+  $active: false,
+  $visited: false,
+  $focus: false
+) {
+  color: $normal;
 
-    @if $visited {
-        &:visited {
-            color: $visited;
-        }
+  @if $visited {
+    &:visited {
+      color: $visited;
     }
+  }
 
+  @if $focus {
+    &:focus {
+      color: $focus;
+    }
+  }
+
+  @if $hover {
     @if $focus {
-        &:focus {
-            color: $focus;
-        }
+      &:hover {
+        color: $hover;
+      }
+    } @else {
+      &:hover,
+      &:focus {
+        color: $hover;
+      }
     }
+  }
 
-    @if $hover {
-        @if $focus {
-            &:hover {
-                color: $hover;
-            }
-        } @else {
-            &:hover,
-            &:focus {
-                color: $hover;
-            }
-        }
+  @if $active {
+    &:active {
+      color: $active;
     }
-
-    @if $active {
-        &:active {
-            color: $active;
-        }
-    }
+  }
 }
 
 // Make a dimension fluid between two values
 @mixin fluid-value($properties, $min-vw, $max-vw, $min-value, $max-value) {
+  @each $property in $properties {
+    #{$property}: $min-value;
+  }
+
+  @media screen and (min-width: $min-vw) {
     @each $property in $properties {
-        #{$property}: $min-value;
+      #{$property}: calc(
+        #{$min-value} +
+          #{strip-unit($max-value - $min-value)} *
+          (100vw - #{$min-vw}) /
+          #{strip-unit($max-vw - $min-vw)}
+      );
     }
+  }
 
-    @media screen and (min-width: $min-vw) {
-        @each $property in $properties {
-            #{$property}: calc(
-                #{$min-value} + #{strip-unit($max-value - $min-value)} *
-                    (
-                        100vw - #{$min-vw}
-                    ) / #{strip-unit($max-vw - $min-vw)}
-            );
-        }
+  @media screen and (min-width: $max-vw) {
+    @each $property in $properties {
+      #{$property}: $max-value;
     }
-
-    @media screen and (min-width: $max-vw) {
-        @each $property in $properties {
-            #{$property}: $max-value;
-        }
-    }
+  }
 }
 
 // Create a CSS triangle - best applied to empty or generated elements
 // https://davidtheclark.github.io/scut/triangle.html
 @mixin triangle($direction: right, $size: 0.75em, $ratio: 2, $color: inherit) {
-    display: inline-block;
-    height: 0;
-    width: 0;
-    // For improved appearance in some Webkit browsers
-    transform: rotate(360deg);
+  display: inline-block;
+  height: 0;
+  width: 0;
+  // For improved appearance in some Webkit browsers
+  transform: rotate(360deg);
 
-    // Set up some variables
-    $width: null;
-    $height: null;
-    $border-widths: null;
+  // Set up some variables
+  $width: null;
+  $height: null;
+  $border-widths: null;
 
-    @if type-of($size) == list {
-        $width: nth($size, 1);
-        $height: nth($size, 2);
-    } @else {
-        $width: $size;
-        $height: $size;
+  @if type-of($size) == list {
+    $width: nth($size, 1);
+    $height: nth($size, 2);
+  } @else {
+    $width: $size;
+    $height: $size;
+  }
+
+  @if ($direction == up) or ($direction == down) {
+    // For up and down, width gets two borders but height only one,
+    // so divide second border-width value by 2
+    $border-widths: $height ($width / $ratio);
+  } @else if($direction == right) or ($direction == left) {
+    // For right and left, height gets two borders but width only one,
+    // so divide first border-width value by $ratio
+    $border-widths: ($height / $ratio) $width;
+  } @else {
+    // For right triangles (the rest), both sides get two borders,
+    // so divide both by $ratio
+    $border-widths: ($height / $ratio) ($width / $ratio);
+  }
+  border-width: $border-widths;
+  border-style: solid;
+
+  // STANDARD TRIANGLES
+  @if (
+    ($direction == up) or
+      ($direction == down) or
+      ($direction == right) or
+      ($direction == left)
+  ) {
+    border-color: transparent;
+
+    @if $direction == up {
+      border-bottom-color: $color;
+      border-top-width: 0;
+    } @else if $direction == right {
+      border-left-color: $color;
+      border-right-width: 0;
+    } @else if $direction == down {
+      border-top-color: $color;
+      border-bottom-width: 0;
+    } @else if $direction == left {
+      border-right-color: $color;
+      border-left-width: 0;
     }
+  }
 
-    @if ($direction == up) or ($direction == down) {
-        // For up and down, width gets two borders but height only one,
-        // so divide second border-width value by 2
-        $border-widths: $height ($width / $ratio);
-    } @else if($direction == right) or ($direction == left) {
-        // For right and left, height gets two borders but width only one,
-        // so divide first border-width value by $ratio
-        $border-widths: ($height / $ratio) $width;
-    } @else {
-        // For right triangles (the rest), both sides get two borders,
-        // so divide both by $ratio
-        $border-widths: ($height / $ratio) ($width / $ratio);
+  // CORNER TRIANGLES
+  @else if($direction == top-right) or ($direction == top-left) {
+    border-top-color: $color;
+    border-bottom-color: transparent;
+
+    @if $direction == top-right {
+      border-left-color: transparent;
+      border-right-color: $color;
+    } @else if $direction == top-left {
+      border-left-color: $color;
+      border-right-color: transparent;
     }
-    border-width: $border-widths;
-    border-style: solid;
+  } @else if($direction == bottom-right) or ($direction == bottom-left) {
+    border-top-color: transparent;
+    border-bottom-color: $color;
 
-    // STANDARD TRIANGLES
-    @if ($direction == up) or ($direction == down) or ($direction == right) or ($direction == left) {
-        border-color: transparent;
-
-        @if $direction == up {
-            border-bottom-color: $color;
-            border-top-width: 0;
-        } @else if $direction == right {
-            border-left-color: $color;
-            border-right-width: 0;
-        } @else if $direction == down {
-            border-top-color: $color;
-            border-bottom-width: 0;
-        } @else if $direction == left {
-            border-right-color: $color;
-            border-left-width: 0;
-        }
+    @if $direction == bottom-right {
+      border-left-color: transparent;
+      border-right-color: $color;
+    } @else if $direction == bottom-left {
+      border-left-color: $color;
+      border-right-color: transparent;
     }
-
-    // CORNER TRIANGLES
-    @else if($direction == top-right) or ($direction == top-left) {
-        border-top-color: $color;
-        border-bottom-color: transparent;
-
-        @if $direction == top-right {
-            border-left-color: transparent;
-            border-right-color: $color;
-        } @else if $direction == top-left {
-            border-left-color: $color;
-            border-right-color: transparent;
-        }
-    } @else if($direction == bottom-right) or ($direction == bottom-left) {
-        border-top-color: transparent;
-        border-bottom-color: $color;
-
-        @if $direction == bottom-right {
-            border-left-color: transparent;
-            border-right-color: $color;
-        } @else if $direction == bottom-left {
-            border-left-color: $color;
-            border-right-color: transparent;
-        }
-    }
+  }
 }

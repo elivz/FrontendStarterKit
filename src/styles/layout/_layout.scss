@@ -1,49 +1,49 @@
 .skip-link {
-    position: fixed;
-    z-index: 1000;
-    top: -100em;
-    left: 0;
-    padding: 1em 1.5em 0.75em;
-    font-size: $fs-small;
-    background: $c-white;
-    box-shadow: 2px 2px 8px $c-gray-light;
+  position: fixed;
+  z-index: 1000;
+  top: -100em;
+  left: 0;
+  padding: 1em 1.5em 0.75em;
+  font-size: $fs-small;
+  background: $c-white;
+  box-shadow: 2px 2px 8px $c-gray-light;
 
-    &:focus {
-        top: 0;
-    }
+  &:focus {
+    top: 0;
+  }
 }
 
 .browserupgrade {
-    width: 100%;
-    padding: size(1/4) size();
-    font-size: $fs-small;
-    font-weight: bold;
-    text-align: center;
-    color: contrasting-color($c-primary);
-    background-color: $c-primary;
+  width: 100%;
+  padding: size(1/4) size();
+  font-size: $fs-small;
+  font-weight: bold;
+  text-align: center;
+  color: contrasting-color($c-primary);
+  background-color: $c-primary;
 
-    a {
-        color: inherit;
-        text-decoration: underline;
-    }
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
 }
 
 .wrapper {
-    @include clearfix;
-    max-width: $max-page-width;
-    min-width: 320px;
-    margin: 0 auto;
-    padding-left: $page-padding-narrow;
-    padding-right: $page-padding-narrow;
+  @include clearfix;
+  max-width: $max-page-width;
+  min-width: 320px;
+  margin: 0 auto;
+  padding-left: $page-padding-narrow;
+  padding-right: $page-padding-narrow;
 
-    @media ($medium-up) {
-        padding-left: $page-padding-wide;
-        padding-right: $page-padding-wide;
-    }
+  @media ($medium-up) {
+    padding-left: $page-padding-wide;
+    padding-right: $page-padding-wide;
+  }
 }
 
 .content {
-    clear: both;
-    // We have to make it focusable for skip link, but want to hide the outline
-    outline: none;
+  clear: both;
+  // We have to make it focusable for skip link, but want to hide the outline
+  outline: none;
 }

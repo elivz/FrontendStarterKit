@@ -1,26 +1,26 @@
 // Remove any units from a value, returning a simple number
 
 @function strip-unit($num) {
-    @return $num / ($num * 0 + 1);
+  @return $num / ($num * 0 + 1);
 }
 
 // Convert a pixel value to ems
 
 @function em($px: 16, $base: 16) {
-    @return strip-unit($px) / strip-unit($base) * 1rem;
+  @return strip-unit($px) / strip-unit($base) * 1rem;
 }
 
 // Convert a pixel value to rems
 
 @function rem($px: 16, $base: 16) {
-    @return strip-unit($px) / strip-unit($base) * 1rem;
+  @return strip-unit($px) / strip-unit($base) * 1rem;
 }
 
 // Return a number of 'line-heights'
 // Useful for maintaining a vertical rhythm
 
 @function size($multiplier: 1) {
-    @return $multiplier * $base-spacing;
+  @return $multiplier * $base-spacing;
 }
 
 /*
@@ -30,25 +30,25 @@
 // Lighten a color by mixing with white
 
 @function tint($color, $percentage) {
-    @return mix(white, $color, $percentage);
+  @return mix(white, $color, $percentage);
 }
 
 // Darken a color by mixing with black
 
 @function shade($color, $percentage) {
-    @return mix(black, $color, $percentage);
+  @return mix(black, $color, $percentage);
 }
 
 @function contrasting-color($color, $dark: #000, $light: #fff) {
-    @if (type_of($color) == 'color') {
-        @if (lightness($color) > 50) {
-            @return $dark; // Lighter backgorund, return dark color
-        } @else {
-            @return $light; // Darker background, return light color
-        }
+  @if (type_of($color) == 'color') {
+    @if (lightness($color) > 50) {
+      @return $dark; // Lighter backgorund, return dark color
+    } @else {
+      @return $light; // Darker background, return light color
     }
+  }
 
-    @warn '#{$color} is not a valid color';
+  @warn '#{$color} is not a valid color';
 
-    @return null;
+  @return null;
 }

@@ -1,74 +1,74 @@
 $text-inputs: 'textarea, input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="file"], select[multiple]';
 
 fieldset {
-    background: tint($c-border, 75%);
-    border: 1px solid $c-border;
-    margin: 0 0 size(1/2) 0;
-    padding: size(1/2);
+  background: tint($c-border, 75%);
+  border: 1px solid $c-border;
+  margin: 0 0 size(1/2) 0;
+  padding: size(1/2);
 }
 
 input,
 label,
 select,
 textarea {
-    display: block;
-    color: $c-gray;
+  display: block;
+  color: $c-gray;
 }
 
 label {
-    font-weight: $fw-bold;
+  font-weight: $fw-bold;
 
-    &.required::after {
-        content: '*';
-        color: $c-gray;
-    }
+  &.required::after {
+    content: '*';
+    color: $c-gray;
+  }
 }
 
 #{$text-inputs} {
-    width: 100%;
-    margin: 0;
-    padding: size(1/4) size(1/2);
-    background-color: $c-white;
-    border: 1px solid $c-border;
-    border-radius: 0;
-    transition: border-color;
+  width: 100%;
+  margin: 0;
+  padding: size(1/4) size(1/2);
+  background-color: $c-white;
+  border: 1px solid $c-border;
+  border-radius: 0;
+  transition: border-color;
 
-    &:focus {
-        border-color: shade($c-border, 15%);
-        outline: none;
-    }
+  &:focus {
+    border-color: shade($c-border, 15%);
+    outline: none;
+  }
 
-    &::placeholder {
-        color: $c-gray-dark;
-    }
+  &::placeholder {
+    color: $c-gray-dark;
+  }
 }
 
 textarea {
-    height: auto;
+  height: auto;
 }
 
 input[type='checkbox'],
 input[type='radio'] {
-    display: inline;
-    margin-right: size(1/4);
+  display: inline;
+  margin-right: size(1/4);
 }
 
 select {
-    width: 100%;
-    border: 1px solid $c-border;
-    appearance: none;
+  width: 100%;
+  border: 1px solid $c-border;
+  appearance: none;
 
-    &::-ms-expand {
-        display: none;
-    }
+  &::-ms-expand {
+    display: none;
+  }
 
-    &::-ms-value {
-        color: currentColor;
-    }
+  &::-ms-value {
+    color: currentColor;
+  }
 
-    option {
-        background-color: white;
-    }
+  option {
+    background-color: white;
+  }
 }
 
 /*
@@ -76,88 +76,88 @@ select {
  */
 
 .field {
-    margin-bottom: size(0.75);
+  margin-bottom: size(0.75);
 }
 
 .field-group {
-    @include clearfix;
-    margin-bottom: size(0.75);
+  @include clearfix;
+  margin-bottom: size(0.75);
 
-    .field {
-        float: left;
-        margin: 0;
-        width: 50%;
+  .field {
+    float: left;
+    margin: 0;
+    width: 50%;
 
-        &:first-child {
-            padding-right: size(0.375);
-        }
-
-        &:last-child {
-            padding-left: size(0.375);
-        }
+    &:first-child {
+      padding-right: size(0.375);
     }
+
+    &:last-child {
+      padding-left: size(0.375);
+    }
+  }
 }
 
 .field--inline {
-    @extend .field;
+  @extend .field;
 
-    @include clearfix;
+  @include clearfix;
 
-    @media ($small-down) {
-        label {
-            float: left;
-            width: 25%;
-        }
-
-        #{$text-inputs},
-        select {
-            float: left;
-            width: 75%;
-        }
+  @media ($small-down) {
+    label {
+      float: left;
+      width: 25%;
     }
+
+    #{$text-inputs},
+    select {
+      float: left;
+      width: 75%;
+    }
+  }
 }
 
 .field--inplace {
-    @extend .field;
-    position: relative;
+  @extend .field;
+  position: relative;
 
-    label {
-        position: absolute;
-        left: 1px;
-        top: 1px;
-        padding: size(1/4) size(1/2);
-        font-size: $fs-small;
-        line-height: size();
-        font-weight: normal;
-        color: $c-gray;
-        cursor: text;
-    }
+  label {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    padding: size(1/4) size(1/2);
+    font-size: $fs-small;
+    line-height: size();
+    font-weight: normal;
+    color: $c-gray;
+    cursor: text;
+  }
 }
 
 .button-group {
-    text-align: right;
+  text-align: right;
 
-    a,
-    button,
-    input {
-        margin-left: 1em;
-        vertical-align: middle;
-    }
+  a,
+  button,
+  input {
+    margin-left: 1em;
+    vertical-align: middle;
+  }
 
-    a:not(.button) {
-        font-size: 0.85em;
-    }
+  a:not(.button) {
+    font-size: 0.85em;
+  }
 }
 
 // Error display
 .form__errors {
-    margin-bottom: size(1/2);
-    color: $c-warning;
+  margin-bottom: size(1/2);
+  color: $c-warning;
 
-    li {
-        &::before,
-        &::after {
-            content: ' – ';
-        }
+  li {
+    &::before,
+    &::after {
+      content: ' – ';
     }
+  }
 }

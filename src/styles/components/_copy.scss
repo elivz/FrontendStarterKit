@@ -1,111 +1,111 @@
 .copy {
-    h1 {
-        font-family: $ff-header;
-        font-size: $fs-biggest;
+  h1 {
+    font-family: $ff-header;
+    font-size: $fs-biggest;
+  }
+
+  h2 {
+    font-family: $ff-header;
+    font-size: $fs-bigger;
+  }
+
+  h3 {
+    font-family: $ff-header;
+    font-size: $fs-big;
+  }
+
+  h4 {
+    font-family: $ff-header;
+    font-size: $fs-normal;
+  }
+
+  h5 {
+    font-family: $ff-header;
+    font-size: $fs-small;
+  }
+
+  h6 {
+    font-family: $ff-header;
+    font-size: $fs-smallest;
+  }
+
+  // Lists
+
+  ul,
+  ol {
+    margin-left: 1.3em;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li > ul,
+  li > ol {
+    margin-left: 0.75em;
+    font-size: 0.95em;
+  }
+
+  dt {
+    font-weight: bold;
+  }
+
+  // Tables
+
+  table {
+    margin: 0 0 size();
+    font-feature-settings: 'kern', 'liga', 'tnum';
+  }
+
+  th {
+    border-bottom: 1px solid $c-border;
+    font-weight: bold;
+    padding: size(1/4) 0;
+    text-align: left;
+  }
+
+  td {
+    border-bottom: 1px solid $c-border;
+    padding: size(1/4) size(1/2);
+  }
+
+  tr,
+  td,
+  th {
+    vertical-align: middle;
+  }
+
+  // Miscellaneous Elements
+
+  small {
+    color: $c-gray-dark;
+  }
+
+  hr {
+    border-bottom: 1px solid $c-border;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    margin: size() 0;
+  }
+
+  blockquote {
+    border-left: 2px solid $c-border;
+    color: tint($c-text, 15%);
+    margin: size() 0;
+    padding-left: size(1/2);
+  }
+
+  cite {
+    color: tint($c-text, 25%);
+    font-style: italic;
+
+    &::before {
+      content: '\2014 \00A0';
     }
-
-    h2 {
-        font-family: $ff-header;
-        font-size: $fs-bigger;
-    }
-
-    h3 {
-        font-family: $ff-header;
-        font-size: $fs-big;
-    }
-
-    h4 {
-        font-family: $ff-header;
-        font-size: $fs-normal;
-    }
-
-    h5 {
-        font-family: $ff-header;
-        font-size: $fs-small;
-    }
-
-    h6 {
-        font-family: $ff-header;
-        font-size: $fs-smallest;
-    }
-
-    // Lists
-
-    ul,
-    ol {
-        margin-left: 1.3em;
-    }
-
-    ul {
-        list-style: disc;
-    }
-
-    ol {
-        list-style: decimal;
-    }
-
-    li > ul,
-    li > ol {
-        margin-left: 0.75em;
-        font-size: 0.95em;
-    }
-
-    dt {
-        font-weight: bold;
-    }
-
-    // Tables
-
-    table {
-        margin: 0 0 size();
-        font-feature-settings: 'kern', 'liga', 'tnum';
-    }
-
-    th {
-        border-bottom: 1px solid $c-border;
-        font-weight: bold;
-        padding: size(1/4) 0;
-        text-align: left;
-    }
-
-    td {
-        border-bottom: 1px solid $c-border;
-        padding: size(1/4) size(1/2);
-    }
-
-    tr,
-    td,
-    th {
-        vertical-align: middle;
-    }
-
-    // Miscellaneous Elements
-
-    small {
-        color: $c-gray-dark;
-    }
-
-    hr {
-        border-bottom: 1px solid $c-border;
-        border-left: none;
-        border-right: none;
-        border-top: none;
-        margin: size() 0;
-    }
-
-    blockquote {
-        border-left: 2px solid $c-border;
-        color: tint($c-text, 15%);
-        margin: size() 0;
-        padding-left: size(1/2);
-    }
-
-    cite {
-        color: tint($c-text, 25%);
-        font-style: italic;
-
-        &::before {
-            content: '\2014 \00A0';
-        }
-    }
+  }
 }
