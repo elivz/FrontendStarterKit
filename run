@@ -26,7 +26,7 @@ case "$1" in
 
     "build")
         echo "🏁  ${green}Initializing Docker images${reset}"
-        ${COMPOSE} pull --parallel
+        ${COMPOSE} pull
         ${COMPOSE} build
         ;;
 

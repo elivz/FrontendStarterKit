@@ -15,9 +15,7 @@
 //    we force a non-overlapping, non-auto-hiding scrollbar to counteract.
 // 6. Change the default tap highlight to be completely transparent in iOS.
 
-// stylelint-disable property-no-vendor-prefix
-// stylelint-disable at-rule-no-vendor-prefix
-// stylelint-disable no-descending-specificity
+/* stylelint-disable */
 
 *,
 *::before,
@@ -393,7 +391,7 @@ select {
 // 2. Correct the inability to style clickable types in iOS and Safari.
 button,
 html [type='button'],
-// 1 [type='reset'],
+/* 1 [type='reset'],*/
 [type='submit'] {
     -webkit-appearance: button; // 2
 }

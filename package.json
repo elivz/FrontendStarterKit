@@ -1,6 +1,6 @@
 {
     "name": "frontend-starter-kit",
-    "version": "3.4.0",
+    "version": "4.0.0",
     "author": "Eli Van Zoeren <eli@elivz.com>",
     "homepage": "https://elivz.com/",
     "license": "MIT",
@@ -13,22 +13,23 @@
         "node": ">=6.0.0"
     },
     "scripts": {
-        "dev": "yarn run blendid",
-        "watch": "yarn run blendid",
-        "build": "yarn run blendid build",
-        "production": "yarn run blendid build",
+        "clean": "rm -rf dist/templates dist/public_html/assets",
+        "watch":
+          "yarn run clean && NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "build":
+          "yarn run clean && NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "precommit": "lint-staged",
         "lint-scripts": "eslint --fix 'src/scripts/**/*.js'",
-        "lint-styles": "stylelint 'src/styles/**/*.{css,scss}' --fix && prettier --write 'src/styles/**/*.{css,scss,js}'",
+        "lint-styles":
+          "prettier --write 'src/styles/**/*.{css,scss,js}' && stylelint 'src/styles/**/*.{css,scss}' --fix verbose --color",
         "lint": "yarn run lint-styles && yarn run lint-scripts"
     },
     "lint-staged": {
-        "src/**/*.js": [
-            "eslint --fix"
-        ],
-        "src/**/*.{css,scss}": [
-            "stylelint --fix",
-            "prettier --write"
+        "src/scripts/**/*.js": ["eslint --fix", "git add"],
+        "src/styles/**/*.{css,scss}": [
+          "stylelint --fix verbose --color",
+          "prettier --write",
+          "git add"
         ]
     },
     "dependencies": {
@@ -89,6 +90,12 @@
             "indent": [
                 "error",
                 4
+            ],
+            "no-param-reassign": [
+                2,
+                {
+                    "props": false
+                }
             ],
             "prettier/prettier": "error",
             "no-new": 1

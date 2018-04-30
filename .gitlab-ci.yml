@@ -1,4 +1,4 @@
-image: elivz/dev-utils
+image: elivz/php
 
 variables:
   LIVE_SSH_USER: REPLACE_ME
