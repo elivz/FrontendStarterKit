@@ -1,3 +1,4 @@
-import lazysizes from 'lazysizes';
+import lozad from 'lozad';
 
-window.lazysizes = lazysizes;
+const observer = lozad('.lazyload');
+observer.observe();

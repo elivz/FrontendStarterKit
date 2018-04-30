@@ -35,8 +35,7 @@
     "dependencies": {
         "accessible-toggle": "^1.1",
         "axios": "^0.18",
-        "iotacss": "^1.5",
-        "lazysizes": "^4.0",
+        "lozad": "^1.4.0",
         "picturefill": "^3.0",
         "reframe.js": "^2.1"
     },

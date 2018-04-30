@@ -1,54 +1,77 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <title></title>
-    <meta name="description" content="">
+  <title></title>
+  <meta name="description" content="">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" href="/assets/styles/site.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="/assets/styles/site.css">
 
-    <script>
-        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-        addEventListener('error', window._e=function f(e){f.q=f.q||[];f.q.push(e)});
-    </script>
-    <script src="/assets/scripts/initial.js" async></script>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+    /* PictureFill polyfill */
+    var testImg = document.createElement("img");
+    if (!("srcset" in testImg) || !("sizes" in testImg)) {
+      document.createElement("picture");
+      var s = document.createElement("script");
+      s.setAttribute("src", "/scripts/picturefill.min.js");
+      s.setAttribute("async", true);
+      document.head.appendChild(s);
+    }
+  </script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.from,Array.forEach,Object.assign" async></script>
+  <script src="/assets/scripts/initial.js" async></script>
+  <script src="/assets/scripts/main.js" defer></script>
+
+  <!-- Google Analytics -->
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=XYZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments) }
+    gtag('js', new Date());
+    gtag('config', 'XYZ');
+  </script>
+
+  <!-- We don't technically support IE8, but it doesn't hurt -->
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
+
 <body>
+  <a href="#content" class="skip-link">Skip to main content</a>
 
-    <a href="#content" class="skip-link">Skip to main content</a>
-
-    <!--[if lt IE 11]>
-        <div class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
-    <![endif]-->
-
-    <div class="wrapper">
-        <header id="masthead" class="header">
-            <div class="header__logo">
-                <a href="/">Site Name</a>
-            </div>
-            <nav class="header__nav">
-                <button type="button" class="header__nav-toggle" data-toggle="navigation">Menu</button>
-                <ul class="header__navigation" id="navigation">
-                    <li><a href="/">Home</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <main id="content" class="content copy" tabindex="-1">
-            <h1>Frontend Starter Kit</h1>
-        </main>
-
-        <footer class="footer">
-            <p class="footer__copyright">&copy; 2017</p>
-        </footer>
+  <!--[if lt IE 11]>
+    <div class="browserupgrade">
+      You are using an <strong>outdated</strong> browser.
+      Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
     </div>
+  <![endif]-->
 
-    <script>window.ga_id='UA-XXXXX-Y'</script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js" defer></script>
-    <script src="/assets/scripts/main.js" defer></script>
-    <script src="https://www.google-analytics.com/analytics.js" defer></script>
+  <div class="wrapper">
+    <header id="masthead" class="header">
+      <div class="header__logo">
+        <a href="/">Site Name</a>
+      </div>
+      <nav class="header__nav">
+        <button type="button" class="header__nav-toggle" data-toggle="navigation">Menu</button>
+        <ul class="header__navigation" id="navigation">
+          <li><a href="/">Home</a></li>
+        </ul>
+      </nav>
+    </header>
 
+    <main id="content" class="content copy" tabindex="-1">
+      <h1>Frontend Starter Kit</h1>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2017</p>
+    </footer>
+  </div>
 </body>
 </html>
