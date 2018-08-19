@@ -23,10 +23,10 @@ class Sync {
   }
 
   /*
-  * Plugins to be merged with the master webpack config.
-  *
-  * @return {Array|Object}
-  */
+   * Plugins to be merged with the master webpack config.
+   *
+   * @return {Array|Object}
+   */
   webpackPlugins() {
     const CopyWebpackPlugin = require('copy-webpack-plugin');
     const patterns = this.paths.map(path => ({

@@ -9,13 +9,19 @@ services:
       - "3001:3001"
     volumes:
       - ..:/var/www
+    links:
+      - db
+      - mail
     environment:
       # Don't change these
+      ENVIRONMENT:
       DB_HOST:
       DB_NAME:
       DB_USER:
       DB_PASS:
+      DB_PORT:
       BASE_URL:
+      BASE_PATH:
       PUBLIC_FOLDER: /dist${PUBLIC_FOLDER}
       IP:
 
@@ -29,6 +35,7 @@ services:
       MYSQL_DATABASE: app
       MYSQL_USER: app
       MYSQL_PASSWORD: 123
+      MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: password
 
   mail:

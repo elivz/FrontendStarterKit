@@ -18,9 +18,9 @@ before_script:
   - eval $(ssh-agent -s)
   - ssh-add <(echo "$SSH_PRIVATE_KEY")
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  - yarn
+  - yarn --non-interactive --silent --frozen-lockfile
   - yarn build
-  - composer update
+  - composer install --no-interaction --no-dev --prefer-dist --no-progress
 
 stage_deploy:
   stage: deploy
@@ -30,7 +30,7 @@ stage_deploy:
     paths:
       - build/
   script:
-    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${STAGING_SSH_USER}@${STAGING_DOMAIN}:${STAGING_ROOT}
+    - rsync -chaz --stats --delete --exclude 'cms/storage' --exclude 'public_html/media' --exclude '.env.php' ./dist/* ${STAGING_SSH_USER}@${STAGING_DOMAIN}:${STAGING_ROOT}
     - wget -qO- http://${STAGING_DOMAIN}${CACHE_CLEAR_URI}
 
 live_deploy:
@@ -38,5 +38,5 @@ live_deploy:
   only:
     - master
   script:
-    - rsync -chaz --stats --delete --exclude 'craft/storage' --exclude 'public_html/media' --exclude '.env.php' build/dist/ ${LIVE_SSH_USER}@${LIVE_DOMAIN}:${LIVE_ROOT}
+    - rsync -chaz --stats --delete --exclude 'cms/storage' --exclude 'public_html/media' --exclude '.env.php' ./dist/* ${LIVE_SSH_USER}@${LIVE_DOMAIN}:${LIVE_ROOT}
     - wget -qO- http://${LIVE_DOMAIN}${CACHE_CLEAR_URI}

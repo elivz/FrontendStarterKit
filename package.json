@@ -1,168 +1,177 @@
 {
-    "name": "frontend-starter-kit",
-    "version": "4.0.1",
-    "author": "Eli Van Zoeren <eli@elivz.com>",
-    "homepage": "https://elivz.com/",
-    "license": "MIT",
-    "private": true,
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:elivz/FrontendStarterKit.git"
-    },
-    "engines": {
-        "node": ">=6.0.0"
-    },
-    "scripts": {
-        "clean": "rm -rf dist/templates dist/public_html/assets",
-        "watch": "yarn run clean && NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "build": "yarn run clean && NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "precommit": "lint-staged",
-        "lint-scripts": "eslint --fix 'src/scripts/**/*.js'",
-        "lint-styles": "prettier --write 'src/styles/**/*.{css,scss,js}' && stylelint 'src/styles/**/*.{css,scss}' --fix verbose --color",
-        "lint": "yarn run lint-styles && yarn run lint-scripts"
-    },
-    "lint-staged": {
-        "src/scripts/**/*.js": [
-            "eslint --fix",
-            "git add"
-        ],
-        "src/styles/**/*.{css,scss}": [
-            "stylelint --fix verbose --color",
-            "prettier --write",
-            "git add"
-        ]
-    },
-    "dependencies": {
-        "accessible-toggle": "^1.3",
-        "axios": "^0.18",
-        "lazysizes": "^4.0",
-        "picturefill": "^3.0",
-        "reframe.js": "^2.1"
-    },
-    "devDependencies": {
-        "browser-sync": "^2.24",
-        "browser-sync-webpack-plugin": "^2.0",
-        "copy-webpack-plugin": "^4.3",
-        "eslint": "^4.12",
-        "eslint-config-airbnb-base": "^12.1",
-        "eslint-config-prettier": "^2.9",
-        "eslint-plugin-import": "^2.12",
-        "eslint-plugin-prettier": "^2.3",
-        "husky": "^0.14",
-        "laravel-mix": "^2.1",
-        "lint-staged": "^7.2",
-        "prettier": "^1.13",
-        "stylelint": "^9.3",
-        "stylelint-config-standard": "^18.0",
-        "svg-url-loader": "^2.3"
-    },
-    "target": {
-        "browsers": [
-            "> 0.25% in US",
-            "> 2%"
-        ]
-    },
-    "babel": {
-        "presets": [
-            [
-                "env",
-                {
-                    "modules": false
-                }
-            ]
-        ]
-    },
-    "eslintConfig": {
-        "env": {
-            "es6": true,
-            "browser": true
-        },
-        "extends": [
-            "airbnb-base",
-            "plugin:prettier/recommended"
-        ],
-        "plugins": [
-            "import"
-        ],
-        "parserOptions": {
-            "ecmaVersion": 2017,
-            "sourceType": "module"
-        },
-        "rules": {
-            "prettier/prettier": "error",
-            "no-new": 1
+  "name": "frontend-starter-kit",
+  "version": "4.0.1",
+  "author": "Eli Van Zoeren <eli@elivz.com>",
+  "homepage": "https://elivz.com/",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:elivz/FrontendStarterKit.git"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "clean": "rm -rf dist/templates dist/public_html/assets",
+    "watch": "yarn run clean && NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "build": "yarn run clean && NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "precommit": "lint-staged",
+    "lint-scripts": "eslint --fix 'src/scripts/**/*.js'",
+    "lint-styles": "prettier --write 'src/styles/**/*.{css,scss,js}' && stylelint 'src/styles/**/*.{css,scss}' --fix verbose --color",
+    "lint": "yarn run lint-styles && yarn run lint-scripts"
+  },
+  "lint-staged": {
+    "src/scripts/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "src/styles/**/*.{css,scss}": [
+      "stylelint --fix verbose --color",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "accessible-toggle": "^1.3",
+    "axios": "^0.18",
+    "delegated-events": "^1.0",
+    "lazysizes": "^4.0",
+    "picturefill": "^3.0",
+    "reframe.js": "^2.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24",
+    "browser-sync-webpack-plugin": "^2.0",
+    "copy-webpack-plugin": "^4.3",
+    "eslint": "^4.12",
+    "eslint-config-airbnb-base": "^12.1",
+    "eslint-config-prettier": "^2.9",
+    "eslint-plugin-import": "^2.12",
+    "eslint-plugin-prettier": "^2.3",
+    "husky": "^0.14",
+    "laravel-mix": "^2.1",
+    "lint-staged": "^7.2",
+    "prettier": "^1.13",
+    "stylelint": "^9.3",
+    "stylelint-config-standard": "^18.0",
+    "svg-url-loader": "^2.3"
+  },
+  "target": {
+    "browsers": [
+      "> 0.25% in US",
+      "> 2%"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
         }
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "browser": true
     },
-    "prettier": {
-        "singleQuote": true,
-        "trailingComma": "es5"
+    "extends": [
+      "airbnb-base",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "import"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
     },
-    "stylelint": {
-        "extends": "stylelint-config-standard",
-        "rules": {
-            "string-quotes": "single",
-            "selector-max-id": 0,
-            "selector-attribute-quotes": "always",
-            "declaration-empty-line-before": "never",
-            "declaration-colon-newline-after": null,
-            "value-list-comma-newline-after": null,
-            "property-no-vendor-prefix": true,
-            "value-no-vendor-prefix": true,
-            "function-url-quotes": "always",
-            "font-family-name-quotes": "always-where-recommended",
-            "at-rule-no-vendor-prefix": true,
-            "selector-no-vendor-prefix": true,
-            "media-feature-name-no-vendor-prefix": true,
-            "no-descending-specificity": null,
-            "block-closing-brace-newline-after": [
-                "always",
-                {
-                    "ignoreAtRules": [
-                        "if",
-                        "else"
-                    ]
-                }
-            ],
-            "at-rule-empty-line-before": [
-                "always",
-                {
-                    "except": [
-                        "blockless-after-same-name-blockless",
-                        "first-nested"
-                    ],
-                    "ignore": [
-                        "after-comment"
-                    ],
-                    "ignoreAtRules": [
-                        "else"
-                    ]
-                }
-            ],
-            "at-rule-no-unknown": [
-                true,
-                {
-                    "ignoreAtRules": [
-                        "at-root",
-                        "content",
-                        "debug",
-                        "each",
-                        "else",
-                        "else if",
-                        "error",
-                        "extend",
-                        "for",
-                        "function",
-                        "if",
-                        "import",
-                        "include",
-                        "media",
-                        "mixin",
-                        "return",
-                        "warn",
-                        "while"
-                    ]
-                }
-            ]
-        }
+    "rules": {
+      "prettier/prettier": "error",
+      "no-new": 1
     }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "max-nesting-depth": [
+        3,
+        {
+          "ignoreAtRules": [
+            "media",
+            "supports",
+            "include"
+          ]
+        }
+      ],
+      "selector-max-compound-selectors": 4,
+      "selector-no-qualifying-type": [
+        true,
+        {
+          "ignore": [
+            "attribute",
+            "class"
+          ]
+        }
+      ],
+      "selector-class-pattern": null,
+      "scss/at-extend-no-missing-placeholder": null,
+      "color-named": null,
+      "order/properties-alphabetical-order": null,
+      "order/order": [
+        [
+          "custom-properties",
+          "dollar-variables",
+          {
+            "type": "at-rule",
+            "name": "extend"
+          },
+          {
+            "type": "at-rule",
+            "name": "include",
+            "hasBlock": false
+          },
+          "declarations",
+          "rules",
+          {
+            "type": "at-rule",
+            "name": "include",
+            "hasBlock": true
+          }
+        ]
+      ],
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "at-root",
+            "content",
+            "debug",
+            "each",
+            "else",
+            "else if",
+            "error",
+            "extend",
+            "for",
+            "function",
+            "if",
+            "import",
+            "include",
+            "media",
+            "mixin",
+            "return",
+            "warn",
+            "while"
+          ]
+        }
+      ]
+    }
+  }
 }

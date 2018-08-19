@@ -1,19 +1,19 @@
 /*
-* Open links to a different domain in a new window
-*/
+ * Open links to a different domain in a new window
+ */
 
-/* eslint-disable no-script-url */
+import { $$ } from '../lib/domUtils';
+
+// RegEx to test if a link goes to a different hostname
+const localTest = new RegExp(`/${window.location.host}/`);
 
 // Find the links
-const links = document.body.getElementsByTagName('a');
+const links = $$('a');
 
 // Add a target attribute to any links that match
-Array.from(links).forEach(link => {
-  if (
-    link.href.indexOf('javascript:') === -1 &&
-    link.href.indexOf(window.location.host) === -1
-  ) {
+links.forEach(link => {
+  if (!localTest.test(link.href) && !link.classList.contains('js-same-tab')) {
     link.setAttribute('target', '_blank');
-    link.setAttribute('rel', `${link.getAttribute('rel')} noopener`);
+    link.setAttribute('rel', 'noopener');
   }
 });

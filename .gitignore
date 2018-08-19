@@ -6,15 +6,11 @@
 # COMPOSER
 dist/vendor
 
-# MYSQL DATA
-config/data
-
-# CRAFT STORAGE
-dist/cms/storage/*
-
 # ASSETS
 dist/templates
-dist/public_html
+dist/public_html/*
+!dist/public_html/.htaccess
+!dist/public_html/index.php
 
 # BUILD FILES
 node_modules
@@ -22,6 +18,8 @@ node_modules
 .composer
 .wp-cli
 yarn-error.log
+npm-debug.log
+.node-gyp
 
 # MISC FILES
 .cache
@@ -32,13 +30,11 @@ yarn-error.log
 .yarn
 .yarnrc
 .v8flags*
-.node-gyp
-.vscode
 *.cache
 *.esproj
+*.code-workspace
 *.sublime-workspace
 *.sublime-project
-*.code-workspace
 *.tmp
 *.tmproj
 *.tmproject
